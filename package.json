@@ -23,7 +23,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "commitlint --from origin/master --to HEAD --verbose"
+      "pre-push": "commitlint --from origin/develop --to HEAD --verbose"
     }
   },
   "lint-staged": {
