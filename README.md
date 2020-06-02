@@ -1,7 +1,7 @@
 # JavaScript Project Files Template for OGP
 
 ## Folder Structure
-Mostly taken from [^1]. Notably, we distinguish between
+Mostly taken from \[1\]. Notably, we distinguish between
 `lib/` and `src/` directories, the latter for files that we have 
 to process (eg, transpile) into `build/` or `dist/`. 
 
@@ -39,4 +39,4 @@ Gitpod users creating workspaces from the repository.
 
 ## References
 
-[^1]: https://gist.github.com/tracker1/59f2c13044315f88bee9
+\[1\]: https://gist.github.com/tracker1/59f2c13044315f88bee9
