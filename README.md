@@ -13,6 +13,11 @@ Done with ESLint, using the following rule configs:
 
 Prettier is further configured using the rules in `.prettierrc.js`.
 
+### Additional rules
+Developers are free to add more ESLint rules that bring their project
+in-line with norms specific to their language or framework of choice,
+eg. typescript or React.
+
 ## Conventional Commits
 Commit messages follow [conventional commits](https://conventionalcommits.org/).
 This is enforced by commitlint, when pushing to remote branch.
