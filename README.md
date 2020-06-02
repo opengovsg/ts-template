@@ -11,14 +11,21 @@ Done with ESLint, using the following rule configs:
 - `eslint:recommended` 
 - `plugin:prettier/recommended`
 
-Prettier is further configured using the rules in `.prettierrc.js`
+Prettier is further configured using the rules in `.prettierrc.js`.
+
+## Conventional Commits
+Commit messages follow [conventional commits](https://conventionalcommits.org/).
+This is enforced by commitlint, when pushing to remote branch.
 
 ## Commit Hooks
 Husky is used in tandem with:
   - lint-staged to ensure files are linted on commit
-  - commitlint to ensure commits follow the 
-    [conventional commits](https://conventionalcommits.org/) 
-    specification on push
+  - commitlint to ensure commits adhere to convention on push
+
+The pre-push hook will interfere on initial push since commitlint
+uses the remote branch as the lower bound in the commit range to inspect,
+and there would be no remote branch. Bypass this the first time with the
+`--no-verify` flag.
 
 ## Miscellany
 
