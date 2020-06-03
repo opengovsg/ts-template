@@ -22,10 +22,16 @@ eg. typescript or React.
 Commit messages follow [conventional commits](https://conventionalcommits.org/).
 This is enforced by commitlint, when pushing to remote branch.
 
+### Commitizen
+[Commitizen](https://github.com/commitizen/cz-cli) has been installed as a 
+convenience for writing conventional commit messages, via `npm run cz`.
+This may be removed to minimise project dependencies.
+
 ## Commit Hooks
 Husky is used in tandem with:
-  - lint-staged to ensure files are linted on commit
-  - commitlint to ensure commits adhere to convention on push
+
+- lint-staged to ensure files are linted on commit
+- commitlint to ensure commits adhere to convention on push
 
 The pre-push hook will interfere on initial push since commitlint
 uses the remote branch as the lower bound in the commit range to inspect,
