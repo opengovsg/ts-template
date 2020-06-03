@@ -35,8 +35,8 @@ Husky is used in tandem with:
 
 The pre-push hook will interfere on initial push since commitlint
 uses the remote branch as the lower bound in the commit range to inspect,
-and there would be no remote branch. Bypass this the first time with the
-`--no-verify` flag.
+and there would be no remote branch. Bypass this the first time with
+`git push --no-verify`.
 
 ## Miscellany
 
