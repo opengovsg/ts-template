@@ -4,7 +4,7 @@
   "description": "A template for most JavaScript projects in OGP",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"no test specified\"",
     "cz": "git-cz",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
@@ -14,6 +14,7 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
+    "@commitlint/travis-cli": "^8.3.5",
     "commitizen": "^4.1.2",
     "cz-conventional-changelog": "^3.2.0",
     "eslint": "^7.1.0",

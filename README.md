@@ -38,6 +38,16 @@ uses the remote branch as the lower bound in the commit range to inspect,
 and there would be no remote branch. Bypass this the first time with
 `git push --no-verify`.
 
+## Continuous Integration
+Travis is commonly used in OGP. A `.travis.yml` config has been provided
+for convenience, which will run the following in order:
+
+- unit-tests (commented out)
+- linting
+- commit linting
+
+Builds will fail if any of these tasks fail.
+
 ## Miscellany
 
 ### WhiteSource Renovate
