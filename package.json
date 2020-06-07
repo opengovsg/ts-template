@@ -8,7 +8,9 @@
     "cz": "git-cz",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "dev": "nodemon --exec 'ts-node --files' src/server/index.ts"
+    "dev": "nodemon --exec 'ts-node --files' src/server/index.ts",
+    "build": "tsc",
+    "start": "node build/server/index.js"
   },
   "author": "Open Government Products, GovTech Singapore (https://open.gov.sg)",
   "license": "MIT",
