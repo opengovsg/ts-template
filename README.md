@@ -50,9 +50,13 @@ Builds will fail if any of these tasks fail.
 
 ## Miscellany
 
-### WhiteSource Renovate
-A `renovate.json` file is in place so that for repositories where
-Renovatebot is enabled, npm dependencies will be regularly updated.
+### Dependabot
+`.github/dependabot.yml` is in place so that npm dependencies will be 
+regularly updated.
+
+Note that the first time dependabot makes a Pull Request, you may have 
+to squash and merge it yourself, changing the commit title to line up with
+conventional commits.
 
 ### Gitpod
 A `.gitpod.yml` has been configured to run `npm install` for 
