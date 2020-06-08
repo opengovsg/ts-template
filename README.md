@@ -54,10 +54,6 @@ Builds will fail if any of these tasks fail.
 `.github/dependabot.yml` is in place so that npm dependencies will be 
 regularly updated.
 
-Note that the first time dependabot makes a Pull Request, you may have 
-to squash and merge it yourself, changing the commit title to line up with
-conventional commits.
-
 ### Gitpod
 A `.gitpod.yml` has been configured to run `npm install` for 
 Gitpod users creating workspaces from the repository.
