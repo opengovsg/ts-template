@@ -12,7 +12,7 @@
     "dev:client": "npm run --prefix client start",
     "dev:server": "nodemon --exec 'node --inspect -r ts-node/register' server/src/index.ts",
     "dev:start": "env-cmd concurrently \"npm run dev:client\" \"npm run dev:server\"",
-    "build": "tsc",
+    "build:server": "tsc",
     "start": "node build/server/index.js"
   },
   "author": "Open Government Products, GovTech Singapore (https://open.gov.sg)",
