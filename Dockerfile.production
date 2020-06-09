@@ -1,0 +1,19 @@
+FROM node:12-alpine3.9 AS node-modules-builder
+LABEL maintainer="Open Government Products"
+WORKDIR /usr/src/app
+RUN apk update && apk add python g++ make && rm -rf /var/cache/apk/*
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY tsconfig.json src ./
+RUN npm run build
+
+FROM node:12-alpine3.9
+WORKDIR /usr/src/app
+RUN apk update && apk add tini && rm -rf /var/cache/apk/*
+COPY --from=node-modules-builder /usr/src/app/package.json /usr/src/app/package-lock.json ./
+COPY --from=node-modules-builder /usr/src/app/node_modules node_modules
+COPY --from=node-modules-builder /usr/src/app/build build
+ENV PORT 8080
+ENTRYPOINT ["tini", "--"]
+CMD ["npm", "run", "start"]
+EXPOSE 8080

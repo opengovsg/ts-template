@@ -8,7 +8,8 @@
     "cz": "git-cz",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "dev": "nodemon --exec 'node --inspect -r ts-node/register' src/server/index.ts",
+    "dev": "docker-compose up --build",
+    "dev:start": "nodemon --exec 'node --inspect -r ts-node/register' src/server/index.ts",
     "build": "tsc",
     "start": "node build/server/index.js"
   },
