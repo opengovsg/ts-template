@@ -6,4 +6,9 @@ RUN npm install
 
 ENTRYPOINT ["tini", "--"]
 CMD ["npm", "run", "dev:start"]
+
+# Webpack dev server
+EXPOSE 3000
+
+# Backend API
 EXPOSE 8080
