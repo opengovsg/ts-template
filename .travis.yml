@@ -1,6 +1,15 @@
 language: node_js
+
 node_js:
   - node
+
+cache:
+  directories:
+    - node_modules
+
+install:
+  - npm ci
+  - cd client && npm ci && cd ..
 
 script:
   - npm test
