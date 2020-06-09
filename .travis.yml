@@ -6,3 +6,4 @@ script:
   - npm test
   - npm run lint
   - npx commitlint-travis
+  - docker build -t js-template-repo:latest -f Dockerfile.production .
