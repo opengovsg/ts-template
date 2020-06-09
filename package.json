@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "dev": "docker-compose up --build",
-    "dev:start": "nodemon --exec 'node --inspect -r ts-node/register' src/server/index.ts",
+    "dev:start": "nodemon --exec 'node --inspect -r ts-node/register' server/src/index.ts",
     "build": "tsc",
     "start": "node build/server/index.js"
   },
