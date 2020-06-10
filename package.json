@@ -1,5 +1,5 @@
 {
-  "name": "@opengovsg/ts-template-repo",
+  "name": "@opengovsg/ts-template",
   "version": "1.0.0",
   "description": "A template for most TypeScript projects in OGP",
   "main": "build/server/index.js",
