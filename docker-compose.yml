@@ -5,7 +5,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.development
-    command: npm run dev:start
     ports:
       - '3000:3000'
       - '8080:8080'
