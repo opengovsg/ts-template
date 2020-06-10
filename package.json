@@ -11,7 +11,7 @@
     "lint-fix": "eslint --fix .",
     "dev": "docker-compose up --build",
     "dev-client": "npm run --prefix client start",
-    "dev-server": "ts-node-dev --respawn --transpileOnly server/src/index.ts",
+    "dev-server": "ts-node-dev --respawn --transpileOnly --inspect -- server/src/index.ts",
     "dev-start": "env-cmd concurrently \"npm run dev-client\" \"npm run dev-server\"",
     "build-server": "tsc",
     "build-client": "npm run --prefix client build",
