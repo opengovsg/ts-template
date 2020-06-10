@@ -10,7 +10,7 @@ RUN cd client && npm ci && cd ..
 # TODO: Remove when server package.json is no longer in parent directory of client
 ENV SKIP_PREFLIGHT_CHECK true
 # Transpile
-RUN npm run build:server && npm run build:client
+RUN npm run build-server && npm run build-client
 
 FROM node:12-alpine3.9
 WORKDIR /usr/src/app
