@@ -1,8 +1,8 @@
 {
-  "name": "@opengovsg/js-template-repo",
+  "name": "@opengovsg/ts-template-repo",
   "version": "1.0.0",
-  "description": "A template for most JavaScript projects in OGP",
-  "main": "index.js",
+  "description": "A template for most TypeScript projects in OGP",
+  "main": "build/server/index.js",
   "scripts": {
     "test-client": "npm run --prefix client test",
     "test": "npm run test-client",

@@ -1,9 +1,12 @@
-# JavaScript Project Files Template for OGP
+# TypeScript Project Files Template for OGP
 
 ## Folder Structure
-Mostly taken from \[1\]. Notably, we distinguish between
-`lib/` and `src/` directories, the latter for files that we have 
-to process (eg, transpile) into `build/` or `dist/`. 
+Two separate TypeScript projects, `client/` and `server/`, 
+for frontend and backend respectively.
+
+Structure within client/server folder taken from \[1\]. Notably, 
+we distinguish between `lib/` and `src/` directories, the latter for
+files that we have to process (eg, transpile) into `build/` or `dist/`. 
 
 ## Linting
 Done with ESLint, using the following rule configs:
