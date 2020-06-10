@@ -1,8 +1,21 @@
 language: node_js
+
 node_js:
   - node
+
+cache:
+  directories:
+    - node_modules
+
+env:
+  - SKIP_PREFLIGHT_CHECK=true
+
+install:
+  - npm ci
+  - cd client && npm ci && cd ..
 
 script:
   - npm test
   - npm run lint
   - npx commitlint-travis
+  - docker build -t js-template-repo:latest -f Dockerfile.production .

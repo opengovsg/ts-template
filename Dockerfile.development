@@ -5,5 +5,10 @@ RUN apk update && apk add python g++ make tini && rm -rf /var/cache/apk/*
 RUN npm install
 
 ENTRYPOINT ["tini", "--"]
-CMD ["npm", "run", "dev:start"]
+CMD ["npm", "run", "dev-start"]
+
+# Webpack dev server
+EXPOSE 3000
+
+# Backend API
 EXPOSE 8080
