@@ -17,6 +17,9 @@
     "typescript": "^3.9.5"
   },
   "scripts": {
+    "lint": "echo eslint .",
+    "lint-fix": "echo eslint --fix .",
+    "lint-staged": "echo lint-staged",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
