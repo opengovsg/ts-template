@@ -16,6 +16,16 @@ Done with ESLint, using the following rule configs:
 
 Prettier is further configured using the rules in `.prettierrc.js`.
 
+VSCode users will have to add the following to their ESLint extension
+settings for linting to work in both `client/` and `server/`:
+
+```json
+    "eslint.workingDirectories": [
+        "server",
+        "client"
+    ],
+```
+
 ### Additional rules
 Developers are free to add more ESLint rules that bring their project
 in-line with norms specific to their language or framework of choice,
