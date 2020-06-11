@@ -2,6 +2,7 @@ FROM node:12-alpine3.9
 LABEL maintainer="Open Government Products"
 WORKDIR /usr/src/app
 RUN apk update && apk add python g++ make tini && rm -rf /var/cache/apk/*
+COPY . ./
 RUN npm install
 
 ENTRYPOINT ["tini", "--"]
