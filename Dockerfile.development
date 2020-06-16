@@ -3,10 +3,10 @@ LABEL maintainer="Open Government Products"
 WORKDIR /usr/src/app
 RUN apk update && apk add python g++ make tini && rm -rf /var/cache/apk/*
 COPY . ./
-# Install server dependencies
-RUN cd server && npm ci && cd ..
-# Install client dependencies
-RUN cd client && npm ci && cd ..
+# Install backend dependencies
+RUN cd backend && npm ci && cd ..
+# Install frontend dependencies
+RUN cd frontend && npm ci && cd ..
 
 ENTRYPOINT ["tini", "--"]
 CMD ["npm", "run", "dev-start"]

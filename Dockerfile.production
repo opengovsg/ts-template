@@ -3,14 +3,14 @@ LABEL maintainer="Open Government Products"
 WORKDIR /usr/src/app
 RUN apk update && apk add python g++ make && rm -rf /var/cache/apk/*
 COPY . ./
-# Install server dependencies
-RUN cd server && npm ci && cd ..
-# Install client dependencies
-RUN cd client && npm ci && cd ..
+# Install backend dependencies
+RUN cd backend && npm ci && cd ..
+# Install frontend dependencies
+RUN cd frontend && npm ci && cd ..
 # TODO: Remove when server package.json is no longer in parent directory of client
 ENV SKIP_PREFLIGHT_CHECK true
 # Transpile
-RUN npm run on-server -- build && npm run on-client -- build
+RUN npm run on-backend -- build && npm run on-frontend -- build
 
 FROM node:12-alpine3.9
 WORKDIR /usr/src/app
