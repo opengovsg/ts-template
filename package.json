@@ -2,22 +2,18 @@
   "name": "@opengovsg/ts-template",
   "version": "1.0.0",
   "description": "A template for most TypeScript projects in OGP",
-  "main": "build/server/index.js",
+  "main": "build/backend/index.js",
   "scripts": {
-    "on-server": "npm run --prefix server",
-    "on-client": "npm run --prefix client",
-
-    "postinstall": "npm --prefix server install && npm --prefix client install",
-  
+    "on-backend": "npm run --prefix backend",
+    "on-frontend": "npm run --prefix frontend",
+    "postinstall": "npm --prefix backend install && npm --prefix frontend install",
     "dev": "docker-compose up --build",
-    "dev-start": "env-cmd concurrently \"npm run on-server -- dev\" \"npm run on-client -- start\"",
-
-    "lint": "npm run on-server -- lint && npm run on-client -- lint",
-    "lint-fix": "npm run on-server -- lint-fix && npm run on-client -- lint-fix",
-    "test": "npm run on-server -- test && npm run on-client -- test",
+    "dev-start": "env-cmd concurrently \"npm run on-backend -- dev\" \"npm run on-frontend -- start\"",
+    "lint": "npm run on-backend -- lint && npm run on-frontend -- lint",
+    "lint-fix": "npm run on-backend -- lint-fix && npm run on-frontend -- lint-fix",
+    "test": "npm run on-backend -- test && npm run on-frontend -- test",
     "cz": "git-cz",
-
-    "start": "node server/build/index.js"
+    "start": "node backend/build/index.js"
   },
   "author": "Open Government Products, GovTech Singapore (https://open.gov.sg)",
   "license": "MIT",
@@ -33,7 +29,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run on-server -- lint-staged && npm run on-client -- lint-staged",
+      "pre-commit": "npm run on-backend -- lint-staged && npm run on-frontend -- lint-staged",
       "pre-push": "commitlint --from origin/develop --to HEAD --verbose"
     }
   },
