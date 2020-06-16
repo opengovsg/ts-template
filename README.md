@@ -1,10 +1,10 @@
 # TypeScript Project Files Template for OGP
 
 ## Folder Structure
-Two separate TypeScript projects, `client/` and `server/`, 
+Two separate TypeScript projects, `frontend/` and `backend/`, 
 for frontend and backend respectively.
 
-Structure within client/server folder taken from \[1\]. Notably, 
+Structure within frontend/backend folder taken from \[1\]. Notably, 
 we distinguish between `lib/` and `src/` directories, the latter for
 files that we have to process (eg, transpile) into `build/` or `dist/`. 
 
@@ -17,12 +17,12 @@ Done with ESLint, using the following rule configs:
 Prettier is further configured using the rules in `.prettierrc.js`.
 
 VSCode users will have to add the following to their ESLint extension
-settings for linting to work in both `client/` and `server/`:
+settings for linting to work in both `frontend/` and `backend/`:
 
 ```json
     "eslint.workingDirectories": [
-        "server",
-        "client"
+        "backend",
+        "frontend"
     ],
 ```
 
