@@ -65,3 +65,5 @@ typings/
 
 # Typescript build
 build
+server/build
+client/build
