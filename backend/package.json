@@ -21,7 +21,7 @@
     "eslint": "^7.2.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "lint-staged": "^10.2.10",
+    "lint-staged": "^10.2.11",
     "prettier": "^2.0.5",
     "ts-node-dev": "^1.0.0-pre.48",
     "typescript": "^3.9.5"
