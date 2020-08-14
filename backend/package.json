@@ -9,7 +9,7 @@
     "lint-staged": "lint-staged",
     "test": "echo 'No tests implemented'",
     "build": "tsc",
-    "dev": "ts-node-dev --respawn --transpileOnly --inspect -- src/index.ts",
+    "dev": "ts-node-dev --respawn --transpile-only --inspect -- src/index.ts",
     "start": "node build/index.js"
   },
   "author": "Open Government Products, GovTech Singapore (https://open.gov.sg)",
