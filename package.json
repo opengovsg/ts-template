@@ -23,7 +23,7 @@
     "@commitlint/travis-cli": "^9.1.2",
     "commitizen": "^4.2.1",
     "concurrently": "^5.3.0",
-    "cz-conventional-changelog": "^3.2.1",
+    "cz-conventional-changelog": "^3.3.0",
     "env-cmd": "^10.1.0",
     "husky": "^4.2.5"
   },
