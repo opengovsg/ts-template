@@ -14,7 +14,7 @@
     "fibers": "^5.0.0",
     "node-sass": "^4.14.1",
     "react": "^16.14.0",
-    "react-dom": "^16.13.1",
+    "react-dom": "^16.14.0",
     "react-scripts": "^3.4.3",
     "sass": "^1.27.0",
     "typescript": "^4.0.3"
