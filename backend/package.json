@@ -4,7 +4,7 @@
   "description": "A template for most TypeScript projects in OGP",
   "main": "server/build/index.js",
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint \"./**/*.ts\"",
     "lint-fix": "eslint --fix .",
     "lint-staged": "lint-staged",
     "test": "echo 'No tests implemented'",

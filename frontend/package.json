@@ -29,7 +29,7 @@
     "prettier": "^2.1.2"
   },
   "scripts": {
-    "lint": "eslint --ext ts,tsx,js,jsx .",
+    "lint": "eslint \"./**/*.tsx\" \"./**/*.ts\" \"./**/*.js\"",
     "lint-fix": "eslint --fix --ext ts,tsx,js,jsx .",
     "lint-staged": "lint-staged",
     "start": "react-scripts start",
