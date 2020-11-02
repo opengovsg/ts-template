@@ -16,5 +16,7 @@ install:
 script:
   - npm test
   - npm run lint
+  - npx lockfile-lint --type npm --path frontend/package-lock.json --validate-https --allowed-hosts npm
+  - npx lockfile-lint --type npm --path backend/package-lock.json --validate-https --allowed-hosts npm
   - npx commitlint-travis
   - docker build -t ts-template:latest -f Dockerfile.production .
