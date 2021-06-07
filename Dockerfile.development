@@ -9,7 +9,7 @@ RUN cd backend && npm ci && cd ..
 RUN cd frontend && npm ci && cd ..
 
 ENTRYPOINT ["tini", "--"]
-CMD ["npm", "run", "dev-start"]
+CMD ["npm", "run", "dev"]
 
 # Webpack dev server
 EXPOSE 3000
