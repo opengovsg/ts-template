@@ -9,7 +9,7 @@
     "@testing-library/user-event": "^12.6.0",
     "@types/jest": "^26.0.19",
     "@types/node": "^14.14.14",
-    "@types/react": "^17.0.0",
+    "@types/react": "^17.0.9",
     "@types/react-dom": "^17.0.0",
     "fibers": "^5.0.0",
     "node-sass": "^5.0.0",
