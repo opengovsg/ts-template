@@ -5,7 +5,7 @@ on:
     types: [opened, reopened]
 jobs:
   ci:
-    name: CI
+    name: Lint
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2

@@ -1,0 +1,13 @@
+pull_request_rules:
+  - name: Approve and merge non-major version dependabot upgrades
+    conditions:
+      - author~=^dependabot(|-preview)\[bot\]$
+      - check-success~=Lint
+      - check-success~=Test
+      - check-success~=Build and push
+      - title~=^build\(deps[^)]*\). bump [^\s]+ from ([\d]+)\..+ to \1\.
+    actions:
+      review:
+        type: APPROVE
+      merge:
+        method: squash
