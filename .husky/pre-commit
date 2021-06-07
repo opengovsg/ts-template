@@ -1,0 +1,4 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npm run on-backend -- lint-staged && npm run on-frontend -- lint-staged
