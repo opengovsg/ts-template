@@ -5,7 +5,7 @@ module.exports = {
   extends: [
     'react-app',
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
+    'prettier',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
