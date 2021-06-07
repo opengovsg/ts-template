@@ -21,7 +21,7 @@
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
-    "@commitlint/travis-cli": "^11.0.0",
+    "@commitlint/travis-cli": "^12.1.4",
     "commitizen": "^4.2.4",
     "concurrently": "^6.2.0",
     "cz-conventional-changelog": "^3.3.0",
