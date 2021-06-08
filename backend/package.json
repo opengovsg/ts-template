@@ -15,7 +15,7 @@
   "author": "Open Government Products, GovTech Singapore (https://open.gov.sg)",
   "license": "MIT",
   "devDependencies": {
-    "@types/convict": "^5.2.1",
+    "@types/convict": "^6.0.2",
     "@types/express": "^4.17.12",
     "@typescript-eslint/parser": "^4.26.1",
     "@typescript-eslint/eslint-plugin": "^4.26.1",
