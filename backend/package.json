@@ -19,7 +19,7 @@
     "@types/express": "^4.17.12",
     "@typescript-eslint/parser": "^4.26.0",
     "@typescript-eslint/eslint-plugin": "^4.26.0",
-    "eslint": "^7.15.0",
+    "eslint": "^7.28.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.3.0",
     "lint-staged": "^11.0.0",
