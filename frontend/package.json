@@ -10,7 +10,7 @@
     "@types/jest": "^26.0.23",
     "@types/node": "^15.12.2",
     "@types/react": "^17.0.10",
-    "@types/react-dom": "^17.0.6",
+    "@types/react-dom": "^17.0.7",
     "fibers": "^5.0.0",
     "node-sass": "^6.0.0",
     "react": "^17.0.1",
