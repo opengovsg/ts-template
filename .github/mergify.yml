@@ -12,3 +12,17 @@ pull_request_rules:
         type: APPROVE
       merge:
         method: squash
+
+  - name: Approve and merge Snyk.io upgrades
+    conditions:
+      - author=snyk-bot
+      - check-success~=Lint
+      - check-success~=Test
+      - check-success~=Build and push
+      - check-success~=CodeQL
+      - title~=^\[Snyk\]
+    actions:
+      review:
+        type: APPROVE
+      merge:
+        method: squash
