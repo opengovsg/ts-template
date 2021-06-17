@@ -179,7 +179,10 @@ multi-AZ deployment, disk-level encryption and IAM authentication
 
 ### Elastic Container Registry (ECR)
 
-- Create a new ECR registry named `<application-name>`
+- [ ] Create a new ECR registry named `<application-name>`
+- [ ] Stash the following secrets into GitHub settings:
+  - [ ] `ECR_URL` - typically `<account-id>.dkr.ecr.<region>.amazonaws.com`
+  - [ ] `ECR_REPO` - `<application-name>`
 
 ### Elastic Beanstalk
 
@@ -233,6 +236,12 @@ and the load balancers that gate access to them
       group associated with the Elastic Beanstalk load balancer; set incoming 
       addresses to [Cloudflare IP ranges](https://www.cloudflare.com/en-gb/ips/) 
       on port 443
+- [ ] Stash the following secrets into GitHub settings:
+  - [ ] `EB_APP_STAGING` and `EB_ENV_STAGING` - 
+    the application and environment names for staging in Elastic Beanstalk 
+  - [ ] `EB_APP_PRODUCTION` and `EB_ENV_PRODUCTION` - 
+    the application and environment names for production in Elastic Beanstalk 
+    (when ready)
 
 #### A Word About Alternatives
 
@@ -271,3 +280,15 @@ served. Alternatives include:
       credentials within the production vault in 1Password
 - [ ] Stash the `cicd` credentials in GitHub as repository secrets for GitHub 
       Actions as `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
+
+### Final configurations
+
+- [ ] Create `staging` and `production` branches off `develop`
+- [ ] Protect `production` with a branch policy that disallows force pushes
+      and requires reviews before merging
+
+Deploys to `staging` would involve pushing from a source branch to a `staging`,
+by force if necessary. This allows developers to use the staging environment
+to either test `develop` or their own feature branches as needed.
+
+Deploys to `production` would involve merging by PR only.

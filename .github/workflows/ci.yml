@@ -3,6 +3,9 @@ on:
   push:
   pull_request:
     types: [opened, reopened]
+env:
+  PRODUCTION_BRANCH: refs/heads/production
+  STAGING_BRANCH: refs/heads/staging
 jobs:
   ci:
     name: Lint
@@ -46,9 +49,102 @@ jobs:
             ${{ runner.OS }}-
       - run: npm ci
       - run: npm run test
+  gatekeep:
+    name: Determine if Build & Deploy is needed
+    outputs:
+      proceed: ${{ steps.determine_proceed.outputs.proceed }}
+    runs-on: ubuntu-18.04
+    if: github.event_name == 'push'
+    steps:
+      - id: determine_proceed
+        run: |
+          if [[ -z "${AWS_ACCESS_KEY_ID}" || -z "${AWS_SECRET_ACCESS_KEY}"  ]]; then
+            echo '::set-output name=proceed::false';
+          elif [[ -z "${ECR_REPO}" || -z "${ECR_URL}"  ]]; then
+            echo '::set-output name=proceed::false';
+          elif [[ $GITHUB_REF == $STAGING_BRANCH ]]; then
+            echo '::set-output name=proceed::true';
+          elif [[ $GITHUB_REF == $PRODUCTION_BRANCH ]]; then
+            echo '::set-output name=proceed::true';
+          else
+            echo '::set-output name=proceed::false';
+          fi
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          ECR_REPO: ${{ secrets.ECR_REPO }}
+          ECR_URL: ${{ secrets.ECR_URL }}
+
   build:
     name: Build and push
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - run: docker build -t ts-template:latest -f Dockerfile.production .
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      - name: Extract ECR tag
+        shell: bash
+        run: echo "##[set-output name=tag;]$(echo ghactions-${BRANCH}-${SHA})"
+        id: extract_tag
+        env:
+          BRANCH: ${{ steps.extract_branch.outputs.branch }}
+          SHA: ${{ github.sha }}
+      - run: docker build -t ${{ steps.extract_tag.outputs.tag }} -f Dockerfile.production .
+      - name: Push to ECR
+        if: needs.gatekeep.outputs.proceed == 'true'
+        uses: opengovsg/gh-ecr-push@v1
+        with:
+          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: ap-southeast-1
+          local-image: ${{ steps.extract_tag.outputs.tag }}
+          image: ${{ secrets.ECR_REPO }}:${{ steps.extract_tag.outputs.tag }}
+  deploy:
+    name: Deploy to Elastic Beanstalk
+    runs-on: ubuntu-18.04
+    needs: [ci, test, gatekeep, build]
+    if: needs.gatekeep.outputs.proceed == 'true'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Package Dockerrun.aws.json
+        run: |
+          sed -i -e "s|@REPO|$REPO|g" Dockerrun.aws.json
+          sed -i -e "s|@TAG|$TAG|g" Dockerrun.aws.json
+          zip -r "deploy.zip" Dockerrun.aws.json
+        env:
+          REPO: ${{secrets.ECR_URL}}/${{secrets.ECR_REPO}}
+          TAG: ${{ needs.build.outputs.tag }}
+      - name: Get timestamp
+        shell: bash
+        run: echo "##[set-output name=timestamp;]$(env TZ=Asia/Singapore date '+%Y%m%d%H%M%S')"
+        id: get_timestamp
+      - name: Get Elastic Beanstalk label
+        shell: bash
+        run: echo "##[set-output name=label;]$(echo ${TAG}-${TIMESTAMP})"
+        id: get_label
+        env:
+          TAG: ${{ needs.build.outputs.tag }}
+          TIMESTAMP: ${{ steps.get_timestamp.outputs.timestamp }}
+      - name: Select Elastic Beanstalk variables
+        run: |
+          if [[ $GITHUB_REF == $STAGING_BRANCH ]]; then
+            echo EB_APP=${{ secrets.EB_APP_STAGING }} >> $GITHUB_ENV;
+            echo EB_ENV=${{ secrets.EB_ENV_STAGING }} >> $GITHUB_ENV;
+          elif if [[ $GITHUB_REF == $PRODUCTION_BRANCH ]]; then
+            echo EB_APP=${{ secrets.EB_APP_PRODUCTION }} >> $GITHUB_ENV;
+            echo EB_ENV=${{ secrets.EB_ENV_PRODUCTION }} >> $GITHUB_ENV;
+        id: select_eb_vars
+      - name: Deploy to EB
+        uses: opengovsg/beanstalk-deploy@v11
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: ${{ env.EB_APP }}
+          environment_name: ${{ env.EB_ENV }}
+          version_label: ${{ steps.get_label.outputs.label }}
+          region: ap-southeast-1
+          deployment_package: deploy.zip
+          wait_for_deployment: false
+          wait_for_environment_recovery: false
