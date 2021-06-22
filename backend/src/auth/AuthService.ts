@@ -60,7 +60,7 @@ export class AuthService {
 
     const mail: SendMailOptions = {
       to: email,
-      from: `${config.get('projectName')}.gov.sg <donotreply@mail.${config.get('projectName')}.gov.sg>`,
+      from: `${this.appHost}.gov.sg <donotreply@mail.${this.appHost}.gov.sg>`,
       subject: `One-Time Password (OTP) for ${config.get('projectName')}`,
       html,
     }
