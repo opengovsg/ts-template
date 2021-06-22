@@ -199,6 +199,8 @@ and the load balancers that gate access to them
   - Configure more options
 - [ ] Set configuration preset to High availability
   - You may wish to experiment with Spot instances at your own peril
+- [ ] Network
+  - [ ] Select the VPC `<app-name>-<environment>`
 - [ ] Software
   - [ ] Stream logs to CloudWatch with a retention of 365 days for production
   - [ ] Configure environment variables per your application
@@ -214,6 +216,7 @@ and the load balancers that gate access to them
   - [ ] Disable the default HTTP listener
   - [ ] Add an HTTPS listener using the ACM certificate created earlier
   - [ ] Enable storing of logs to the `<application-name>-access-logs` S3 bucket
+    - Follow the instructions in the "Learn More" prompt to configure bucket permissions
 - [ ] Rolling updates and deployments
   - [ ] Deployment policy `Rolling with additional batch`, batch size `100%`
   - [ ] Configuration updates `Rolling based on Health`, batch size `1`
@@ -222,8 +225,6 @@ and the load balancers that gate access to them
 - [ ] Managed updates
   - [ ] Enable managed updates, choosing an appropriate window to perform these
   - [ ] Allow instances to be replaced if no updates available
-- [ ] Network
-  - [ ] Select the VPC `<app-name>-<environment>`
 
 #### Post-creation actions
 
