@@ -73,7 +73,7 @@ export async function bootstrap(): Promise<{
       maxAge: config.get('cookieMaxAge'),
     },
     secret: config.get('sessionSecret'),
-    name: 'ts-template',
+    name: config.get('projectName'),
   })
 
   const app = express()

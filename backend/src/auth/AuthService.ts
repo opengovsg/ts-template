@@ -4,6 +4,7 @@ import { totp as totpGlobal } from 'otplib'
 
 import { User } from '../types/user'
 import { User as UserModel } from '../database/models/User'
+import config from '../config'
 
 export class AuthService {
   private secret: string
@@ -59,8 +60,8 @@ export class AuthService {
 
     const mail: SendMailOptions = {
       to: email,
-      from: 'CheckFirst.gov.sg <donotreply@mail.checkfirst.gov.sg>',
-      subject: 'One-Time Password (OTP) for CheckFirst',
+      from: `${config.get('projectName')}.gov.sg <donotreply@mail.${config.get('projectName')}.gov.sg>`,
+      subject: `One-Time Password (OTP) for ${config.get('projectName')}`,
       html,
     }
 

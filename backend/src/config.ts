@@ -118,6 +118,12 @@ const config = convict({
     format: '*',
     default: '*.gov.sg',
   },
+  projectName: {
+    doc: 'The name of this software project or repo',
+    env: 'PROJECT_NAME',
+    format: '*',
+    default: 'ts-template'
+  }
 })
 
 export default config
