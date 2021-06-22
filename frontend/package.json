@@ -18,7 +18,7 @@
     "react-scripts": "^4.0.3",
     "sass": "^1.35.1",
     "typescript": "^4.3.4",
-    "snyk": "^1.639.0"
+    "snyk": "^1.640.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.27.0",
