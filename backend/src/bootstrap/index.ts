@@ -52,6 +52,7 @@ export async function bootstrap(): Promise<{
       emailValidator,
       totp,
       mailer,
+      User,
     }),
   })
 

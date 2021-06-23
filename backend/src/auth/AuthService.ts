@@ -3,8 +3,8 @@ import { SendMailOptions, SentMessageInfo, Transporter } from 'nodemailer'
 import { totp as totpGlobal } from 'otplib'
 
 import { User } from '../types/user'
-import { User as UserModel } from '../database/models/User'
 import config from '../config'
+import { Model, ModelCtor } from 'sequelize-typescript'
 
 export class AuthService {
   private secret: string
@@ -12,7 +12,7 @@ export class AuthService {
   private emailValidator: IMinimatch
   private totp: Pick<typeof totpGlobal, 'generate' | 'verify' | 'options'>
   private mailer: Pick<Transporter, 'sendMail'>
-  private UserModel: typeof UserModel
+  private UserModel: ModelCtor<User & Model>
 
   constructor({
     secret,
@@ -20,19 +20,21 @@ export class AuthService {
     emailValidator,
     totp,
     mailer,
+    User,
   }: {
     secret: string
     appHost: string
     emailValidator: IMinimatch
     totp: Pick<typeof totpGlobal, 'generate' | 'verify' | 'options'>
     mailer: Pick<Transporter, 'sendMail'>
+    User: ModelCtor<User & Model>
   }) {
     this.secret = secret
     this.appHost = appHost
     this.emailValidator = emailValidator
     this.totp = totp
     this.mailer = mailer
-    this.UserModel = UserModel
+    this.UserModel = User
   }
 
   private secretFrom: (email: string) => string = (email) => this.secret + email
