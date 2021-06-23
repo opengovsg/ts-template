@@ -166,6 +166,16 @@ multi-AZ deployment, disk-level encryption and IAM authentication
         bastion host
   - [ ] Authentication - Password and IAM
 
+- [ ] Populate your database with initial schema
+  - [ ] Create a .env file with the following env vars set:
+    - `DB_NAME`
+    - `DB_HOST` (note that if using a bastion host, a [SSH tunnel](https://stackoverflow.com/questions/19583467/sequelize-connection-over-ssh) has to be set up)
+    - `DB_USERNAME`
+    - `DB_PASSWORD`
+  - [ ] Source .env file into your shell
+  - [ ] Run `npx sequelize db:migrate`
+  - [ ] Ensure that schema set up, then delete .env and close shell
+
 ### AWS Certificate Manager (ACM)
 
 - [ ] Follow instructions to obtain a certificate with `name.gov.sg` as the
@@ -204,8 +214,7 @@ and the load balancers that gate access to them
 - [ ] Software
   - [ ] Stream logs to CloudWatch with a retention of 365 days for production
   - [ ] Configure environment variables per your application
-    - Set `DB_URI` to a database connection string bearing master credentials,
-      but only for now
+    - Configure `DB_` env vars using master credentials, but only for now
 - [ ] Instances
   - [ ] Check the `<app-name>-<environment>-ec2` EC2 Security Group
 - [ ] Capacity
