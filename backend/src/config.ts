@@ -52,41 +52,43 @@ const config = convict({
     format: 'int',
     default: 86400000, // 24 hours
   },
-  dbHost: {
-    doc: 'The database host address',
-    env: 'DATABASE_HOST',
-    format: '*',
-    default: '',
-  },
-  dbName: {
-    doc: 'The database name',
-    env: 'DATABASE_NAME',
-    format: '*',
-    default: '',
-  },
-  dbPort: {
-    doc: 'The database port number',
-    env: 'DATABASE_PORT',
-    format: 'int',
-    default: '',
-  },
-  dbPassword: {
-    doc: 'The database password',
-    env: 'DATABASE_PASSWORD',
-    format: '*',
-    default: '',
-  },
-  dbUsername: {
-    doc: 'The database username',
-    env: 'DATABASE_USERNAME',
-    format: '*',
-    default: '',
-  },
-  dbDialect: {
-    doc: 'The database dialect',
-    env: 'DATABASE_DIALECT',
-    format: '*',
-    default: 'postgres',
+  db:{
+    host: {
+      doc: 'The database host address',
+      env: 'DB_HOST',
+      format: '*',
+      default: '',
+    },
+    database: {
+      doc: 'The database name',
+      env: 'DB_NAME',
+      format: '*',
+      default: '',
+    },
+    port: {
+      doc: 'The database port number',
+      env: 'DB_PORT',
+      format: 'int',
+      default: '',
+    },
+    password: {
+      doc: 'The database password',
+      env: 'DB_PASSWORD',
+      format: '*',
+      default: '',
+    },
+    username: {
+      doc: 'The database username',
+      env: 'DB_USERNAME',
+      format: '*',
+      default: '',
+    },
+    dialect: {
+      doc: 'The database dialect',
+      env: 'DB_DIALECT',
+      format: '*',
+      default: 'postgres',
+    },
   },
   appHost: {
     doc: 'The fully-qualified domain name of the application',
