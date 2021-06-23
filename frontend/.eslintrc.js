@@ -13,7 +13,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'no-console': 'warn',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/member-delimiter-style': [

@@ -14,7 +14,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     'no-console': 'warn',
     '@typescript-eslint/member-delimiter-style': [
       'error',
