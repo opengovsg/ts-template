@@ -38,7 +38,7 @@ const config = convict({
     doc: 'The region in which the AWS service is running in',
     env: 'AWS_REGION',
     format: '*',
-    default: '',
+    default: 'ap-southeast-1',
   },
   nodeEnv: {
     doc: 'The environment that NodeJS is running',
