@@ -1,6 +1,5 @@
 import express, { Express } from 'express'
 import session from 'express-session'
-import bodyParser from 'body-parser'
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import SequelizeStoreFactory from 'connect-session-sequelize'
 
@@ -83,7 +82,7 @@ export async function bootstrap(): Promise<{
     app.set('trust proxy', 1)
   }
 
-  const apiMiddleware = [sessionMiddleware, bodyParser.json()]
+  const apiMiddleware = [sessionMiddleware, express.json()]
   app.use('/api/v1', apiMiddleware, api({ auth }))
 
   console.log('Connecting to Sequelize')
