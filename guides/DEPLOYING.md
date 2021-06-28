@@ -302,3 +302,8 @@ by force if necessary. This allows developers to use the staging environment
 to either test `develop` or their own feature branches as needed.
 
 Deploys to `production` would involve merging by PR only.
+
+## Monitoring and Backups
+
+Refer to the OGP Monitoring Guide and OGP Backup Guide to set up the necessary
+monitoring and backup infrastructure
