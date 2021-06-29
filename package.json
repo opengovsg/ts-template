@@ -12,6 +12,7 @@
     "lint": "npm run on-backend -- lint && npm run on-frontend -- lint",
     "lint-fix": "npm run on-backend -- lint-fix && npm run on-frontend -- lint-fix",
     "test": "npm run on-backend -- test && npm run on-frontend -- test",
+    "build": "npm run on-backend -- build && npm run on-frontend -- build",
     "cz": "git-cz",
     "start": "node backend/build/index.js",
     "prepare": "husky install"
