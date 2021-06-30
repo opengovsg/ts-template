@@ -1,40 +1,13 @@
-# Deploying the OGP Application Template
+# Amazon Web Services
 
-This step-by-step guide will walk the reader through the steps needed to have 
-this application running on an environment hosted by Amazon Web Services, with
-supporting services also set up
-
-## Registrations
-
-Front load all the service registrations so that you can focus on configuration
-
-- [ ] Create two 1Password Vaults, one for staging and one for production
-- [ ] Create a Google Groups e-mail for your application
-- [ ] Register for a .gov.sg domain and the .sg equivalent
-- [ ] Sign up for Cloudflare
-- [ ] Sign up for Sentry.io, or create a new Sentry organisation
-- [ ] Sign up for an Amazon Web Services account; have credit card details ready
-
-## Domains and CDN
-
-- [ ] Create a Cloudflare site for the .sg and .gov.sg domains
-- [ ] Instruct the domain registrar (GovTech for .gov.sg, your commercial 
-      registrar otherwise) to set the primary nameservers to the ones Cloudflare
-      lists for your site
-- [ ] (if you are not using .sg for testing your deployed application) Set up a 
-      Page Rule that would redirect all requests from .sg to .gov.sg
-- [ ] Create a Page Rule that forwards all requests from www.name.gov.sg to
-      name.gov.sg
-
-## Amazon Web Services
-
-Set up the application for deployments to Amazon Web Services (AWS)
+This guide will aid the reader to set up the application for deployments 
+to Amazon Web Services (AWS) using Elastic Beanstalk
 
 _TODO: Build a Terraform config that would do all this_
 
 - [ ] Ensure that the console is in the ap-southeast-1 region
 
-### Virtual Private Cloud (VPC) and Networking
+## Virtual Private Cloud (VPC) and Networking
 
 Create an environment (staging for now, production later) that consists of one 
 VPC, segmented into three subnets, gated by NAT Gateways and Security Groups
@@ -43,7 +16,7 @@ VPC, segmented into three subnets, gated by NAT Gateways and Security Groups
 - [ ] Navigate to the VPC section in AWS Console
 - [ ] Create a VPC named `<app-name>-<environment>`, eg `checkfirst-staging`
 
-#### Subnets
+### Subnets
 
 Create subnets in each availability zone in ap-southeast-1; for every zone, set
 up one public subnet, one subnet that hosts application servers and one subnet
@@ -68,14 +41,14 @@ Take care to have a wide-enough IP range between layers to keep things organised
 - [ ] Create `<app-name>-<environment>-public-1b` in ap-southeast-1b
 - [ ] Create `<app-name>-<environment>-public-1c` in ap-southeast-1c 
 
-#### Internet Gateway
+### Internet Gateway
 
 Create an Internet Gateway to allow Internet traffic to go in and out
 of the VPC, so that your application can both send and receive requests
 
 - [ ] Create an Internet Gateway attached to the VPC
 
-#### NAT Gateways
+### NAT Gateways
 
 Create one NAT Gateway for each availability zone, attaching each one to the 
 corresponding public subnet
@@ -100,7 +73,7 @@ If desired, return to this section to test replacements for NAT Gateways.
 - [ ] Create NAT Gateway for ap-southeast-1b
 - [ ] Create NAT Gateway for ap-southeast-1c
 
-#### Route Tables
+### Route Tables
 
 Define network traffic routing for subnets within the VPC
 
@@ -116,7 +89,7 @@ Define network traffic routing for subnets within the VPC
       Gateway that sits on `<app-name>-<environment>-public-1c`; associate this
       route table with `<app-name>-<environment>-ec2-1c`
 
-#### Security Groups
+### Security Groups
 
 Create Security Groups for RDS and EC2
 
@@ -132,7 +105,7 @@ automatically created by Elastic Beanstalk. We will come back for that security
 group once it is created, to limit incoming connections to the load balancer to
 those from Cloudflare IPs
 
-### Relational Database Service (RDS)
+## Relational Database Service (RDS)
 
 Create an RDS instance that will sit on the designated subnets, enabling 
 multi-AZ deployment, disk-level encryption and IAM authentication
@@ -176,25 +149,25 @@ multi-AZ deployment, disk-level encryption and IAM authentication
   - [ ] Run `npx sequelize db:migrate`
   - [ ] Ensure that schema set up, then delete .env and close shell
 
-### AWS Certificate Manager (ACM)
+## AWS Certificate Manager (ACM)
 
 - [ ] Follow instructions to obtain a certificate with `name.gov.sg` as the
       Common Name, and `www.name.gov.sg` as the Subject Alt Name. Use 
       Cloudflare to create the appropriate DNS entries for verification
 
-### S3
+## S3
 
 - [ ] Create an S3 bucket named `<application-name>-access-logs`, leaving
       everything as default
 
-### Elastic Container Registry (ECR)
+## Elastic Container Registry (ECR)
 
 - [ ] Create a new ECR registry named `<application-name>`
 - [ ] Stash the following secrets into GitHub settings:
   - [ ] `ECR_URL` - typically `<account-id>.dkr.ecr.<region>.amazonaws.com`
   - [ ] `ECR_REPO` - `<application-name>`
 
-### Elastic Beanstalk
+## Elastic Beanstalk
 
 Create the Elastic Beanstalk environment that will manage the application servers
 and the load balancers that gate access to them
@@ -235,7 +208,7 @@ and the load balancers that gate access to them
   - [ ] Enable managed updates, choosing an appropriate window to perform these
   - [ ] Allow instances to be replaced if no updates available
 
-#### Post-creation actions
+### Post-creation actions
 
 - [ ] Add time-based scaling tasks to deliberately scale up and scale down 
       (one for each action) the number of instances within a given time window
@@ -253,7 +226,7 @@ and the load balancers that gate access to them
     the application and environment names for production in Elastic Beanstalk 
     (when ready)
 
-#### A Word About Alternatives
+### A Word About Alternatives
 
 Elastic Beanstalk is not the only means through which an application can be 
 served. Alternatives include:
@@ -263,7 +236,7 @@ served. Alternatives include:
 
 - Using AWS App Runner
 
-### Simple Email Service (SES)
+## Simple Email Service (SES)
 
 - [ ] Verify the domain of the application
 - [ ] Verify the email addresses who will be receiving OTPs from the application
@@ -272,7 +245,7 @@ served. Alternatives include:
 - [ ] Create SMTP Credentials under SMTP Settings, if the application is using SMTP
       (as opposed to through aws-sdk) to send OTP emails
 
-### Identity and Access Management (IAM)
+## Identity and Access Management (IAM)
 
 - [ ] Set a complex password policy requiring at least 36 characters 
       (at time of writing) and inclusion of non-alphanumeric characters. Team
@@ -290,20 +263,3 @@ served. Alternatives include:
       credentials within the production vault in 1Password
 - [ ] Stash the `cicd` credentials in GitHub as repository secrets for GitHub 
       Actions as `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
-
-### Final configurations
-
-- [ ] Create `staging` and `production` branches off `develop`
-- [ ] Protect `production` with a branch policy that disallows force pushes
-      and requires reviews before merging
-
-Deploys to `staging` would involve pushing from a source branch to a `staging`,
-by force if necessary. This allows developers to use the staging environment
-to either test `develop` or their own feature branches as needed.
-
-Deploys to `production` would involve merging by PR only.
-
-## Monitoring and Backups
-
-Refer to the OGP Monitoring Guide and OGP Backup Guide to set up the necessary
-monitoring and backup infrastructure
