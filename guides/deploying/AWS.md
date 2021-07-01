@@ -15,6 +15,8 @@ VPC, segmented into three subnets, gated by NAT Gateways and Security Groups
 
 - [ ] Navigate to the VPC section in AWS Console
 - [ ] Create a VPC named `<app-name>-<environment>`, eg `checkfirst-staging`
+  - [ ] for IPv4, use the AWS default (in the placeholder) - `10.0.0.0/24`
+  - [ ] for IPv6, select 'Amazon-provided IPv6 CIDR block'
 
 ### Subnets
 
