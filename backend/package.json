@@ -16,7 +16,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/convict": "^6.1.1",
-    "@types/express": "^4.17.12",
+    "@types/express": "^4.17.13",
     "@types/express-session": "^1.17.4",
     "@types/minimatch": "^3.0.4",
     "@types/node": "^16.0.0",
