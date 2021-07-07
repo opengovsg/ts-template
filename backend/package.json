@@ -21,7 +21,7 @@
     "@types/minimatch": "^3.0.4",
     "@types/node": "^16.0.0",
     "@types/nodemailer": "^6.4.2",
-    "@types/validator": "^13.6.2",
+    "@types/validator": "^13.6.3",
     "@typescript-eslint/eslint-plugin": "^4.28.2",
     "@typescript-eslint/parser": "^4.28.2",
     "eslint": "^7.30.0",
