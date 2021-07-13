@@ -27,7 +27,7 @@
     "eslint": "^7.30.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
-    "lint-staged": "^11.0.0",
+    "lint-staged": "^11.0.1",
     "prettier": "^2.3.2",
     "sequelize-cli": "^6.2.0",
     "ts-node-dev": "^1.1.8",
