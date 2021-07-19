@@ -39,7 +39,7 @@
     ]
   },
   "dependencies": {
-    "aws-sdk": "^2.947.0",
+    "aws-sdk": "^2.948.0",
     "connect-session-sequelize": "^7.1.1",
     "convict": "^6.2.0",
     "express": "^4.17.1",
