@@ -1,0 +1,7 @@
+# For syntax visit https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/about-code-owners#example-of-a-codeowners-file
+
+# Set one primary team as default onwer for the whole repository
+
+* @opengovsg/team-name
+
+# List overrides for parts of the repo below (if necessary)
