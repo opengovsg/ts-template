@@ -1,3 +1,2 @@
-import helmet from 'helmet'
 
-export default helmet()
+export default {}
