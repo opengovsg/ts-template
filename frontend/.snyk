@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.19.0
+version: v1.21.5
 ignore: {}
 # patches apply the minimum changes required to fix a vulnerability
 patch:
@@ -10,3 +10,77 @@ patch:
         patched: '2021-06-10T06:35:48.675Z'
     - snyk > snyk-docker-plugin > snyk-nodejs-lockfile-parser > @yarnpkg/core > lodash:
         patched: '2021-06-10T06:35:48.675Z'
+    - '@testing-library/jest-dom > lodash':
+        patched: '2021-07-26T06:49:58.553Z'
+    - node-sass > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - node-sass > sass-graph > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > eslint-plugin-flowtype > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > html-webpack-plugin > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > webpack-manifest-plugin > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - node-sass > gaze > globule > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > optimize-css-assets-webpack-plugin > last-call-webpack-plugin > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > webpack-dev-server > http-proxy-middleware > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - snyk > snyk-nodejs-lockfile-parser > @yarnpkg/core > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > eslint-plugin-testing-library > @typescript-eslint/experimental-utils > @typescript-eslint/typescript-estree > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > webpack-dev-server > portfinder > async > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - snyk > snyk-docker-plugin > snyk-nodejs-lockfile-parser > @yarnpkg/core > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest > @jest/core > jest-config > jest-environment-jsdom > jsdom > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest > jest-cli > jest-config > jest-environment-jsdom > jsdom > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest-circus > jest-runner > jest-config > jest-environment-jsdom > jsdom > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest-circus > jest-runtime > jest-config > jest-environment-jsdom > jsdom > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest > @jest/core > jest-config > jest-environment-jsdom > jsdom > data-urls > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest > jest-cli > jest-config > jest-environment-jsdom > jsdom > data-urls > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest-circus > jest-runner > jest-config > jest-environment-jsdom > jsdom > data-urls > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest-circus > jest-runtime > jest-config > jest-environment-jsdom > jsdom > data-urls > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest > jest-cli > @jest/core > jest-config > jest-environment-jsdom > jsdom > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest > @jest/core > jest-runner > jest-config > jest-environment-jsdom > jsdom > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest-circus > jest-runner > jest-runtime > jest-config > jest-environment-jsdom > jsdom > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest > @jest/core > jest-runtime > jest-config > jest-environment-jsdom > jsdom > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest > jest-cli > @jest/core > jest-config > jest-environment-jsdom > jsdom > data-urls > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest > @jest/core > jest-runner > jest-config > jest-environment-jsdom > jsdom > data-urls > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest-circus > jest-runner > jest-runtime > jest-config > jest-environment-jsdom > jsdom > data-urls > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest > @jest/core > jest-runtime > jest-config > jest-environment-jsdom > jsdom > data-urls > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest > jest-cli > @jest/core > jest-runner > jest-config > jest-environment-jsdom > jsdom > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest > @jest/core > jest-runner > jest-runtime > jest-config > jest-environment-jsdom > jsdom > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest > jest-cli > @jest/core > jest-runtime > jest-config > jest-environment-jsdom > jsdom > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest > jest-cli > @jest/core > jest-runner > jest-config > jest-environment-jsdom > jsdom > data-urls > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest > @jest/core > jest-runner > jest-runtime > jest-config > jest-environment-jsdom > jsdom > data-urls > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest > jest-cli > @jest/core > jest-runtime > jest-config > jest-environment-jsdom > jsdom > data-urls > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest > jest-cli > @jest/core > jest-runner > jest-runtime > jest-config > jest-environment-jsdom > jsdom > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
+    - react-scripts > jest > jest-cli > @jest/core > jest-runner > jest-runtime > jest-config > jest-environment-jsdom > jsdom > data-urls > whatwg-url > lodash:
+        patched: '2021-07-26T06:49:58.553Z'
