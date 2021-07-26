@@ -1,5 +1,7 @@
 import express, { Express } from 'express'
 import session from 'express-session'
+import minimatch from 'minimatch'
+import { totp as totpFactory } from 'otplib'
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 import { Sequelize as OriginSequelize } from 'sequelize'
 
@@ -10,13 +12,11 @@ import { databaseConfigType, nodeEnvType } from '../types/sequelize-config'
 import * as sequelizeConfig from '../database/config/config'
 import { User } from '../database/models/User'
 
-import minimatch from 'minimatch'
-import { totp as totpFactory } from 'otplib'
-
 import config from '../config'
 import api from '../api'
 import { AuthController, AuthService } from '../auth'
 
+import helmet from './helmet'
 import mailer from './mailer'
 
 const step = config.get('otpExpiry') / 2
@@ -83,6 +83,8 @@ export async function bootstrap(): Promise<{
   if (secure) {
     app.set('trust proxy', 1)
   }
+
+  app.use(helmet)
 
   const apiMiddleware = [sessionMiddleware, express.json()]
   app.use('/api/v1', apiMiddleware, api({ auth }))
