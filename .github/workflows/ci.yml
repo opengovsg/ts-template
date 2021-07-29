@@ -137,6 +137,7 @@ jobs:
           elif if [[ $GITHUB_REF == $PRODUCTION_BRANCH ]]; then
             echo EB_APP=${{ secrets.EB_APP_PRODUCTION }} >> $GITHUB_ENV;
             echo EB_ENV=${{ secrets.EB_ENV_PRODUCTION }} >> $GITHUB_ENV;
+          fi
         id: select_eb_vars
       - name: Deploy to EB
         uses: opengovsg/beanstalk-deploy@v11
