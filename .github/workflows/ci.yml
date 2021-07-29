@@ -134,7 +134,7 @@ jobs:
           if [[ $GITHUB_REF == $STAGING_BRANCH ]]; then
             echo EB_APP=${{ secrets.EB_APP_STAGING }} >> $GITHUB_ENV;
             echo EB_ENV=${{ secrets.EB_ENV_STAGING }} >> $GITHUB_ENV;
-          elif if [[ $GITHUB_REF == $PRODUCTION_BRANCH ]]; then
+          elif [[ $GITHUB_REF == $PRODUCTION_BRANCH ]]; then
             echo EB_APP=${{ secrets.EB_APP_PRODUCTION }} >> $GITHUB_ENV;
             echo EB_ENV=${{ secrets.EB_ENV_PRODUCTION }} >> $GITHUB_ENV;
           fi
