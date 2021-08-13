@@ -8,7 +8,7 @@
     "lint-fix": "eslint --fix .",
     "lint-staged": "lint-staged",
     "test": "jest",
-    "coverage": "jest --coverage",
+    "coverage": "jest --coverage && sed -i.bak 's/SF:src/SF:backend\\/src/g' coverage/lcov.info",
     "build": "tsc -p tsconfig.build.json",
     "dev": "ts-node-dev --respawn --transpile-only --inspect -- src/index.ts",
     "start": "node build/index.js"
