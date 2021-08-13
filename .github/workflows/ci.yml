@@ -71,6 +71,13 @@ jobs:
           POSTGRES_HOST: localhost
           POSTGRES_USER: test
           POSTGRES_PASSWORD: test
+      - name: Generate code coverage
+        run: npm run coverage
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ./lcov.info
   gatekeep:
     name: Determine if Build & Deploy is needed
     outputs:
