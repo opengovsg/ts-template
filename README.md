@@ -55,7 +55,7 @@ and there would be no remote branch. Bypass this the first time with
 Travis is commonly used in OGP. A `.travis.yml` config has been provided
 for convenience, which will run the following in order:
 
-- unit-tests (commented out)
+- unit-tests
 - linting
 - commit linting
 
