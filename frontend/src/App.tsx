@@ -1,37 +1,43 @@
-import React, { useState, useEffect } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
+import { ChakraProvider, Button } from '@chakra-ui/react'
 
-function App() {
-  const [greeting, setGreeting] = useState('')
+import { AuthProvider, useAuth } from './features/auth/AuthContext'
+import { LoginPage } from './pages/login/LoginPage'
+import { theme } from './theme'
 
-  useEffect(() => {
-    fetch('/api/hello')
-      .then((response) => {
-        return response.text()
-      })
-      .then((data) => setGreeting(data))
-  })
+const queryClient = new QueryClient()
 
+function App(): JSX.Element {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1>{greeting}</h1>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <ChakraProvider theme={theme} resetCSS>
+        <AuthProvider>
+          <InnerApp />
+        </AuthProvider>
+      </ChakraProvider>
+    </QueryClientProvider>
   )
 }
 
 export default App
+
+export const InnerApp = () => {
+  const { user, isLoading, logout } = useAuth()
+
+  if (isLoading) {
+    return <div>...Loading...</div>
+  }
+
+  if (!user) {
+    return <LoginPage />
+  }
+
+  return (
+    <div>
+      Logged in: {JSON.stringify(user)}
+      <Button onClick={logout}>Logout</Button>
+    </div>
+  )
+}
