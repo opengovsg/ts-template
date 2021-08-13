@@ -16,7 +16,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-  app:
+  backend:
     build:
       context: .
       dockerfile: Dockerfile.development
@@ -24,7 +24,6 @@ services:
       postgres:
         condition: service_healthy
     ports:
-      - '3000:3000'
       - '8080:8080'
     environment:
       - NODE_ENV=development
@@ -33,6 +32,10 @@ services:
       - DB_PASSWORD=postgres
       - DB_HOST=postgres
     volumes:
-      - ./:/usr/src/app
+      - ./:/usr/backend
+  maildev:
+    image: maildev/maildev
+    ports:
+      - '1080:80'
 volumes:
   pg-data:
