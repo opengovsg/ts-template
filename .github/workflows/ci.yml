@@ -64,15 +64,13 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
       - run: npm ci
-      - name: Run tests
-        run: npm test
+      - name: Run tests and generate coverage
+        run: npm run coverage
         env:
           POSTGRES_DB: ts_template_test
           POSTGRES_HOST: localhost
           POSTGRES_USER: test
           POSTGRES_PASSWORD: test
-      - name: Generate code coverage
-        run: npm run coverage
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
