@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common'
-import { Logger } from '@nestjs/common'
 import nodemailer, { SendMailOptions, Transporter } from 'nodemailer'
 import { SES } from 'aws-sdk'
 
@@ -18,12 +17,11 @@ export class MailerService {
           },
         }),
       })
-    : {
-        sendMail: (options: SendMailOptions) => {
-          Logger.log(JSON.stringify(options, null, 2))
-          return Promise.resolve(options)
-        },
-      }
+    : nodemailer.createTransport({
+        port: 1025,
+        host: 'localhost',
+        ignoreTLS: true,
+      })
 
   sendMail = async (mailOptions: SendMailOptions): Promise<void> => {
     return this.mailer.sendMail(mailOptions)
