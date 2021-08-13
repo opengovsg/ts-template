@@ -1,14 +1,38 @@
 version: '3'
 
 services:
+  postgres:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=dev
+    ports:
+      - '5432:5432'
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 5
   app:
     build:
       context: .
       dockerfile: Dockerfile.development
+    depends_on:
+      postgres:
+        condition: service_healthy
     ports:
       - '3000:3000'
       - '8080:8080'
     environment:
       - NODE_ENV=development
+      - DB_NAME=dev
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - DB_HOST=postgres
     volumes:
       - ./:/usr/src/app
+volumes:
+  pg-data:
