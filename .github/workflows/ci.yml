@@ -33,6 +33,19 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-18.04
+    services:
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_DB: ts_template_test
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
@@ -49,7 +62,13 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
       - run: npm ci
-      - run: npm run test
+      - name: Run tests
+        run: npm test
+        env:
+          POSTGRES_DB: ts_template_test
+          POSTGRES_HOST: postgres
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
   gatekeep:
     name: Determine if Build & Deploy is needed
     outputs:
