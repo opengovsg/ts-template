@@ -46,6 +46,8 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          - 5432:5432
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
@@ -66,7 +68,7 @@ jobs:
         run: npm test
         env:
           POSTGRES_DB: ts_template_test
-          POSTGRES_HOST: postgres
+          POSTGRES_HOST: localhost
           POSTGRES_USER: test
           POSTGRES_PASSWORD: test
   gatekeep:
