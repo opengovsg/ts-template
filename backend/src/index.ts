@@ -1,7 +1,10 @@
-import bootstrap from './bootstrap'
-import config from './config'
+import { NestFactory } from '@nestjs/core'
+import { AppModule } from './app.module'
 
-const port = config.get('port')
-bootstrap().then(({ app }) =>
-  app.listen(port, () => console.log(`Listening on port ${port}`))
-)
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule)
+  app.setGlobalPrefix('/api')
+  await app.listen(8080)
+}
+
+bootstrap()
