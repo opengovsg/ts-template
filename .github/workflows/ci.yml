@@ -69,6 +69,7 @@ jobs:
         env:
           POSTGRES_DB: ts_template_test
           POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
           POSTGRES_USER: test
           POSTGRES_PASSWORD: test
       - name: Coveralls

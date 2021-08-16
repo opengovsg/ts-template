@@ -9,15 +9,17 @@ export async function createTestDatabase(
   const {
     POSTGRES_DB,
     POSTGRES_HOST,
+    POSTGRES_PORT,
     POSTGRES_USER,
     POSTGRES_PASSWORD,
     JEST_WORKER_ID,
   } = process.env
 
+  const port = POSTGRES_PORT ? +POSTGRES_PORT : 5432
   const config: Partial<SequelizeOptions> = {
     dialect: 'postgres',
     host: POSTGRES_HOST || 'localhost',
-    port: 5432,
+    port,
     username: POSTGRES_USER || '',
     password: POSTGRES_PASSWORD || '',
     logging: undefined,
