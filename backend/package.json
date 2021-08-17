@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "lint-fix": "eslint --fix .",
     "lint-staged": "lint-staged",
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf build",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
