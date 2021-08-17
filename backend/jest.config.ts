@@ -1,4 +1,4 @@
-import type { Config } from '@jest/types';
+import type { Config } from '@jest/types'
 
 const config: Config.InitialOptions = {
   preset: 'ts-jest',
@@ -6,6 +6,6 @@ const config: Config.InitialOptions = {
   testPathIgnorePatterns: ['<rootDir>/build/', '<rootDir>/node_modules/'],
   collectCoverageFrom: ['<rootDir>/src/**/*.{ts,js}'],
   coveragePathIgnorePatterns: ['<rootDir>/build', '<rootDir>/node_modules'],
-};
+}
 
-export default config;
+export default config
