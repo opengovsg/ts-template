@@ -10,7 +10,7 @@
     "target": "es6",
     "sourceMap": true,
     "outDir": "./build",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "incremental": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
