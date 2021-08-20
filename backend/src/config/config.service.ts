@@ -8,6 +8,7 @@ export class ConfigService {
   config: Config<ConfigSchema>
   constructor() {
     this.config = convict(schema)
+    this.config.validate()
   }
 
   // We want to implicitly use the return type of convict get method.
