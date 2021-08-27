@@ -4,22 +4,23 @@ import { GenerateOtpDto, VerifyOtpDto } from './dto/index'
 import { User } from '../database/models'
 import { Logger } from '@nestjs/common'
 import { totp as totpFactory } from 'otplib'
+import { ConfigService } from '../config/config.service'
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(User)
-    private readonly userModel: typeof User
+    private readonly userModel: typeof User,
+    private config: ConfigService
   ) {}
 
-  // TO-DO: Get the totp secret and expiry from config
-  private readonly secret = 'test'
-  private readonly totpExpiry = 1000
-  // TO-DO: Import the totp instance as a module
-  private totp = totpFactory.clone({ step: this.totpExpiry, window: [1, 0] })
+  private totp = totpFactory.clone({
+    step: this.config.get('otp.expiry'),
+    window: [1, 0],
+  })
 
   private generateSecret(email: string) {
-    return this.secret + email
+    return this.config.get('otp.secret') + email
   }
 
   async generateOtp(generateOtpDto: GenerateOtpDto): Promise<void> {
