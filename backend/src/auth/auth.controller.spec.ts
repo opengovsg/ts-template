@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { getModelToken } from '@nestjs/sequelize'
 import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
+import { ConfigModule } from '../config/config.module'
 import { User } from '../database/models'
 
 describe('AuthController', () => {
@@ -10,6 +11,7 @@ describe('AuthController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [ConfigModule],
       controllers: [AuthController],
       providers: [
         AuthService,

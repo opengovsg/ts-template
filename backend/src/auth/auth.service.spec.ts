@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { getModelToken } from '@nestjs/sequelize'
 import { AuthService } from './auth.service'
+import { ConfigService } from '../config/config.service'
 import { User } from '../database/models'
 
 describe('AuthService', () => {
@@ -11,6 +12,7 @@ describe('AuthService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
+        ConfigService,
         {
           provide: getModelToken(User),
           useValue: mockModel,
