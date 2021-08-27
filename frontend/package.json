@@ -41,7 +41,7 @@
   },
   "lint-staged": {
     "**/*.(js|jsx|ts|tsx)": [
-      "eslint --fix --ext ts,tsx,js,jsx"
+      "eslint --fix"
     ]
   },
   "browserslist": {

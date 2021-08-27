@@ -68,3 +68,6 @@ typings/
 build
 backend/build
 frontend/build
+
+# JetBrains IDEs' settings
+.idea
