@@ -5,8 +5,8 @@
   "author": "Open Government Products, GovTech Singapore (https://open.gov.sg)",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint .",
-    "lint-fix": "eslint --fix .",
+    "lint": "eslint --ext ts,tsx,js,jsx .",
+    "lint-fix": "eslint --fix --ext ts,tsx,js,jsx .",
     "lint-staged": "lint-staged",
     "prebuild": "rimraf build",
     "build": "nest build",
