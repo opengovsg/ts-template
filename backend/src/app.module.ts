@@ -3,6 +3,7 @@ import { SequelizeModule } from '@nestjs/sequelize'
 import { HelmetMiddleware } from 'middlewares/helmet.middleware'
 import { SessionMiddleware } from 'middlewares/session.middleware'
 import { ConfigModule } from 'config/config.module'
+import { AuthModule } from 'auth/auth.module'
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ConfigModule } from 'config/config.module'
       autoLoadModels: true, // TO-DO: remove in production
       synchronize: true, // TO-DO: remove in production
     }),
+    AuthModule,
   ],
 })
 export class AppModule implements NestModule {
