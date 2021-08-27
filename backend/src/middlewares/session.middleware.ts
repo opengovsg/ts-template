@@ -3,13 +3,14 @@ import { Request, Response, NextFunction, RequestHandler } from 'express'
 import session from 'express-session'
 
 import { ConfigService } from 'config/config.service'
+import { NodeEnv } from 'config/config.schema'
 
 @Injectable()
 export class SessionMiddleware implements NestMiddleware {
   private middleware: RequestHandler
 
   constructor(private config: ConfigService) {
-    const secure = ['staging', 'production'].includes(
+    const secure = [NodeEnv.Staging, NodeEnv.Prod].includes(
       this.config.get('environment')
     )
     this.middleware = session({

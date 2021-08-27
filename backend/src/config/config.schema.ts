@@ -1,8 +1,15 @@
 import { Schema } from 'convict'
 
+export enum NodeEnv {
+  Prod = 'production',
+  Staging = 'staging',
+  Dev = 'development',
+  Test = 'test',
+}
+
 export interface ConfigSchema {
   port: number
-  environment: 'development' | 'staging' | 'production' | 'test'
+  environment: NodeEnv
   session: { name: string; secret: string; cookie: { maxAge: number } }
   otp: { expiry: number; secret: string }
 }
@@ -17,8 +24,8 @@ export const schema: Schema<ConfigSchema> = {
   environment: {
     doc: 'The environment that Node.js is running in',
     env: 'NODE_ENV',
-    format: ['development', 'staging', 'production', 'test'],
-    default: 'development',
+    format: Object.values(NodeEnv),
+    default: NodeEnv.Dev,
   },
   session: {
     name: {
