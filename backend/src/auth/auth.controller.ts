@@ -24,7 +24,7 @@ export class AuthController {
     try {
       await this.authService.generateOtp(generateOtpDto)
       res.status(HttpStatus.OK).json({ message: 'OTP sent' })
-    } catch (error) {
+    } catch (error: any) {
       Logger.error(error)
       res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -50,7 +50,7 @@ export class AuthController {
           .status(HttpStatus.UNAUTHORIZED)
           .json({ message: 'Incorrect OTP given' })
       }
-    } catch (error) {
+    } catch (error: any) {
       Logger.error(error)
       res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
