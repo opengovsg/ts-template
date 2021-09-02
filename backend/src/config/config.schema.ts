@@ -2,8 +2,9 @@ import { Schema } from 'convict'
 
 export interface ConfigSchema {
   port: number
-  environment: 'development' | 'staging' | 'production'
+  environment: 'development' | 'staging' | 'production' | 'test'
   session: { name: string; secret: string; cookie: { maxAge: number } }
+  otp: { expiry: number; secret: string }
 }
 
 export const schema: Schema<ConfigSchema> = {
@@ -16,7 +17,7 @@ export const schema: Schema<ConfigSchema> = {
   environment: {
     doc: 'The environment that Node.js is running in',
     env: 'NODE_ENV',
-    format: ['development', 'staging', 'production'],
+    format: ['development', 'staging', 'production', 'test'],
     default: 'development',
   },
   session: {
@@ -39,6 +40,20 @@ export const schema: Schema<ConfigSchema> = {
         format: 'int',
         default: 24 * 60 * 60 * 1000, // 24 hours
       },
+    },
+  },
+  otp: {
+    expiry: {
+      doc: 'The number of seconds that an OTP is valid for a user',
+      env: 'OTP_EXPIRY',
+      format: 'int',
+      default: 300,
+    },
+    secret: {
+      doc: 'A secret string used to generate TOTPs for users',
+      env: 'OTP_SECRET',
+      format: '*',
+      default: 'toomanysecrets',
     },
   },
 }

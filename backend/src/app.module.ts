@@ -1,16 +1,20 @@
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common'
-
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
-
+import { SequelizeModule } from '@nestjs/sequelize'
 import { HelmetMiddleware } from 'middlewares/helmet.middleware'
 import { SessionMiddleware } from 'middlewares/session.middleware'
 import { ConfigModule } from 'config/config.module'
+import { AuthModule } from 'auth/auth.module'
 
 @Module({
-  controllers: [AppController],
-  providers: [AppService],
-  imports: [ConfigModule],
+  imports: [
+    ConfigModule,
+    SequelizeModule.forRoot({
+      dialect: 'sqlite', // TO-DO: change to production database dialect
+      autoLoadModels: true, // TO-DO: remove in production
+      synchronize: true, // TO-DO: remove in production
+    }),
+    AuthModule,
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
