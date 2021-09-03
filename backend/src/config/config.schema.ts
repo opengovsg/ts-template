@@ -3,8 +3,14 @@ import { Schema } from 'convict'
 export interface ConfigSchema {
   port: number
   environment: 'development' | 'staging' | 'production' | 'test'
+  awsRegion: string
   session: { name: string; secret: string; cookie: { maxAge: number } }
-  otp: { expiry: number; secret: string }
+  otp: {
+    expiry: number
+    secret: string
+    numValidPastWindows: number
+    numValidFutureWindows: number
+  }
 }
 
 export const schema: Schema<ConfigSchema> = {
@@ -19,6 +25,12 @@ export const schema: Schema<ConfigSchema> = {
     env: 'NODE_ENV',
     format: ['development', 'staging', 'production', 'test'],
     default: 'development',
+  },
+  awsRegion: {
+    doc: 'The AWS region for SES. Optional, logs mail to console if absent',
+    env: 'AWS_REGION',
+    format: '*',
+    default: '',
   },
   session: {
     name: {
@@ -54,6 +66,18 @@ export const schema: Schema<ConfigSchema> = {
       env: 'OTP_SECRET',
       format: '*',
       default: 'toomanysecrets',
+    },
+    numValidPastWindows: {
+      doc: 'The number of past windows for which tokens should be considered valid',
+      env: 'OTP_NUM_VALID_PAST_WINDOWS',
+      format: 'int',
+      default: 1,
+    },
+    numValidFutureWindows: {
+      doc: 'The number of future windows for which tokens should be considered valid',
+      env: 'OTP_NUM_VALID_FUTURE_WINDOWS',
+      format: 'int',
+      default: 0,
     },
   },
 }
