@@ -5,6 +5,7 @@ export interface ConfigSchema {
   environment: 'development' | 'staging' | 'production' | 'test'
   session: { name: string; secret: string; cookie: { maxAge: number } }
   otp: { expiry: number; secret: string }
+  health: { heapSizeThreshold: number; rssThreshold: number }
 }
 
 export const schema: Schema<ConfigSchema> = {
@@ -54,6 +55,20 @@ export const schema: Schema<ConfigSchema> = {
       env: 'OTP_SECRET',
       format: '*',
       default: 'toomanysecrets',
+    },
+  },
+  health: {
+    heapSizeThreshold: {
+      doc: 'Heap size treshold before healthcheck fails (in bytes).',
+      env: 'HEAP_SIZE_THRESHOLD',
+      format: 'int',
+      default: 200 * 1024 * 1024, // 200MB
+    },
+    rssThreshold: {
+      doc: 'Heap size treshold before healthcheck fails (in bytes).',
+      env: 'RSS_THRESHOLD',
+      format: 'int',
+      default: 3000 * 1024 * 1024, // 3000MB
     },
   },
 }

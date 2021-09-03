@@ -4,6 +4,8 @@ import { HelmetMiddleware } from 'middlewares/helmet.middleware'
 import { SessionMiddleware } from 'middlewares/session.middleware'
 import { ConfigModule } from 'config/config.module'
 import { AuthModule } from 'auth/auth.module'
+import { TerminusModule } from '@nestjs/terminus'
+import { HealthModule } from './health/health.module'
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { AuthModule } from 'auth/auth.module'
       synchronize: true, // TO-DO: remove in production
     }),
     AuthModule,
+    TerminusModule,
+    HealthModule,
   ],
 })
 export class AppModule implements NestModule {
