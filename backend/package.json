@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "eslint --ext ts,tsx,js,jsx .",
     "lint-fix": "eslint --fix --ext ts,tsx,js,jsx .",
-    "lint-staged": "lint-staged",
+    "pre-commit": "lint-staged",
     "prebuild": "rimraf build",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
