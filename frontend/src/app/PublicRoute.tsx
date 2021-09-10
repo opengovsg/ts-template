@@ -1,8 +1,9 @@
 import { Redirect, Route, RouteProps, useLocation } from 'react-router-dom'
 import { Location } from 'history'
 
-import { useAuth } from '../features/auth/AuthContext'
-import { ROOT_ROUTE } from '../constants/routes'
+import { ROOT_ROUTE } from '~constants/routes'
+
+import { useAuth } from '~features/auth'
 
 export interface PublicRouteProps extends Omit<RouteProps, 'render'> {
   // If `strict` is true, only non-authed users can access the route.

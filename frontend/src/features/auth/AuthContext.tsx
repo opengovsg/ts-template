@@ -1,7 +1,6 @@
 import { createContext, FC, useContext } from 'react'
 
-import { LOGGED_IN_KEY } from '../localStorage/constants'
-import { useLocalStorage } from '../localStorage/useLocalStorage'
+import { LOGGED_IN_KEY, useLocalStorage } from '~features/localStorage'
 
 type AuthContextProps = {
   isAuthenticated?: boolean
