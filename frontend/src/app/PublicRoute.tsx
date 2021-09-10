@@ -30,7 +30,7 @@ export const PublicRoute = ({
         !!isAuthenticated && strict ? (
           <Redirect
             to={{
-              pathname: state.from?.pathname ?? ROOT_ROUTE,
+              pathname: state?.from?.pathname ?? ROOT_ROUTE,
               state: { from: location },
             }}
           />
