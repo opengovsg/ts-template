@@ -5,16 +5,21 @@ import {
   Body,
   Req,
   Res,
-  Logger,
   HttpStatus,
 } from '@nestjs/common'
 import { Request, Response } from 'express'
+import { AppLogger } from '../logger/logger.service'
 import { AuthService } from './auth.service'
 import { GenerateOtpDto, VerifyOtpDto } from './dto'
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly logger: AppLogger
+  ) {
+    this.logger.setContext(AuthController.name)
+  }
 
   @Post()
   async generateOtp(
@@ -25,7 +30,13 @@ export class AuthController {
       await this.authService.generateOtp(generateOtpDto)
       res.status(HttpStatus.OK).json({ message: 'OTP sent' })
     } catch (error: any) {
-      Logger.error(error)
+      this.logger.error({
+        message: 'Error while generating authentication OTP',
+        meta: {
+          function: 'generateOtp',
+        },
+        error,
+      })
       res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .json({ message: error.message })
@@ -42,16 +53,28 @@ export class AuthController {
       const user = await this.authService.verifyOtp(verifyOtpDto)
       if (user) {
         Object.assign(req.session, { user })
-        Logger.log(`Successfully verified OTP for user ${verifyOtpDto.email}`)
+        this.logger.log({
+          message: `Successfully verified OTP for user ${verifyOtpDto.email}`,
+          meta: { function: 'verifyOtp' },
+        })
         res.status(HttpStatus.OK).json({ message: 'OTP verified' })
       } else {
-        Logger.warn(`Incorrect OTP given for ${verifyOtpDto.email}`)
+        this.logger.warn({
+          message: `Incorrect OTP given for ${verifyOtpDto.email}`,
+          meta: { function: 'verifyOtp' },
+        })
         res
           .status(HttpStatus.UNAUTHORIZED)
           .json({ message: 'Incorrect OTP given' })
       }
     } catch (error: any) {
-      Logger.error(error)
+      this.logger.error({
+        message: 'Error while verifying authentication OTP',
+        meta: {
+          function: 'verifyOtp',
+        },
+        error,
+      })
       res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .json({ message: error.message })

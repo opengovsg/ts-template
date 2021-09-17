@@ -3,6 +3,7 @@ import { getModelToken } from '@nestjs/sequelize'
 import { AuthService } from './auth.service'
 import { ConfigService } from '../config/config.service'
 import { User } from '../database/models'
+import { AppLogger } from '../logger/logger.service'
 
 describe('AuthService', () => {
   let service: AuthService
@@ -13,6 +14,7 @@ describe('AuthService', () => {
       providers: [
         AuthService,
         ConfigService,
+        AppLogger,
         {
           provide: getModelToken(User),
           useValue: mockModel,

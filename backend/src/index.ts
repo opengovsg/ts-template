@@ -4,9 +4,13 @@ import { NestExpressApplication } from '@nestjs/platform-express'
 import { AppModule } from './app.module'
 import { ConfigService } from 'config/config.service'
 import { NodeEnv } from 'config/config.schema'
+import { AppLogger } from 'logger/logger.service'
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule)
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    bufferLogs: true,
+  })
+  app.useLogger(app.get(AppLogger))
 
   app.setGlobalPrefix('/api')
 

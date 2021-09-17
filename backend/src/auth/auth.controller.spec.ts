@@ -4,6 +4,7 @@ import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
 import { ConfigModule } from '../config/config.module'
 import { User } from '../database/models'
+import { AppLogger } from '../logger/logger.service'
 
 describe('AuthController', () => {
   let controller: AuthController
@@ -15,6 +16,7 @@ describe('AuthController', () => {
       controllers: [AuthController],
       providers: [
         AuthService,
+        AppLogger,
         {
           provide: getModelToken(User),
           useValue: mockModel,

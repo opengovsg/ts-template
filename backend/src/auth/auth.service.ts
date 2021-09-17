@@ -2,17 +2,20 @@ import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 import { GenerateOtpDto, VerifyOtpDto } from './dto/index'
 import { User } from '../database/models'
-import { Logger } from '@nestjs/common'
 import { totp as totpFactory } from 'otplib'
 import { ConfigService } from '../config/config.service'
+import { AppLogger } from '../logger/logger.service'
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(User)
     private readonly userModel: typeof User,
-    private config: ConfigService
-  ) {}
+    private config: ConfigService,
+    private readonly logger: AppLogger
+  ) {
+    this.logger.setContext(AuthService.name)
+  }
 
   private totp = totpFactory.clone({
     step: this.config.get('otp.expiry'),
@@ -30,9 +33,12 @@ export class AuthService {
       : NaN
 
     // TO-DO: Make this log only in development - read env from config
-    Logger.log(
-      `Your OTP token is ${otp}. It will expire in ${timeLeft} minutes`
-    )
+    this.logger.log({
+      message: `Your OTP token is ${otp}. It will expire in ${timeLeft} minutes`,
+      meta: {
+        function: 'generateOtp',
+      },
+    })
   }
 
   async verifyOtp(verifyOtpDto: VerifyOtpDto): Promise<User | undefined> {
