@@ -59,15 +59,17 @@ export const schema: Schema<ConfigSchema> = {
   },
   health: {
     heapSizeThreshold: {
-      doc: 'Heap size treshold before healthcheck fails (in bytes).',
+      doc: 'Heap size threshold before healthcheck fails (in bytes).',
       env: 'HEAP_SIZE_THRESHOLD',
       format: 'int',
+      // TODO: Set to a more reasonable value depending on the instance size used.
       default: 200 * 1024 * 1024, // 200MB
     },
     rssThreshold: {
-      doc: 'Heap size treshold before healthcheck fails (in bytes).',
+      doc: 'Resident set size threshold before healthcheck fails (in bytes).',
       env: 'RSS_THRESHOLD',
       format: 'int',
+      // TODO: Set to a more reasonable value depending on the instance size used.
       default: 3000 * 1024 * 1024, // 3000MB
     },
   },
