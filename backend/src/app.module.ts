@@ -6,6 +6,8 @@ import { ConfigModule } from 'config/config.module'
 import { AuthModule } from 'auth/auth.module'
 import { OtpModule } from 'otp/otp.module'
 import { MailerModule } from 'mailer/mailer.module'
+import { TerminusModule } from '@nestjs/terminus'
+import { HealthModule } from './health/health.module'
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { MailerModule } from 'mailer/mailer.module'
       synchronize: true, // TO-DO: remove in production
     }),
     AuthModule,
+    TerminusModule,
+    HealthModule,
   ],
 })
 export class AppModule implements NestModule {

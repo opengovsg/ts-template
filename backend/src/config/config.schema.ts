@@ -11,6 +11,7 @@ export interface ConfigSchema {
     numValidPastWindows: number
     numValidFutureWindows: number
   }
+  health: { heapSizeThreshold: number; rssThreshold: number }
 }
 
 export const schema: Schema<ConfigSchema> = {
@@ -78,6 +79,22 @@ export const schema: Schema<ConfigSchema> = {
       env: 'OTP_NUM_VALID_FUTURE_WINDOWS',
       format: 'int',
       default: 0,
+    },
+  },
+  health: {
+    heapSizeThreshold: {
+      doc: 'Heap size threshold before healthcheck fails (in bytes).',
+      env: 'HEAP_SIZE_THRESHOLD',
+      format: 'int',
+      // TODO: Set to a more reasonable value depending on the instance size used.
+      default: 200 * 1024 * 1024, // 200MB
+    },
+    rssThreshold: {
+      doc: 'Resident set size threshold before healthcheck fails (in bytes).',
+      env: 'RSS_THRESHOLD',
+      format: 'int',
+      // TODO: Set to a more reasonable value depending on the instance size used.
+      default: 3000 * 1024 * 1024, // 3000MB
     },
   },
 }
