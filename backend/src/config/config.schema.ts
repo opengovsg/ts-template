@@ -69,13 +69,13 @@ export const schema: Schema<ConfigSchema> = {
       default: 'toomanysecrets',
     },
     numValidPastWindows: {
-      doc: 'The number of past windows for which tokens should be considered valid',
+      doc: 'The number of past windows for which tokens should be considered valid, where a window is the duration that an OTP is valid for, e.g. OTP expiry time.',
       env: 'OTP_NUM_VALID_PAST_WINDOWS',
       format: 'int',
       default: 1,
     },
     numValidFutureWindows: {
-      doc: 'The number of future windows for which tokens should be considered valid',
+      doc: 'The number of future windows for which tokens should be considered valid, where a window is the duration that an OTP is valid for, e.g. OTP expiry time.',
       env: 'OTP_NUM_VALID_FUTURE_WINDOWS',
       format: 'int',
       default: 0,
