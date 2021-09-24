@@ -3,6 +3,8 @@ import { getModelToken } from '@nestjs/sequelize'
 import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
 import { ConfigModule } from '../config/config.module'
+import { OtpModule } from '../otp/otp.module'
+import { MailerModule } from '../mailer/mailer.module'
 import { User } from '../database/models'
 
 describe('AuthController', () => {
@@ -11,7 +13,7 @@ describe('AuthController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [ConfigModule],
+      imports: [ConfigModule, OtpModule, MailerModule],
       controllers: [AuthController],
       providers: [
         AuthService,
