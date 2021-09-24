@@ -23,6 +23,7 @@ export class AuthService {
     Please use this to login to your account.
     <p>If your OTP does not work, please request for a new one.</p>`
 
+    // TODO: Replace the `from` and `subject` fields with content specific to your application
     const mail = {
       to: email,
       from: 'Starter Kit <donotreply@mail.open.gov.sg>',
