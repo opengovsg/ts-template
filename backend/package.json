@@ -37,7 +37,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.4.0",
     "sequelize": "^6.7.0",
-    "sequelize-typescript": "^2.1.0",
+    "sequelize-typescript": "^2.1.1",
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
