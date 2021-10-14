@@ -16,7 +16,7 @@
     "@snyk/protect": "latest",
     "@storybook/addon-actions": "^6.3.11",
     "@storybook/addon-essentials": "^6.3.12",
-    "@storybook/addon-links": "^6.3.11",
+    "@storybook/addon-links": "^6.3.12",
     "@storybook/node-logger": "^6.3.11",
     "@storybook/preset-create-react-app": "^4.0.0",
     "@storybook/react": "^6.3.12",
