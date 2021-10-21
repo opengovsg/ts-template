@@ -29,7 +29,7 @@
     "cz-conventional-changelog": "^3.3.0",
     "env-cmd": "^10.1.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "husky": "^7.0.2"
+    "husky": "^7.0.4"
   },
   "lint-staged": {
     "**/*.(js|jsx|ts|tsx)": [
