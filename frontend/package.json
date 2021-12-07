@@ -20,7 +20,7 @@
     "@storybook/node-logger": "^6.3.12",
     "@storybook/preset-create-react-app": "^4.0.0",
     "@storybook/react": "^6.3.12",
-    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.0.2",
