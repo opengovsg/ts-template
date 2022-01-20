@@ -21,7 +21,7 @@
   "author": "Open Government Products, GovTech Singapore (https://open.gov.sg)",
   "license": "MIT",
   "devDependencies": {
-    "@commitlint/cli": "^13.2.1",
+    "@commitlint/cli": "^16.1.0",
     "@commitlint/config-conventional": "^13.2.0",
     "@commitlint/travis-cli": "^13.2.1",
     "commitizen": "^4.2.4",
