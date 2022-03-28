@@ -4,7 +4,7 @@
   "private": true,
   "proxy": "http://localhost:8080/",
   "dependencies": {
-    "@chakra-ui/react": "^1.6.10",
+    "@chakra-ui/react": "^1.8.7",
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "framer-motion": "^4.1.17",
