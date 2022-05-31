@@ -8,6 +8,10 @@ Structure within frontend/backend folder taken from \[1\]. Notably,
 we distinguish between `lib/` and `src/` directories, the latter for
 files that we have to process (eg, transpile) into `build/` or `dist/`. 
 
+## Environmental Variables
+
+For `npm run dev` to work, go to `backend/`, copy the `.env.example` file and past as a `.env` file.
+
 ## Linting
 Done with ESLint, using the following rule configs:
 
