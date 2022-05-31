@@ -55,6 +55,20 @@ uses the remote branch as the lower bound in the commit range to inspect,
 and there would be no remote branch. Bypass this the first time with
 `git push --no-verify`.
 
+## Secrets Detection
+
+This project makes of [detect-secrets](https://github.com/Yelp/detect-secrets) to prevent secrets and credentials from being committed to the repository. It runs as a pre-commit hook and it needs to be installed (runs as part of `npm run prepare`) if you intend to make commits to the repo.
+
+**Note**: The reason we're running `detect-secrets` through `detect-secrets:precommit` instead of using `lint-staged` is because `detect-secrets-hook` doesn't work well with the combination of output of staged files by `lint-staged` and baseline supplied.
+
+Upon blockage by `detect-secrets-hook`, please take these steps:
+
+- Go into each of the locations pointed out by `detect-secrets-hook` and remove accidentally added secrets
+- If some of these detections are false positive (please be super sure about this, when not sure check with teammates), update the secrets baseline by running `npm run detect-secrets:updateUpon blockage by `detect-secrets-hook`, please take these steps:
+
+- Go into each of the locations pointed out by `detect-secrets-hook` and remove accidentally added secrets
+- If some of these detections are false positive (please be super sure about this, when not sure check with teammates), update the secrets baseline by running `npm run detect-secrets:update
+
 ## Continuous Integration
 Travis is commonly used in OGP. A `.travis.yml` config has been provided
 for convenience, which will run the following in order:

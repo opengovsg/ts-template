@@ -16,7 +16,11 @@
     "coverage": "npm run on-backend -- test:cov && cat backend/coverage/lcov.info > lcov.info",
     "cz": "git-cz",
     "start": "node backend/build/index.js",
-    "prepare": "husky install"
+    "pre-commit": "npm run detect-secrets:precommit",
+    "prepare": "husky install && pip install detect-secrets==1.2.0",
+    "detect-secrets:update": "detect-secrets scan --baseline .secrets.baseline",
+    "detect-secrets:check": "git ls-files -z | xargs -0 detect-secrets-hook --baseline .secrets.baseline",
+    "detect-secrets:precommit": "git diff --staged --name-only -z | xargs -0 detect-secrets-hook --baseline .secrets.baseline"
   },
   "author": "Open Government Products, GovTech Singapore (https://open.gov.sg)",
   "license": "MIT",
