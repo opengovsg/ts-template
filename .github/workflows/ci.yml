@@ -30,6 +30,12 @@ jobs:
       - run: npx lockfile-lint --type npm --path backend/package-lock.json --validate-https --allowed-hosts npm
       - run: npm run lint
       - run: npm run on-backend -- build
+      - name: detect secrets in repo
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.x"
+      - run: pip install detect-secrets==1.2.0
+      - run: npm run detect-secrets:check # pragma: allowlist secret
   test:
     name: Test
     runs-on: ubuntu-18.04
