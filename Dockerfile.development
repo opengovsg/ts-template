@@ -1,7 +1,7 @@
 FROM node:lts-alpine
 LABEL maintainer="Open Government Products"
 WORKDIR /usr/src/app
-RUN apk update && apk add python g++ make tini && rm -rf /var/cache/apk/*
+RUN apk update && apk add --no-cache tini && rm -rf /var/cache/apk/*
 COPY . ./
 # Install backend dependencies
 RUN cd backend && npm ci && cd ..

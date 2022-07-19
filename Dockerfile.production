@@ -1,7 +1,7 @@
 FROM node:lts-alpine AS node-modules-builder
 LABEL maintainer="Open Government Products"
 WORKDIR /usr/src/app
-RUN apk update && apk add python g++ make && rm -rf /var/cache/apk/*
+
 COPY . ./
 # Install backend dependencies
 RUN cd backend && npm ci && cd ..
@@ -16,7 +16,7 @@ FROM node:lts-alpine
 WORKDIR /usr/src/app
 EXPOSE 8080
 ENV PORT 8080
-RUN apk update && apk add tini && rm -rf /var/cache/apk/*
+RUN apk update && apk add --no-cache tini && rm -rf /var/cache/apk/*
 COPY --from=node-modules-builder /usr/src/app ./
-ENTRYPOINT ["tini", "--"]
+ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["npm", "run", "start"]
