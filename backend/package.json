@@ -41,7 +41,7 @@
     "sqlite3": "^5.0.9"
   },
   "devDependencies": {
-    "@nestjs/cli": "^8.1.4",
+    "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^8.0.4",
     "@nestjs/testing": "^8.1.2",
     "@types/convict": "^6.1.1",
