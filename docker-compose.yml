@@ -1,14 +1,26 @@
 version: '3'
 
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile.development
-    ports:
-      - '3000:3000'
-      - '8080:8080'
+  postgres:
+    image: postgres:alpine
     environment:
-      - NODE_ENV=development
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=dev
+    ports:
+      - '5432:5432'
     volumes:
-      - ./:/usr/src/app
+      - pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  maildev:
+    image: maildev/maildev
+    ports:
+      - '1080:80'
+      - '1025:25'
+    command: bin/maildev --web 80 --smtp 25 --log-mail-contents
+volumes:
+  pg-data:
