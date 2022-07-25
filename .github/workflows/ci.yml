@@ -123,7 +123,7 @@ jobs:
         env:
           BRANCH: ${{ steps.extract_branch.outputs.branch }}
           SHA: ${{ github.sha }}
-      - run: docker build -t ${{ steps.extract_tag.outputs.tag }} -f Dockerfile.production .
+      - run: docker build -t ${{ steps.extract_tag.outputs.tag }} -f Dockerfile .
       - name: Push to ECR
         if: needs.gatekeep.outputs.proceed == 'true'
         uses: opengovsg/gh-ecr-push@v1

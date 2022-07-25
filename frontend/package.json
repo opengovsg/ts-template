@@ -51,7 +51,9 @@
     ]
   },
   "scripts": {
+    "dev": "npm run start:dev",
     "start": "react-app-rewired start",
+    "start:dev": "npm start",
     "build": "cross-env CI=false INLINE_RUNTIME_CHUNK=false react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
