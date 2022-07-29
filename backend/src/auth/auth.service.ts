@@ -1,12 +1,12 @@
-import { Injectable } from '@nestjs/common'
-import { Logger } from '@nestjs/common'
+import { Injectable, Logger } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 
+import { GenerateOtpDto, VerifyOtpDto } from '~shared/types/auth.dto'
+
+import { ConfigService } from '../config/config.service'
 import { User } from '../database/models'
 import { MailerService } from '../mailer/mailer.service'
 import { OtpService } from '../otp/otp.service'
-
-import { GenerateOtpDto, VerifyOtpDto } from './dto/index'
 
 @Injectable()
 export class AuthService {
@@ -15,6 +15,7 @@ export class AuthService {
     private readonly userModel: typeof User,
     private otpService: OtpService,
     private mailerService: MailerService,
+    private config: ConfigService,
   ) {}
 
   async generateOtp(generateOtpDto: GenerateOtpDto): Promise<void> {
@@ -28,7 +29,9 @@ export class AuthService {
     // TODO: Replace the `from` and `subject` fields with content specific to your application
     const mail = {
       to: email,
-      from: 'Starter Kit <donotreply@mail.open.gov.sg>',
+      from: `${this.config.get('otp.sender_name')} <${this.config.get(
+        'otp.email',
+      )}>`,
       subject: 'One-Time Password (OTP) for Starter Kit',
       html,
     }

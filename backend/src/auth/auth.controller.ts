@@ -10,8 +10,9 @@ import {
 } from '@nestjs/common'
 import { Request, Response } from 'express'
 
+import { GenerateOtpDto, VerifyOtpDto } from '~shared/types/auth.dto'
+
 import { AuthService } from './auth.service'
-import { GenerateOtpDto, VerifyOtpDto } from './dto'
 
 @Controller('auth')
 export class AuthController {

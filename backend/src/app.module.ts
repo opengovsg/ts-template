@@ -11,7 +11,7 @@ import { OtpModule } from 'otp/otp.module'
 import { join } from 'path'
 
 import { ConfigService } from './config/config.service'
-import { User } from './database/models'
+import { DatabaseConfigService } from './database/database-config.service'
 import { HealthModule } from './health/health.module'
 
 const FRONTEND_PATH = join(
@@ -32,22 +32,7 @@ const FRONTEND_PATH = join(
     SequelizeModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        dialect: 'postgres',
-        host: config.get('database.host'),
-        port: config.get('database.port'),
-        username: config.get('database.username'),
-        password: config.get('database.password'),
-        database: config.get('database.name'),
-        models: [User],
-        autoLoadModels: true, // TO-DO: remove in production
-        synchronize: true, // TO-DO: remove in production
-        pool: {
-          min: config.get('database.minPool'),
-          max: config.get('database.maxPool'),
-        },
-        logging: config.get('database.logging'),
-      }),
+      useClass: DatabaseConfigService,
     }),
     AuthModule,
     TerminusModule,

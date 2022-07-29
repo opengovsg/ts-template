@@ -6,9 +6,10 @@ import { PublicRoute } from '~/app/PublicRoute'
 
 import { routes } from '~constants/routes'
 
+import { LoginPage } from '~features/auth/LoginPage'
+
 const WorkspacePage = lazy(() => import('~features/dashboard/DashboardPage'))
 const HealthPage = lazy(() => import('~features/health/HealthPage'))
-const LoginPage = lazy(() => import('~features/auth/LoginPage'))
 
 export const AppRouter = (): JSX.Element => {
   return (
