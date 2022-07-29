@@ -1,4 +1,4 @@
-import { createContext, FC, useContext } from 'react'
+import { createContext, ReactNode, useContext } from 'react'
 
 import { LOGGED_IN_KEY, useLocalStorage } from '~features/localStorage'
 
@@ -12,7 +12,7 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined)
  * Provider component that wraps your app and makes auth object available to any
  * child component that calls `useAuth()`.
  */
-export const AuthProvider: FC = ({ children }) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const auth = useProvideAuth()
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>

@@ -2,6 +2,7 @@ import { useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, ButtonGroup, Flex } from '@chakra-ui/react'
 
+import { routes } from '~constants/routes'
 import { LOGGED_IN_KEY, useLocalStorage } from '~features/localStorage'
 
 const DashboardPage = (): JSX.Element => {
@@ -18,9 +19,12 @@ const DashboardPage = (): JSX.Element => {
       <ButtonGroup>
         <Button onClick={logout}>Logout</Button>
         <Button>
-          <Link to="/login">
+          <Link to={routes.login}>
             Attempt to go to login page (and see nothing happen)
           </Link>
+        </Button>
+        <Button>
+          <Link to={routes.health}>See backend health</Link>
         </Button>
       </ButtonGroup>
     </Flex>
