@@ -1,28 +1,44 @@
 import { lazy, Suspense } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 
-import { LOGIN_ROUTE, ROOT_ROUTE } from '~constants/routes'
-
-import { PrivateRoute } from './PrivateRoute'
-import { PublicRoute } from './PublicRoute'
+import { PrivateRoute } from '~/app/PrivateRoute'
+import { PublicRoute } from '~/app/PublicRoute'
+import { routes } from '~constants/routes'
 
 const WorkspacePage = lazy(() => import('~features/dashboard/DashboardPage'))
+const HealthPage = lazy(() => import('~features/health/HealthPage'))
 const LoginPage = lazy(() => import('~features/auth/LoginPage'))
 
 export const AppRouter = (): JSX.Element => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Switch>
-        <PublicRoute exact path={LOGIN_ROUTE}>
-          <LoginPage />
-        </PublicRoute>
-        <PrivateRoute exact path={ROOT_ROUTE}>
-          <WorkspacePage />
-        </PrivateRoute>
-        <Route path="*">
-          <div>404</div>
-        </Route>
-      </Switch>
+      <Routes>
+        <Route
+          path={routes.index}
+          element={
+            <PrivateRoute>
+              <WorkspacePage />
+            </PrivateRoute>
+          }
+        ></Route>
+        <Route
+          path={routes.login}
+          element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path={routes.health}
+          element={
+            <PrivateRoute>
+              <HealthPage />
+            </PrivateRoute>
+          }
+        />
+        <Route path="*" element={<div>404</div>} />
+      </Routes>
     </Suspense>
   )
 }
