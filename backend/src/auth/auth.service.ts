@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common'
-import { InjectModel } from '@nestjs/sequelize'
-import { GenerateOtpDto, VerifyOtpDto } from './dto/index'
-import { User } from '../database/models'
 import { Logger } from '@nestjs/common'
-import { OtpService } from '../otp/otp.service'
+import { InjectModel } from '@nestjs/sequelize'
+
+import { User } from '../database/models'
 import { MailerService } from '../mailer/mailer.service'
+import { OtpService } from '../otp/otp.service'
+
+import { GenerateOtpDto, VerifyOtpDto } from './dto/index'
 
 @Injectable()
 export class AuthService {
@@ -12,7 +14,7 @@ export class AuthService {
     @InjectModel(User)
     private readonly userModel: typeof User,
     private otpService: OtpService,
-    private mailerService: MailerService
+    private mailerService: MailerService,
   ) {}
 
   async generateOtp(generateOtpDto: GenerateOtpDto): Promise<void> {

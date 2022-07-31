@@ -2,36 +2,41 @@
   "name": "@opengovsg/ts-template",
   "version": "1.0.0",
   "description": "A template for most TypeScript projects in OGP",
-  "main": "build/backend/index.js",
+  "author": "Open Government Products, GovTech Singapore (https://open.gov.sg)",
+  "license": "MIT",
   "scripts": {
-    "all": "concurrently -c green,blue",
+    "all": "concurrently -c green,blue,yellow",
     "on-backend": "npm --prefix backend run",
     "on-frontend": "npm --prefix frontend run",
-    "postinstall": "npm --prefix backend install && npm --prefix frontend install",
+    "on-shared": "npm --prefix shared run",
+    "postinstall": "npm --prefix backend install && npm --prefix frontend install && npm --prefix shared install",
     "dev-docker": "docker-compose up --build",
     "dev": "npm run all \"docker-compose up\" \"npm run dev:app\"",
-    "dev:app": "npm run all -- --kill-others \"npm:on-* start:dev\"",
+    "dev:app": "npm run all -- --kill-others \"npm:on-* dev\"",
     "lint": "npm run all \"npm:on-* lint\"",
     "lint:fix": "npm run all \"npm:on-* lint:fix\"",
     "test": "npm run all \"npm:on-* test\"",
     "build": "npm run all \"npm:on-* build\"",
     "coverage": "npm run on-backend -- test:cov && cat backend/coverage/lcov.info > lcov.info",
     "cz": "git-cz",
-    "start": "node backend/build/index.js",
+    "start": "npm --prefix backend start",
     "prepare": "husky install"
   },
-  "author": "Open Government Products, GovTech Singapore (https://open.gov.sg)",
-  "license": "MIT",
   "devDependencies": {
-    "@commitlint/cli": "^13.2.1",
-    "@commitlint/config-conventional": "^13.2.0",
-    "@commitlint/travis-cli": "^13.2.1",
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@commitlint/travis-cli": "^17.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
     "commitizen": "^4.2.4",
-    "concurrently": "^6.3.0",
+    "concurrently": "^7.3.0",
     "cz-conventional-changelog": "^3.3.0",
     "env-cmd": "^10.1.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "husky": "^7.0.4"
+    "eslint": "^8.20.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "husky": "^8.0.1"
   },
   "lint-staged": {
     "**/*.(js|jsx|ts|tsx)": [
@@ -42,6 +47,5 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  },
-  "dependencies": {}
+  }
 }

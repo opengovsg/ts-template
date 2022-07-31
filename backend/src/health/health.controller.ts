@@ -1,11 +1,13 @@
 import { Controller, Get } from '@nestjs/common'
 import {
   HealthCheck,
-  HealthCheckResult,
   HealthCheckService,
-  SequelizeHealthIndicator,
   MemoryHealthIndicator,
+  SequelizeHealthIndicator,
 } from '@nestjs/terminus'
+
+import { HealthDto } from '~shared/types/health.dto'
+
 import { ConfigService } from '../config/config.service'
 
 @Controller('health')
@@ -16,23 +18,23 @@ export class HealthController {
     // Refer to https://github.com/nestjs/terminus/blob/master/sample/ for
     // examples of how to add other services/databases to healthcheck.
     private db: SequelizeHealthIndicator,
-    private memory: MemoryHealthIndicator
+    private memory: MemoryHealthIndicator,
   ) {}
 
   @Get()
   @HealthCheck()
-  async check(): Promise<HealthCheckResult> {
+  async check(): Promise<HealthDto> {
     return this.health.check([
       async () => this.db.pingCheck('database'),
       async () =>
         this.memory.checkHeap(
           'memory_heap',
-          this.config.get('health.heapSizeThreshold')
+          this.config.get('health.heapSizeThreshold'),
         ),
       async () =>
         this.memory.checkRSS(
           'memory_rss',
-          this.config.get('health.rssThreshold')
+          this.config.get('health.rssThreshold'),
         ),
     ])
   }

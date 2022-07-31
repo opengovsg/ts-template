@@ -1,6 +1,7 @@
-import { Module, Global } from '@nestjs/common'
+import { Global, Module } from '@nestjs/common'
 
 import { ConfigModule } from '../config/config.module'
+
 import { OtpService } from './otp.service'
 
 @Global()

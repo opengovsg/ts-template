@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common'
 import { SequelizeModule } from '@nestjs/sequelize'
-import { AuthService } from './auth.service'
-import { AuthController } from './auth.controller'
+
 import { ConfigModule } from '../config/config.module'
-import { OtpModule } from '../otp/otp.module'
-import { MailerModule } from '../mailer/mailer.module'
 import { User } from '../database/models'
+import { MailerModule } from '../mailer/mailer.module'
+import { OtpModule } from '../otp/otp.module'
+
+import { AuthController } from './auth.controller'
+import { AuthService } from './auth.service'
 
 @Module({
   imports: [
