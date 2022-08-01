@@ -3,10 +3,12 @@ import fs from 'fs'
 import { exit } from 'process'
 import dotenv from 'dotenv'
 
-// This is a helper for local file runs or jest, as specified in package.json
-// It emulates the loading of SSM which Lambda will do.
-// This file is not meant to be used in a deployment and is .mjs so we can use top-level await
-async function saveAllParameters() {
+/**
+ * This is a helper for local file runs or jest, as specified in package.json  
+ * It emulates the putting of parameters into SSM which Lambda will do.  
+ * This is not meant to be used in a deployment and is .mjs so we can use top-level await
+ */
+async function putAllParameters() {
   console.log(`Retrieving parameters for ENV=${process.env.ENV}`)
 
   if (process.env.ENV === 'development') {
@@ -61,4 +63,4 @@ async function saveAllParameters() {
   }
 }
 
-await saveAllParameters()
+await putAllParameters()
