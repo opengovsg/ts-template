@@ -28,7 +28,7 @@
     "@nestjs/sequelize": "^9.0.0",
     "@nestjs/serve-static": "^3.0.0",
     "@nestjs/terminus": "^9.0.0",
-    "aws-sdk": "^2.1184.0",
+    "aws-sdk": "^2.1185.0",
     "convict": "^6.2.3",
     "dotenv": "^16.0.1",
     "express-session": "^1.17.3",
