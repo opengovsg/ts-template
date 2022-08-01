@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button, ButtonGroup, Flex } from '@chakra-ui/react'
 
 import { routes } from '~constants/routes'
+
 import { LOGGED_IN_KEY, useLocalStorage } from '~features/localStorage'
 
 const DashboardPage = (): JSX.Element => {

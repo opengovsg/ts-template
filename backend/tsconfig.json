@@ -1,5 +1,6 @@
 {
   "include": ["src/**/*"],
+  "exclude": ["**/jest.config.ts"],
   "compilerOptions": {
     "strict": true,
     "esModuleInterop": true,
@@ -14,6 +15,12 @@
     "incremental": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "~shared/*": ["../../shared/src/*"]
+    }
+  },
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
   }
 }

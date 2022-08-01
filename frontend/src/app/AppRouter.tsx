@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 
 import { PrivateRoute } from '~/app/PrivateRoute'
 import { PublicRoute } from '~/app/PublicRoute'
+
 import { routes } from '~constants/routes'
 
 const WorkspacePage = lazy(() => import('~features/dashboard/DashboardPage'))

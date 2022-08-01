@@ -15,7 +15,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false
   },
-  "include": ["src/**/*", ".storybook/**/*"]
+  "include": ["src/**/*", ".storybook/**/*"],
+  "exclude": ["**/jest.config.ts"]
 }

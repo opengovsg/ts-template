@@ -1,17 +1,13 @@
 import { Injectable, NestMiddleware } from '@nestjs/common'
-import { Request, Response, NextFunction, RequestHandler } from 'express'
-import session from 'express-session'
-
 import { ConfigService } from 'config/config.service'
+import { NextFunction, Request, RequestHandler, Response } from 'express'
+import session from 'express-session'
 
 @Injectable()
 export class SessionMiddleware implements NestMiddleware {
   private middleware: RequestHandler
 
   constructor(private config: ConfigService) {
-    const secure = ['staging', 'production'].includes(
-      this.config.get('environment')
-    )
     this.middleware = session({
       resave: false, // can set to false since touch is implemented by our store
       saveUninitialized: false, // do not save new sessions that have not been modified
@@ -20,7 +16,7 @@ export class SessionMiddleware implements NestMiddleware {
         httpOnly: true,
         sameSite: 'strict',
         maxAge: this.config.get('session.cookie.maxAge'),
-        secure,
+        secure: !config.isDevEnv, // disable in local dev env
       },
     })
   }

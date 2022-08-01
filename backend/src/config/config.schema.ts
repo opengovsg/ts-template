@@ -1,10 +1,26 @@
-import { Schema } from 'convict'
+import { addFormats, Schema } from 'convict'
 
 export interface ConfigSchema {
   port: number
   environment: 'development' | 'staging' | 'production' | 'test'
   awsRegion: string
-  session: { name: string; secret: string; cookie: { maxAge: number } }
+  database: {
+    host: string
+    username: string
+    password: string
+    port: number
+    name: string
+    logging: boolean
+    minPool: number
+    maxPool: number
+  }
+  session: {
+    secret: string
+    name: string
+    cookie: {
+      maxAge: number
+    }
+  }
   otp: {
     expiry: number
     secret: string
@@ -13,6 +29,16 @@ export interface ConfigSchema {
   }
   health: { heapSizeThreshold: number; rssThreshold: number }
 }
+
+addFormats({
+  'required-string': {
+    validate: (val?: string): void => {
+      if (val == undefined || val === '') {
+        throw new Error('Required value cannot be empty')
+      }
+    },
+  },
+})
 
 export const schema: Schema<ConfigSchema> = {
   port: {
@@ -32,6 +58,47 @@ export const schema: Schema<ConfigSchema> = {
     env: 'AWS_REGION',
     format: '*',
     default: '',
+  },
+  database: {
+    username: {
+      env: 'DB_USERNAME',
+      sensitive: true,
+      default: '',
+      format: 'required-string',
+    },
+    password: {
+      env: 'DB_PASSWORD',
+      sensitive: true,
+      default: '',
+      format: 'required-string',
+    },
+    host: {
+      env: 'DB_HOST',
+      default: 'localhost',
+      format: 'required-string',
+    },
+    port: {
+      env: 'DB_PORT',
+      default: 5432,
+      format: Number,
+    },
+    name: {
+      env: 'DB_NAME',
+      default: '',
+      format: 'required-string',
+    },
+    logging: {
+      env: 'DB_LOGGING',
+      default: false,
+    },
+    minPool: {
+      env: 'DB_MIN_POOL_SIZE',
+      default: 10,
+    },
+    maxPool: {
+      env: 'DB_MAX_POOL_SIZE',
+      default: 100,
+    },
   },
   session: {
     name: {

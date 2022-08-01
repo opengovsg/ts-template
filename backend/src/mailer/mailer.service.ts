@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
-import nodemailer, { SendMailOptions, Transporter } from 'nodemailer'
 import { SES } from 'aws-sdk'
+import nodemailer, { SendMailOptions, Transporter } from 'nodemailer'
 
 import { ConfigService } from '../config/config.service'
 

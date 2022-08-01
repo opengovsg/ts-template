@@ -1,22 +1,22 @@
 FROM node:lts-alpine AS node-modules-builder
 LABEL maintainer="Open Government Products"
+
+ARG ENV=production
 WORKDIR /usr/src/app
 
 COPY . ./
-# Install backend dependencies
-RUN cd backend && npm ci && cd ..
-# Install frontend dependencies
-RUN cd frontend && npm ci && cd ..
-# TODO: Remove when server package.json is no longer in parent directory of client
-ENV SKIP_PREFLIGHT_CHECK true
-# Transpile
-RUN npm run on-backend -- build && npm run on-frontend -- build
+RUN npm ci
+RUN ENV=$ENV REACT_APP_ENV=$ENV npm run build \
+  && npm prune --production
 
 FROM node:lts-alpine
 WORKDIR /usr/src/app
+
+COPY --from=node-modules-builder /usr/src/app/backend ./backend
+COPY --from=node-modules-builder /usr/src/app/frontend/build ./frontend/build
+COPY --from=node-modules-builder /usr/src/app/shared ./shared
+COPY --from=node-modules-builder /usr/src/app/node_modules ./node_modules
+COPY --from=node-modules-builder /usr/src/app/package.json ./
+
 EXPOSE 8080
-ENV PORT 8080
-RUN apk update && apk add --no-cache tini && rm -rf /var/cache/apk/*
-COPY --from=node-modules-builder /usr/src/app ./
-ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["npm", "run", "start"]

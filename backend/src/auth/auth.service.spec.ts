@@ -1,10 +1,12 @@
-import { Test, TestingModule } from '@nestjs/testing'
 import { getModelToken } from '@nestjs/sequelize'
-import { AuthService } from './auth.service'
+import { Test, TestingModule } from '@nestjs/testing'
+
 import { ConfigService } from '../config/config.service'
-import { OtpService } from '../otp/otp.service'
-import { MailerService } from '../mailer/mailer.service'
 import { User } from '../database/models'
+import { MailerService } from '../mailer/mailer.service'
+import { OtpService } from '../otp/otp.service'
+
+import { AuthService } from './auth.service'
 
 describe('AuthService', () => {
   let service: AuthService
