@@ -21,7 +21,7 @@
     "env:load": "ENV=${ENV:-'development'} node scripts/env/loader.mjs",
     "env:put": "ENV=${ENV:-'development'} node scripts/env/putter.mjs",
     "pino-pretty": "pino-pretty --hideObject -i pid,hostname -t SYS:standard -o '\u001b[33m[{req.id}]\u001b[0m \u001b[32m[{scope}]\u001b[0m {msg}'",
-    "pino-datadog": "if [ -n \"${DD_API_KEY}\" ]; then pino-datadog ; else cat; fi"
+    "pino-datadog": "if [ -n \"${DD_API_KEY}\" ]; then pino-datadog; else cat; fi"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.7",
