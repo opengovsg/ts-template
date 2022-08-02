@@ -49,7 +49,7 @@
     "sqlite3": "^5.0.11"
   },
   "devDependencies": {
-    "@aws-sdk/client-ssm": "^3.138.0",
+    "@aws-sdk/client-ssm": "^3.141.0",
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.1",
     "@nestjs/testing": "^9.0.7",
