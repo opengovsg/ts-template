@@ -2,12 +2,11 @@ import { getModelToken } from '@nestjs/sequelize'
 import { Test, TestingModule } from '@nestjs/testing'
 import { PinoLogger } from 'nestjs-pino'
 
-import { ConfigService } from '../config/config.service'
-import { User } from '../database/models'
-import { MailerService } from '../mailer/mailer.service'
-import { OtpService } from '../otp/otp.service'
-
-import { AuthService } from './auth.service'
+import { ConfigService } from '../../config/config.service'
+import { User } from '../../database/models'
+import { MailerService } from '../../mailer/mailer.service'
+import { OtpService } from '../../otp/otp.service'
+import { AuthService } from '../auth.service'
 
 describe('AuthService', () => {
   let service: AuthService
