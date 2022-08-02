@@ -7,8 +7,10 @@ import { ConfigModule } from 'config/config.module'
 import { MailerModule } from 'mailer/mailer.module'
 import { HelmetMiddleware } from 'middlewares/helmet.middleware'
 import { SessionMiddleware } from 'middlewares/session.middleware'
+import { LoggerModule } from 'nestjs-pino'
 import { OtpModule } from 'otp/otp.module'
 import { join } from 'path'
+import { TraceIdProvider } from 'providers/trace-id.provider'
 
 import { ConfigService } from './config/config.service'
 import { DatabaseConfigService } from './database/database-config.service'
@@ -26,6 +28,31 @@ const FRONTEND_PATH = join(
 
 @Module({
   imports: [
+    LoggerModule.forRootAsync({
+      providers: [TraceIdProvider],
+      inject: [TraceIdProvider],
+      useFactory: (traceProvider: TraceIdProvider) => ({
+        pinoHttp: {
+          genReqId: traceProvider.getTraceId.bind(undefined),
+          customProps: (req) => {
+            const context = {
+              trace_id: req.headers['x-datadog-trace-id'],
+              xray_id: req.headers['x-amzn-trace-id'],
+            }
+            return { context, scope: 'NestApplication' }
+          },
+          customSuccessMessage: (req, res) => {
+            return `${req.method ?? ''} ${req.url ?? ''} ${res.statusCode}`
+          },
+          customErrorMessage: (req, res, err) => {
+            return `${req.method ?? ''} ${req.url ?? ''} ${res.statusCode}: (${
+              err.name
+            }) ${err.message}`
+          },
+        },
+        renameContext: 'scope',
+      }),
+    }),
     ConfigModule,
     OtpModule,
     MailerModule,

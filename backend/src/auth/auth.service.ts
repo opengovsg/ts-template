@@ -1,5 +1,6 @@
-import { Injectable, Logger } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
+import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'
 
 import { GenerateOtpDto, VerifyOtpDto } from '~shared/types/auth.dto'
 
@@ -16,6 +17,8 @@ export class AuthService {
     private otpService: OtpService,
     private mailerService: MailerService,
     private config: ConfigService,
+    @InjectPinoLogger(AuthService.name)
+    private readonly logger: PinoLogger,
   ) {}
 
   async generateOtp(generateOtpDto: GenerateOtpDto): Promise<void> {
@@ -36,7 +39,7 @@ export class AuthService {
       html,
     }
 
-    Logger.log(`Sending mail to ${email}`)
+    this.logger.info(`Sending mail to ${email}`)
     return this.mailerService.sendMail(mail)
   }
 
