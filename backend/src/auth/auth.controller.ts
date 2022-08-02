@@ -10,8 +10,9 @@ import {
 import { Request, Response } from 'express'
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'
 
+import { GenerateOtpDto, VerifyOtpDto } from '~shared/types/auth.dto'
+
 import { AuthService } from './auth.service'
-import { GenerateOtpDto, VerifyOtpDto } from './dto'
 
 @Controller('auth')
 export class AuthController {
