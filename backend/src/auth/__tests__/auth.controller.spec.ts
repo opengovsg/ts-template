@@ -1,13 +1,13 @@
 import { getModelToken } from '@nestjs/sequelize'
 import { Test, TestingModule } from '@nestjs/testing'
+import { PinoLogger } from 'nestjs-pino'
 
-import { ConfigModule } from '../config/config.module'
-import { User } from '../database/models'
-import { MailerModule } from '../mailer/mailer.module'
-import { OtpModule } from '../otp/otp.module'
-
-import { AuthController } from './auth.controller'
-import { AuthService } from './auth.service'
+import { ConfigModule } from '../../config/config.module'
+import { User } from '../../database/models'
+import { MailerModule } from '../../mailer/mailer.module'
+import { OtpModule } from '../../otp/otp.module'
+import { AuthController } from '../auth.controller'
+import { AuthService } from '../auth.service'
 
 describe('AuthController', () => {
   let controller: AuthController
@@ -22,6 +22,14 @@ describe('AuthController', () => {
         {
           provide: getModelToken(User),
           useValue: mockModel,
+        },
+        {
+          provide: `${PinoLogger.name}:${AuthController.name}`,
+          useValue: console,
+        },
+        {
+          provide: `${PinoLogger.name}:${AuthService.name}`,
+          useValue: console,
         },
       ],
     }).compile()
