@@ -1,5 +1,6 @@
 import { getModelToken } from '@nestjs/sequelize'
 import { Test, TestingModule } from '@nestjs/testing'
+import { PinoLogger } from 'nestjs-pino'
 
 import { ConfigModule } from '../config/config.module'
 import { User } from '../database/models'
@@ -22,6 +23,14 @@ describe('AuthController', () => {
         {
           provide: getModelToken(User),
           useValue: mockModel,
+        },
+        {
+          provide: `${PinoLogger.name}:${AuthController.name}`,
+          useValue: console,
+        },
+        {
+          provide: `${PinoLogger.name}:${AuthService.name}`,
+          useValue: console,
         },
       ],
     }).compile()
