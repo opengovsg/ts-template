@@ -1,0 +1,72 @@
+{
+  "containerDefinitions": [
+    {
+      "name": "<APP_NAME>-<ENV>-app-container",
+      "image": "<IMAGE_TAG>",
+      "cpu": 0,
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "hostPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+      "environment": [],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "secrets": [
+        {
+          "name": "DB_HOST",
+          "valueFrom": "/application/<ENV>/DB_HOST"
+        },
+        {
+          "name": "DB_NAME",
+          "valueFrom": "/application/<ENV>/DB_NAME"
+        },
+        {
+          "name": "DB_PASSWORD",
+          "valueFrom": "/application/<ENV>/DB_PASSWORD"
+        },
+        {
+          "name": "DB_USERNAME",
+          "valueFrom": "/application/<ENV>/DB_USERNAME"
+        },
+        {
+          "name": "OTP_SENDER_NAME",
+          "valueFrom": "/application/<ENV>/OTP_SENDER_NAME"
+        },
+        {
+          "name": "OTP_EMAIL",
+          "valueFrom": "/application/<ENV>/OTP_EMAIL"
+        },
+        {
+          "name": "NODE_ENV",
+          "valueFrom": "/application/<ENV>/NODE_ENV"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/<APP_NAME>-<ENV>-app",
+          "awslogs-region": "ap-southeast-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ],
+  "family": "<APP_NAME>-<ENV>-app",
+  "taskRoleArn": "arn:aws:iam::<AWS_ACCOUNT_ID>:role/<APP_NAME>-<ENV>-app-execution-task-role",
+  "executionRoleArn": "arn:aws:iam::<AWS_ACCOUNT_ID>:role/<APP_NAME>-<ENV>-app-execution-task-role",
+  "networkMode": "awsvpc",
+  "volumes": [],
+  "placementConstraints": [],
+  "runtimePlatform": {
+    "operatingSystemFamily": "LINUX"
+  },
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "512",
+  "memory": "1024"
+}
