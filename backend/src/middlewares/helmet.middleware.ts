@@ -1,4 +1,5 @@
 import { Injectable, NestMiddleware } from '@nestjs/common'
+import { ConfigService } from 'config/config.service'
 import { NextFunction, Request, RequestHandler, Response } from 'express'
 import helmet from 'helmet'
 
@@ -6,7 +7,7 @@ import helmet from 'helmet'
 export class HelmetMiddleware implements NestMiddleware {
   private middleware: RequestHandler
 
-  constructor() {
+  constructor(private config: ConfigService) {
     this.middleware = helmet({
       contentSecurityPolicy: {
         directives: {
@@ -29,7 +30,7 @@ export class HelmetMiddleware implements NestMiddleware {
           ],
           scriptSrcAttr: ["'none'"],
           scriptSrc: ["'self'"],
-          upgradeInsecureRequests: null, // set to [] in production
+          upgradeInsecureRequests: config.isDevEnv ? null : [],
         },
       },
     })
