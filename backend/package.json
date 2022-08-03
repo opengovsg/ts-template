@@ -24,7 +24,7 @@
     "pino-datadog": "if [ -n \"${DD_API_KEY}\" ]; then pino-datadog; else cat; fi"
   },
   "dependencies": {
-    "@nestjs/common": "^9.0.7",
+    "@nestjs/common": "^9.0.8",
     "@nestjs/core": "^9.0.7",
     "@nestjs/platform-express": "^9.0.7",
     "@nestjs/sequelize": "^9.0.0",
