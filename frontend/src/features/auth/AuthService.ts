@@ -27,5 +27,5 @@ export const verifyLoginOtp = async (params: VerifyOtpRequestDto) => {
 }
 
 export const logout = async (): Promise<void> => {
-  return api.url('/logout').post().json()
+  return api.url('/auth/logout').post().json()
 }
