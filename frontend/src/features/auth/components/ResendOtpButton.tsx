@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useMutation } from 'react-query'
 import { Button } from '@chakra-ui/react'
+import { useMutation } from '@tanstack/react-query'
 
 import { useInterval } from '../../../hooks/useInterval'
 
