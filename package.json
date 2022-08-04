@@ -4,6 +4,10 @@
   "description": "A template for most TypeScript projects in OGP",
   "author": "Open Government Products, GovTech Singapore (https://open.gov.sg)",
   "license": "MIT",
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=16.0.0"
+  },
   "scripts": {
     "all": "concurrently -c green,blue,yellow",
     "on-backend": "npm --prefix backend run",
@@ -36,7 +40,8 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "husky": "^8.0.1"
+    "husky": "^8.0.1",
+    "prettier": "^2.7.1"
   },
   "lint-staged": {
     "**/*.(js|jsx|ts|tsx)": [
