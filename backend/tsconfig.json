@@ -3,6 +3,7 @@
   "exclude": ["**/jest.config.ts"],
   "compilerOptions": {
     "strict": true,
+    "strictPropertyInitialization": false,
     "esModuleInterop": true,
     "module": "commonjs",
     "declaration": true,

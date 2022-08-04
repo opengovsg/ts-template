@@ -1,19 +1,22 @@
 import { Injectable } from '@nestjs/common'
-import { InjectModel } from '@nestjs/sequelize'
+import { InjectRepository } from '@nestjs/typeorm'
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'
+import { FindOneOptions, Repository } from 'typeorm'
 
 import { GenerateOtpDto, VerifyOtpDto } from '~shared/types/auth.dto'
 
 import { ConfigService } from '../config/config.service'
-import { User } from '../database/models'
+import { Session, User } from '../database/entities'
 import { MailerService } from '../mailer/mailer.service'
 import { OtpService } from '../otp/otp.service'
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel(User)
-    private readonly userModel: typeof User,
+    @InjectRepository(User)
+    private readonly usersRepository: Repository<User>,
+    @InjectRepository(Session)
+    private readonly sessionRepository: Repository<Session>,
     private otpService: OtpService,
     private mailerService: MailerService,
     private config: ConfigService,
@@ -32,9 +35,7 @@ export class AuthService {
     // TODO: Replace the `from` and `subject` fields with content specific to your application
     const mail = {
       to: email,
-      from: `${this.config.get('otp.sender_name')} <${this.config.get(
-        'otp.email',
-      )}>`,
+      from: `Starter Kit <${this.config.get('otp.email')}>`,
       subject: 'One-Time Password (OTP) for Starter Kit',
       html,
     }
@@ -46,10 +47,21 @@ export class AuthService {
   async verifyOtp(verifyOtpDto: VerifyOtpDto): Promise<User | undefined> {
     const { email, token } = verifyOtpDto
     const isVerified = this.otpService.verifyOtp(email, token)
-    const [user] = isVerified
-      ? await this.userModel.findOrCreate({ where: { email } })
-      : []
+    return isVerified
+      ? await this.findOrCreate(
+          { where: { email } },
+          {
+            email,
+          },
+        )
+      : undefined
+  }
 
-    return user
+  async findOrCreate(
+    query: FindOneOptions<Partial<User>>,
+    create: Partial<Omit<User, 'id'>>,
+  ): Promise<User> {
+    const user = await this.usersRepository.findOne(query)
+    return user ?? (await this.usersRepository.save(create))
   }
 }

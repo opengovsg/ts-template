@@ -1,9 +1,9 @@
-import { getModelToken } from '@nestjs/sequelize'
 import { Test, TestingModule } from '@nestjs/testing'
+import { getRepositoryToken } from '@nestjs/typeorm'
 import { PinoLogger } from 'nestjs-pino'
 
 import { ConfigService } from '../../config/config.service'
-import { User } from '../../database/models'
+import { Session, User } from '../../database/entities'
 import { MailerService } from '../../mailer/mailer.service'
 import { OtpService } from '../../otp/otp.service'
 import { AuthService } from '../auth.service'
@@ -20,7 +20,11 @@ describe('AuthService', () => {
         OtpService,
         MailerService,
         {
-          provide: getModelToken(User),
+          provide: getRepositoryToken(User),
+          useValue: mockModel,
+        },
+        {
+          provide: getRepositoryToken(Session),
           useValue: mockModel,
         },
         {

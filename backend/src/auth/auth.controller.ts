@@ -6,17 +6,23 @@ import {
   Post,
   Req,
   Res,
+  Session,
 } from '@nestjs/common'
 import { Request, Response } from 'express'
+import { pick } from 'lodash'
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'
 
 import { GenerateOtpDto, VerifyOtpDto } from '~shared/types/auth.dto'
+
+import { ConfigService } from '../config/config.service'
+import { UserSession } from '../types/session'
 
 import { AuthService } from './auth.service'
 
 @Controller('auth')
 export class AuthController {
   constructor(
+    private readonly config: ConfigService,
     private readonly authService: AuthService,
     @InjectPinoLogger(AuthController.name)
     private readonly logger: PinoLogger,
@@ -47,7 +53,7 @@ export class AuthController {
     try {
       const user = await this.authService.verifyOtp(verifyOtpDto)
       if (user) {
-        Object.assign(req.session, { user })
+        req.session.user = user
         this.logger.info(
           `Successfully verified OTP for user ${verifyOtpDto.email}`,
         )
@@ -67,14 +73,20 @@ export class AuthController {
   }
 
   @Post('logout')
-  async logout(@Req() req: Request, @Res() res: Response): Promise<void> {
-    req.session.destroy(() =>
+  async logout(
+    @Req() req: Request,
+    @Session() session: UserSession,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<void> {
+    res.clearCookie(this.config.get('session.name'))
+    session.destroy(() =>
       res.status(HttpStatus.OK).json({ message: 'Logged out' }),
     )
   }
 
   @Get('whoami')
   async whoami(@Req() req: Request, @Res() res: Response): Promise<void> {
-    res.status(HttpStatus.OK).json(req.session.user || null)
+    const user = req.session.user
+    res.status(HttpStatus.OK).json(user ? pick(user, ['id', 'email']) : null)
   }
 }

@@ -11,8 +11,6 @@ async function bootstrap() {
   })
   app.useLogger(app.get(Logger))
 
-  app.setGlobalPrefix('/api')
-
   const config = app.get(ConfigService)
   if (!config.isDevEnv) {
     app.set('trust proxy', 1)
