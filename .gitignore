@@ -62,9 +62,7 @@ typings/
 .next
 
 # Typescript build
-build
-backend/build
-frontend/build
+build/
 
 # JetBrains IDEs' settings
 .idea
