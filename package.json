@@ -8,6 +8,11 @@
     "npm": ">=7.0.0",
     "node": ">=16.0.0"
   },
+  "workspaces": {
+    "packages": [
+      "./packages/*"
+    ]
+  },
   "scripts": {
     "all": "concurrently -c green,blue,yellow",
     "on-backend": "npm --prefix backend run",
