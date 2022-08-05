@@ -9,7 +9,6 @@ import {
   Session,
 } from '@nestjs/common'
 import { Request, Response } from 'express'
-import { pick } from 'lodash'
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'
 
 import { GenerateOtpDto, VerifyOtpDto } from '~shared/types/auth.dto'
@@ -87,6 +86,8 @@ export class AuthController {
   @Get('whoami')
   async whoami(@Req() req: Request, @Res() res: Response): Promise<void> {
     const user = req.session.user
-    res.status(HttpStatus.OK).json(user ? pick(user, ['id', 'email']) : null)
+    res
+      .status(HttpStatus.OK)
+      .json(user ? { id: user.id, email: user.email } : null)
   }
 }

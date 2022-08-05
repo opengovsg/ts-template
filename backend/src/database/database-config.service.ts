@@ -4,7 +4,7 @@ import { Client } from 'pg'
 
 import { ConfigService } from '../config/config.service'
 
-import { getOrmConfig } from './ormconfig'
+import { base } from './ormconfig'
 
 @Injectable()
 export class DatabaseConfigService implements TypeOrmOptionsFactory {
@@ -33,6 +33,6 @@ export class DatabaseConfigService implements TypeOrmOptionsFactory {
     // Create database, remove in production
     await this.createDatabase()
 
-    return getOrmConfig(this.config.config)
+    return base
   }
 }
