@@ -26,6 +26,7 @@ export interface ConfigSchema {
     secret: string
     numValidPastWindows: number
     numValidFutureWindows: number
+    sender_name: string
     email: string
   }
   health: { heapSizeThreshold: number; rssThreshold: number }
@@ -147,6 +148,12 @@ export const schema: Schema<ConfigSchema> = {
       env: 'OTP_NUM_VALID_FUTURE_WINDOWS',
       format: 'int',
       default: 0,
+    },
+    sender_name: {
+      doc: 'Name of email sender',
+      env: 'OTP_SENDER_NAME',
+      format: String,
+      default: 'Starter Kit',
     },
     email: {
       doc: 'Email to send OTP emails from',

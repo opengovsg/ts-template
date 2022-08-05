@@ -35,7 +35,9 @@ export class AuthService {
     // TODO: Replace the `from` and `subject` fields with content specific to your application
     const mail = {
       to: email,
-      from: `Starter Kit <${this.config.get('otp.email')}>`,
+      from: `${this.config.get('otp.sender_name')} <${this.config.get(
+        'otp.email',
+      )}>`,
       subject: 'One-Time Password (OTP) for Starter Kit',
       html,
     }
