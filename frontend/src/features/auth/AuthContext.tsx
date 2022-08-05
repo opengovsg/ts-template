@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useCallback, useContext } from 'react'
-import { useQuery, useQueryClient } from 'react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { WhoAmIResponseDto } from '~shared/types/auth.dto'
 
@@ -45,7 +45,7 @@ const useProvideAuth = () => {
   const queryClient = useQueryClient()
 
   const { data: user, isLoading } = useQuery(
-    'currentUser',
+    ['currentUser'],
     () => AuthService.fetchUser(),
     // 10 minutes staletime, do not need to retrieve so often.
     { staleTime: 600000, enabled: !!isLoggedIn },
