@@ -1,16 +1,13 @@
 import { Injectable } from '@nestjs/common'
-import {
-  SequelizeModuleOptions,
-  SequelizeOptionsFactory,
-} from '@nestjs/sequelize'
+import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm'
 import { Client } from 'pg'
 
 import { ConfigService } from '../config/config.service'
 
-import { User } from './models'
+import { base } from './ormconfig'
 
 @Injectable()
-export class DatabaseConfigService implements SequelizeOptionsFactory {
+export class DatabaseConfigService implements TypeOrmOptionsFactory {
   constructor(private readonly config: ConfigService) {}
 
   private async createDatabase() {
@@ -32,25 +29,10 @@ export class DatabaseConfigService implements SequelizeOptionsFactory {
     await client.end()
   }
 
-  async createSequelizeOptions(): Promise<SequelizeModuleOptions> {
+  async createTypeOrmOptions(): Promise<TypeOrmModuleOptions> {
     // Create database, remove in production
     await this.createDatabase()
 
-    return {
-      dialect: 'postgres',
-      host: this.config.get('database.host'),
-      port: this.config.get('database.port'),
-      username: this.config.get('database.username'),
-      password: this.config.get('database.password'),
-      database: this.config.get('database.name'),
-      models: [User],
-      autoLoadModels: true, // TO-DO: remove in production
-      synchronize: true, // TO-DO: remove in production
-      pool: {
-        min: this.config.get('database.minPool'),
-        max: this.config.get('database.maxPool'),
-      },
-      logging: this.config.get('database.logging'),
-    }
+    return base
   }
 }

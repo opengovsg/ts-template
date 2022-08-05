@@ -106,7 +106,7 @@ export const schema: Schema<ConfigSchema> = {
     name: {
       doc: 'Name of session ID cookie to set in response',
       env: 'SESSION_NAME',
-      default: 'ts-template',
+      default: 'ts-template.sid',
       format: String,
     },
     secret: {
@@ -150,7 +150,7 @@ export const schema: Schema<ConfigSchema> = {
       default: 0,
     },
     sender_name: {
-      doc: 'Name to send OTP emails from',
+      doc: 'Name of email sender',
       env: 'OTP_SENDER_NAME',
       format: String,
       default: 'Starter Kit',

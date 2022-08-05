@@ -1,20 +1,16 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
-import { SequelizeModule } from '@nestjs/sequelize'
 import { ServeStaticModule } from '@nestjs/serve-static'
-import { TerminusModule } from '@nestjs/terminus'
-import { AuthModule } from 'auth/auth.module'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { ApiModule } from 'api.module'
 import { ConfigModule } from 'config/config.module'
-import { MailerModule } from 'mailer/mailer.module'
 import { HelmetMiddleware } from 'middlewares/helmet.middleware'
 import { SessionMiddleware } from 'middlewares/session.middleware'
 import { LoggerModule } from 'nestjs-pino'
-import { OtpModule } from 'otp/otp.module'
 import { join } from 'path'
 import { TraceIdProvider } from 'providers/trace-id.provider'
 
 import { ConfigService } from './config/config.service'
 import { DatabaseConfigService } from './database/database-config.service'
-import { HealthModule } from './health/health.module'
 
 const FRONTEND_PATH = join(
   __dirname,
@@ -28,6 +24,8 @@ const FRONTEND_PATH = join(
 
 @Module({
   imports: [
+    ApiModule,
+    ConfigModule,
     LoggerModule.forRootAsync({
       providers: [TraceIdProvider],
       inject: [TraceIdProvider],
@@ -53,17 +51,11 @@ const FRONTEND_PATH = join(
         renameContext: 'scope',
       }),
     }),
-    ConfigModule,
-    OtpModule,
-    MailerModule,
-    SequelizeModule.forRootAsync({
+    TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useClass: DatabaseConfigService,
     }),
-    AuthModule,
-    TerminusModule,
-    HealthModule,
     ServeStaticModule.forRoot({
       rootPath: FRONTEND_PATH,
       exclude: ['/api*'], // Return 404 for non-existent API routes

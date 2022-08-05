@@ -6,6 +6,6 @@ test('renders page', async () => {
   render(<App />)
 
   await waitFor(() =>
-    expect(screen.getByText('This is a mock login page')).toBeInTheDocument(),
+    expect(screen.getByText('Get started with Template')).toBeInTheDocument(),
   )
 })

@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common'
-import { SequelizeModule } from '@nestjs/sequelize'
 import { TerminusModule } from '@nestjs/terminus'
+import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { HealthController } from './health.controller'
 
 @Module({
-  imports: [SequelizeModule, TerminusModule],
+  imports: [TerminusModule, TypeOrmModule],
   controllers: [HealthController],
 })
 export class HealthModule {}

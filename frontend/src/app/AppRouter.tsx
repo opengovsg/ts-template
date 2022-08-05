@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
+import { Flex, Spinner } from '@chakra-ui/react'
 
 import { PrivateRoute } from '~/app/PrivateRoute'
 import { PublicRoute } from '~/app/PublicRoute'
@@ -13,7 +14,13 @@ const HealthPage = lazy(() => import('~features/health/HealthPage'))
 
 export const AppRouter = (): JSX.Element => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense
+      fallback={
+        <Flex w="full" h="full" justify="center" align="center">
+          <Spinner />
+        </Flex>
+      }
+    >
       <Routes>
         <Route
           path={routes.index}
