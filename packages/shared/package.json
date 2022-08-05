@@ -2,6 +2,10 @@
   "name": "@opengovsg/shared",
   "version": "0.1.0",
   "private": true,
+  "main": "./build/index.js",
+  "exports": {
+    ".": "./build/index.js"
+  },
   "scripts": {
     "pre-commit": "lint-staged",
     "lint": "eslint --ext ts,tsx,js,jsx . && prettier -c \"src/**/*.{ts,tsx}\"",
