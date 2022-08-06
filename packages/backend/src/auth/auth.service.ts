@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { GenerateOtpDto, VerifyOtpDto } from '@opengovsg/shared'
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'
 import { FindOneOptions, Repository } from 'typeorm'
-
-import { GenerateOtpDto, VerifyOtpDto } from '~shared/types/auth.dto'
 
 import { ConfigService } from '../config/config.service'
 import { Session, User } from '../database/entities'

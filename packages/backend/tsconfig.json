@@ -16,12 +16,10 @@
     "incremental": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "paths": {
-      "~shared/*": ["../../shared/src/*"]
-    }
+    "forceConsistentCasingInFileNames": true
   },
   "ts-node": {
     "require": ["tsconfig-paths/register"]
-  }
+  },
+  "references": [{ "path": "../shared" }]
 }
