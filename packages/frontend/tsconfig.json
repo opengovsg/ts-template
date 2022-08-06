@@ -20,5 +20,6 @@
     "strictPropertyInitialization": false
   },
   "include": ["src/**/*", ".storybook/**/*"],
-  "exclude": ["**/jest.config.ts"]
+  "exclude": ["**/jest.config.ts"],
+  "references": [{ "path": "../shared" }]
 }

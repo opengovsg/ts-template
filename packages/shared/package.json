@@ -11,6 +11,7 @@
     "lint": "eslint --ext ts,tsx,js,jsx . && prettier -c \"src/**/*.{ts,tsx}\"",
     "lint:fix": "eslint --fix --ext ts,tsx,js,jsx . && prettier -c --write \"src/**/*.{ts,tsx}\"",
     "build": "tsc --build --clean && tsc --build tsconfig.build.json --force",
+    "postinstall": "npm run build",
     "test": "jest",
     "test:watch": "jest --watch --runInBand",
     "test:cov": "jest --coverage --runInBand",

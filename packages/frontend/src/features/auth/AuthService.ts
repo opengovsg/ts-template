@@ -4,7 +4,7 @@ import {
   VerifyOtpRequestDto,
   VerifyOtpResponseDto,
   WhoAmIResponseDto,
-} from '~shared/types/auth.dto'
+} from '@opengovsg/shared'
 
 import { api } from '~/api'
 
