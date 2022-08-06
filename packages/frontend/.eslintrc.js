@@ -1,7 +1,7 @@
 module.exports = {
   plugins: ['react', 'react-hooks'],
   extends: [
-    '../.eslintrc.js',
+    '../../.eslintrc.js',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
   ],
