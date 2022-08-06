@@ -1,17 +1,28 @@
 # TypeScript Project Files Template for OGP
 
-## Folder Structure
-Two separate TypeScript projects, `frontend/` and `backend/`, 
-for frontend and backend respectively.
+## Get started
 
-Structure within frontend/backend folder taken from \[1\]. Notably, 
+`npm install`
+
+Installs dependencies for all workspace projects.
+
+`npm run dev`
+
+Runs all projects and spins up docker containers for DB and MailDev.
+
+## Folder Structure
+
+All projects live under `./packages` directory. Default projects are under `/frontend` and `/backend` and `/shared`.
+
+Structure within frontend/backend folder taken from \[1\]. Notably,
 we distinguish between `lib/` and `src/` directories, the latter for
-files that we have to process (eg, transpile) into `build/` or `dist/`. 
+files that we have to process (eg, transpile) into `build/` or `dist/`.
 
 ## Linting
+
 Done with ESLint, using the following rule configs:
 
-- `eslint:recommended` 
+- `eslint:recommended`
 - `plugin:prettier/recommended`
 
 Prettier is further configured using the rules in `.prettierrc.js`.
@@ -27,20 +38,24 @@ settings for linting to work in both `frontend/` and `backend/`:
 ```
 
 ### Additional rules
+
 Developers are free to add more ESLint rules that bring their project
 in-line with norms specific to their language or framework of choice,
 eg. typescript or React.
 
 ## Conventional Commits
+
 Commit messages follow [conventional commits](https://conventionalcommits.org/).
 This is enforced by commitlint, when pushing to remote branch.
 
 ### Commitizen
-[Commitizen](https://github.com/commitizen/cz-cli) has been installed as a 
+
+[Commitizen](https://github.com/commitizen/cz-cli) has been installed as a
 convenience for writing conventional commit messages, via `npm run cz`.
 This may be removed to minimise project dependencies.
 
 ## Commit Hooks
+
 Husky is used in tandem with:
 
 - lint-staged to ensure files are linted on commit
@@ -52,6 +67,7 @@ and there would be no remote branch. Bypass this the first time with
 `git push --no-verify`.
 
 ## Continuous Integration
+
 Travis is commonly used in OGP. A `.travis.yml` config has been provided
 for convenience, which will run the following in order:
 
@@ -64,11 +80,13 @@ Builds will fail if any of these tasks fail.
 ## Miscellany
 
 ### Dependabot
-`.github/dependabot.yml` is in place so that npm dependencies will be 
+
+`.github/dependabot.yml` is in place so that npm dependencies will be
 regularly updated.
 
 ### Gitpod
-A `.gitpod.yml` has been configured to run `npm install` for 
+
+A `.gitpod.yml` has been configured to run `npm install` for
 Gitpod users creating workspaces from the repository.
 
 ## References
