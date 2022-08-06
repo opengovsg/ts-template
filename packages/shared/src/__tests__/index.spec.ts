@@ -1,4 +1,4 @@
-import { NAME } from '../index'
+import { NAME } from '../index.js'
 
 describe('dummy test', () => {
   test('equality of same', () => {
