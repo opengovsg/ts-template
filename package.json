@@ -15,10 +15,9 @@
   },
   "scripts": {
     "all": "concurrently -c green,blue,yellow",
-    "on-backend": "npm --prefix backend run",
-    "on-frontend": "npm --prefix frontend run",
-    "on-shared": "npm --prefix shared run",
-    "postinstall": "npm --prefix backend install && npm --prefix frontend install && npm --prefix shared install",
+    "on-backend": "npm --workspace=@opengovsg/backend run",
+    "on-frontend": "npm --workspace=@opengovsg/frontend run",
+    "on-shared": "npm --workspace=@opengovsg/shared run",
     "dev": "npm run all \"docker-compose up\" \"npm run dev:app\"",
     "dev:docker": "docker-compose up --build",
     "dev:app": "npm run all -- --kill-others \"npm:on-* dev\"",
@@ -28,7 +27,7 @@
     "build": "npm run all \"npm:on-* build\"",
     "coverage": "npm run on-backend -- test:cov && cat backend/coverage/lcov.info > lcov.info",
     "cz": "git-cz",
-    "start": "npm --prefix backend start",
+    "start": "npm --workspace=@opengovsg/backend start",
     "prepare": "husky install"
   },
   "devDependencies": {
