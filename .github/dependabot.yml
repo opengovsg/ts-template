@@ -10,10 +10,14 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/frontend" # Location of package manifests
+    directory: "/packages/frontend" # Location of package manifests
     schedule:
       interval: "daily"
   - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/backend" # Location of package manifests
+    directory: "/packages/backend" # Location of package manifests
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "npm" # See documentation for possible values
+    directory: "/packages/shared" # Location of package manifests
     schedule:
       interval: "daily"

@@ -15,7 +15,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
       - name: Cache Node.js modules
         uses: actions/cache@v3
         with:
@@ -26,10 +26,11 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
       - run: npm ci
-      - run: npx lockfile-lint --type npm --path frontend/package-lock.json --validate-https --allowed-hosts npm
-      - run: npx lockfile-lint --type npm --path backend/package-lock.json --validate-https --allowed-hosts npm
+      - run: npx lockfile-lint --type npm --path packages/frontend/package-lock.json --validate-https --allowed-hosts npm
+      - run: npx lockfile-lint --type npm --path packages/backend/package-lock.json --validate-https --allowed-hosts npm
+      - run: npx lockfile-lint --type npm --path packages/shared/package-lock.json --validate-https --allowed-hosts npm
       - run: npm run lint
-      - run: npm run on-backend -- build
+      - run: npm run build
 
   test:
     name: Test
@@ -54,7 +55,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
       - name: Cache Node.js modules
         uses: actions/cache@v3
         with:

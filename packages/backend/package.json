@@ -15,7 +15,7 @@
     "start": "nest start | npm run pino-datadog",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:cov": "jest --coverage && sed -i.bak 's/SF:src/SF:backend\\/src/g' coverage/lcov.info",
+    "test:cov": "jest --coverage && sed -i.bak 's/SF:src/SF:packages\\/backend\\/src/g' coverage/lcov.info",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "env:load": "ENV=${ENV:-'development'} node scripts/env/loader.mjs",
