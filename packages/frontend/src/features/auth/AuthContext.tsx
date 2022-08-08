@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useCallback, useContext } from 'react'
-import { WhoAmIResponseDto } from '@opengovsg/shared'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { WhoAmIResponseDto } from '@ts/shared'
 
 import { LOGGED_IN_KEY, useLocalStorage } from '~features/localStorage'
 

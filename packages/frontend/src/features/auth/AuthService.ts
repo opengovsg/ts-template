@@ -4,7 +4,7 @@ import {
   VerifyOtpRequestDto,
   VerifyOtpResponseDto,
   WhoAmIResponseDto,
-} from '@opengovsg/shared'
+} from '@ts/shared'
 
 import { api } from '~/api'
 

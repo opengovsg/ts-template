@@ -5,7 +5,7 @@ import {
   MemoryHealthIndicator,
   TypeOrmHealthIndicator,
 } from '@nestjs/terminus'
-import { HealthDto } from '@opengovsg/shared'
+import { HealthDto } from '@ts/shared'
 
 import { ConfigService } from '../config/config.service'
 

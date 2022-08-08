@@ -1,5 +1,5 @@
-import { HealthDto } from '@opengovsg/shared'
 import { useQuery } from '@tanstack/react-query'
+import { HealthDto } from '@ts/shared'
 
 import { api } from '~/api'
 

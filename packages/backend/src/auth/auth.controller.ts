@@ -8,7 +8,7 @@ import {
   Res,
   Session,
 } from '@nestjs/common'
-import { GenerateOtpDto, VerifyOtpDto } from '@opengovsg/shared'
+import { GenerateOtpDto, VerifyOtpDto } from '@ts/shared'
 import { Request, Response } from 'express'
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'
 
