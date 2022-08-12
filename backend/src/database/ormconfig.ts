@@ -21,6 +21,9 @@ export const base = {
   migrationsRun: false,
   // js for runtime, ts for typeorm cli
   entities: [join(__dirname, 'entities', '*.entity{.js,.ts}')],
+  ...(config.get('database.ca')
+    ? { ssl: { ca: config.get('database.ca') } }
+    : {}),
   // ref: https://github.com/typeorm/typeorm/issues/3388 to set pool size
   extra: {
     min: config.get('database.minPool'),

@@ -13,6 +13,7 @@ export interface ConfigSchema {
     logging: boolean
     minPool: number
     maxPool: number
+    ca: string
   }
   session: {
     secret: string
@@ -100,6 +101,11 @@ export const schema: Schema<ConfigSchema> = {
     maxPool: {
       env: 'DB_MAX_POOL_SIZE',
       default: 100,
+    },
+    ca: {
+      env: 'CA_CERT',
+      default: '',
+      format: String,
     },
   },
   session: {
