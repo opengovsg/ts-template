@@ -4,7 +4,7 @@
   "private": true,
   "proxy": "http://localhost:8080/",
   "dependencies": {
-    "@chakra-ui/react": "^2.2.6",
+    "@chakra-ui/react": "^2.2.8",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@tanstack/react-query": "^4.1.0",
