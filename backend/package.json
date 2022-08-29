@@ -52,7 +52,7 @@
     "pino-http": "^8.2.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.6",
-    "typeorm": "^0.3.7"
+    "typeorm": "^0.3.9"
   },
   "devDependencies": {
     "@aws-sdk/client-ssm": "^3.159.0",
