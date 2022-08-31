@@ -41,7 +41,7 @@
     "aws-sdk": "^2.1205.0",
     "connect-typeorm": "^2.0.0",
     "convict": "^6.2.3",
-    "dotenv": "^16.0.1",
+    "dotenv": "^16.0.2",
     "express-session": "^1.17.3",
     "helmet": "^5.1.1",
     "nestjs-pino": "^3.1.1",
@@ -55,7 +55,7 @@
     "typeorm": "^0.3.9"
   },
   "devDependencies": {
-    "@aws-sdk/client-ssm": "^3.160.0",
+    "@aws-sdk/client-ssm": "^3.161.0",
     "@nestjs/cli": "^9.1.1",
     "@nestjs/schematics": "^9.0.1",
     "@nestjs/testing": "^9.0.11",
