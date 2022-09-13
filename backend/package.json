@@ -65,7 +65,7 @@
     "@types/helmet": "^4.0.0",
     "@types/jest": "^28.1.8",
     "@types/node": "*",
-    "@types/nodemailer": "^6.4.5",
+    "@types/nodemailer": "^6.4.6",
     "@types/pg": "^8.6.5",
     "@types/supertest": "^2.0.12",
     "dotenv-cli": "^6.0.0",
