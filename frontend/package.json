@@ -24,7 +24,7 @@
     "@storybook/builder-webpack5": "^6.5.10",
     "@storybook/manager-webpack5": "^6.5.10",
     "@storybook/mdx2-csf": "^0.0.3",
-    "@storybook/node-logger": "^6.5.10",
+    "@storybook/node-logger": "^6.5.11",
     "@storybook/preset-create-react-app": "^4.1.2",
     "@storybook/react": "^6.5.11",
     "@storybook/testing-library": "^0.0.13",
