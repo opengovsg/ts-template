@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@snyk/protect": "latest",
-    "@storybook/addon-actions": "^6.5.11",
+    "@storybook/addon-actions": "^6.5.12",
     "@storybook/addon-essentials": "^6.5.11",
     "@storybook/addon-interactions": "^6.5.11",
     "@storybook/addon-links": "^6.5.11",
