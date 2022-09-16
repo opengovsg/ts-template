@@ -20,7 +20,7 @@
     "@storybook/addon-actions": "^6.5.12",
     "@storybook/addon-essentials": "^6.5.12",
     "@storybook/addon-interactions": "^6.5.12",
-    "@storybook/addon-links": "^6.5.11",
+    "@storybook/addon-links": "^6.5.12",
     "@storybook/builder-webpack5": "^6.5.11",
     "@storybook/manager-webpack5": "^6.5.12",
     "@storybook/mdx2-csf": "^0.0.3",
