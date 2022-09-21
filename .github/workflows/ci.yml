@@ -15,7 +15,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
       - name: Cache Node.js modules
         uses: actions/cache@v3
         with:
@@ -54,7 +54,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
       - name: Cache Node.js modules
         uses: actions/cache@v3
         with:
@@ -126,11 +126,16 @@ jobs:
           BRANCH: ${{ steps.extract_branch.outputs.branch }}
           SHA: ${{ github.sha }}
       - run: docker build -t ${{ steps.extract_tag.outputs.tag }} -f Dockerfile .
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
       - name: Push to ECR
         if: needs.gatekeep.outputs.proceed == 'true'
         uses: opengovsg/gh-ecr-push@v1
         with:
-          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
           secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           region: ap-southeast-1
           local-image: ${{ steps.extract_tag.outputs.tag }}
@@ -172,11 +177,16 @@ jobs:
             echo EB_ENV=${{ secrets.EB_ENV_PRODUCTION }} >> $GITHUB_ENV;
           fi
         id: select_eb_vars
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
       - name: Deploy to EB
         uses: opengovsg/beanstalk-deploy@v11
         with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_access_key: ${{ env.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ env.AWS_SECRET_ACCESS_KEY }}
           application_name: ${{ env.EB_APP }}
           environment_name: ${{ env.EB_ENV }}
           version_label: ${{ steps.get_label.outputs.label }}
