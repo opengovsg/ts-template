@@ -125,7 +125,7 @@ Resources:
                   - s3:ListBucket
                   - s3:PutObject
                   - s3:ListObjectsV2
-                Resource: arn:aws:s3:::admin.form.gov.sg/*
+                Resource: arn:aws:s3:::<s3-bucket-name>/*
 ​
   GithubOidc:
     Type: AWS::IAM::OIDCProvider
