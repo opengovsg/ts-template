@@ -88,7 +88,7 @@ jobs:
     steps:
       - id: determine_proceed
         run: |
-          if [[ -z "${AWS_ACCESS_KEY_ID}" || -z "${AWS_SECRET_ACCESS_KEY}"  ]]; then
+          if [[ -z "${AWS_ROLE_ARN}" || -z "${AWS_REGION}"  ]]; then
             echo '::set-output name=proceed::false';
           elif [[ -z "${ECR_REPO}" || -z "${ECR_URL}"  ]]; then
             echo '::set-output name=proceed::false';
@@ -100,8 +100,8 @@ jobs:
             echo '::set-output name=proceed::false';
           fi
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
           ECR_REPO: ${{ secrets.ECR_REPO }}
           ECR_URL: ${{ secrets.ECR_URL }}
 
@@ -127,16 +127,17 @@ jobs:
           SHA: ${{ github.sha }}
       - run: docker build -t ${{ steps.extract_tag.outputs.tag }} -f Dockerfile .
       - name: Configure AWS Credentials
+        if: needs.gatekeep.outputs.proceed == 'true'
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ env.AWS_ROLE_ARN }}
-          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
       - name: Push to ECR
         if: needs.gatekeep.outputs.proceed == 'true'
         uses: opengovsg/gh-ecr-push@v1
         with:
           access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
-          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
           region: ap-southeast-1
           local-image: ${{ steps.extract_tag.outputs.tag }}
           image: ${{ secrets.ECR_REPO }}:${{ steps.extract_tag.outputs.tag }}
@@ -180,8 +181,8 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ env.AWS_ROLE_ARN }}
-          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
       - name: Deploy to EB
         uses: opengovsg/beanstalk-deploy@v11
         with:
