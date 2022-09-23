@@ -32,9 +32,9 @@
     "seed:revert": "npm run preload -- typeorm-ts-node-esm migration:revert -d src/database/datasource-seed.ts"
   },
   "dependencies": {
-    "@nestjs/common": "^9.1.1",
+    "@nestjs/common": "^9.1.2",
     "@nestjs/core": "^9.1.2",
-    "@nestjs/platform-express": "^9.0.11",
+    "@nestjs/platform-express": "^9.1.2",
     "@nestjs/serve-static": "^3.0.0",
     "@nestjs/terminus": "^9.1.1",
     "@nestjs/typeorm": "^9.0.1",
