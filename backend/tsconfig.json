@@ -1,6 +1,10 @@
 {
-  "include": ["src/**/*"],
-  "exclude": ["**/jest.config.ts"],
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "**/jest.config.ts"
+  ],
   "compilerOptions": {
     "strict": true,
     "strictPropertyInitialization": false,
@@ -18,10 +22,14 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "~shared/*": ["../../shared/src/*"]
+      "~shared/*": [
+        "../../shared/build/*"
+      ]
     }
   },
   "ts-node": {
-    "require": ["tsconfig-paths/register"]
+    "require": [
+      "tsconfig-paths/register"
+    ]
   }
 }
