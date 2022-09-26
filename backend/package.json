@@ -12,7 +12,7 @@
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "dev": "npm run preload -- nest start --watch | npm run pino-pretty",
     "debug": "npm run preload -- nest start --debug --watch | npm run pino-pretty",
-    "start": "nest start | npm run pino-datadog",
+    "start": "node -r tsconfig-paths/register build/main | npm run pino-datadog",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage && sed -i.bak 's/SF:src/SF:backend\\/src/g' coverage/lcov.info",

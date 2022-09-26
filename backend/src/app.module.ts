@@ -12,15 +12,7 @@ import { TraceIdProvider } from 'providers/trace-id.provider'
 import { ConfigService } from './config/config.service'
 import { DatabaseConfigService } from './database/database-config.service'
 
-const FRONTEND_PATH = join(
-  __dirname,
-  '..',
-  '..',
-  '..',
-  '..',
-  'frontend',
-  'build',
-)
+const FRONTEND_PATH = join(__dirname, '..', '..', 'frontend', 'build')
 
 @Module({
   imports: [
