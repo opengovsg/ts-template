@@ -82,119 +82,90 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: ./lcov.info
 
-  gatekeep:
-    name: Determine if Build & Deploy is needed
+  proceed:
+    name: Determine if deploy is needed
     outputs:
-      proceed: ${{ steps.determine_proceed.outputs.proceed }}
+      ecs: ${{ steps.determine-ecs.outputs.ecs }}
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     steps:
-      - id: determine_proceed
+      - id: determine-ecs
         run: |
-          if [[ -z "${AWS_ROLE_ARN}" || -z "${AWS_REGION}"  ]]; then
-            echo '::set-output name=proceed::false';
-          elif [[ -z "${ECR_REPO}" || -z "${ECR_URL}"  ]]; then
-            echo '::set-output name=proceed::false';
-          elif [[ $GITHUB_REF == $STAGING_BRANCH ]]; then
-            echo '::set-output name=proceed::true';
-          elif [[ $GITHUB_REF == $PRODUCTION_BRANCH ]]; then
-            echo '::set-output name=proceed::true';
+          if [[ -z "${AWS_ROLE_ARN_STAGING}" || -z "${AWS_ACCOUNT_ID_STAGING}" ]]; then
+            echo '::set-output name=ecs::false';
+          elif [[ -z "${AWS_ROLE_ARN_PROD}" || -z "${AWS_ACCOUNT_ID_PROD}" ]]; then
+            echo '::set-output name=ecs::false';
+          elif [[ -z "${ECR_REPO}" || -z "${AWS_REGION}" ]]; then
+            echo '::set-output name=ecs::false';
           else
-            echo '::set-output name=proceed::false';
+            echo '::set-output name=ecs::true';
           fi
         env:
-          AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
+          AWS_ACCOUNT_ID_STAGING: ${{ secrets.AWS_ACCOUNT_ID_STAGING }}
+          AWS_ROLE_ARN_STAGING: ${{ secrets.AWS_ROLE_ARN_STAGING }}
+          AWS_ACCOUNT_ID_PROD: ${{ secrets.AWS_ACCOUNT_ID_PROD }}
+          AWS_ROLE_ARN_PROD: ${{ secrets.AWS_ROLE_ARN_PROD }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
           ECR_REPO: ${{ secrets.ECR_REPO }}
-          ECR_URL: ${{ secrets.ECR_URL }}
 
-  build:
-    name: Build and push
+  build-docker:
+    name: Build Docker image
     runs-on: ubuntu-latest
-    needs: [gatekeep]
     outputs:
-      branch: ${{ steps.extract_branch.outputs.branch }}
-      tag: ${{steps.extract_tag.outputs.tag}}
+      branch: ${{ steps.extract-branch.outputs.branch }}
+      tag: ${{steps.extract-tag.outputs.tag}}
     steps:
       - uses: actions/checkout@v2
       - name: Extract branch name
+        id: extract-branch
         shell: bash
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
-      - name: Extract ECR tag
+      - name: Extract tag
+        id: extract-tag
         shell: bash
         run: echo "##[set-output name=tag;]$(echo ghactions-${BRANCH}-${SHA})"
-        id: extract_tag
         env:
-          BRANCH: ${{ steps.extract_branch.outputs.branch }}
+          BRANCH: ${{ steps.extract-branch.outputs.branch }}
           SHA: ${{ github.sha }}
-      - run: docker build -t ${{ steps.extract_tag.outputs.tag }} -f Dockerfile .
-      - name: Configure AWS Credentials
-        if: needs.gatekeep.outputs.proceed == 'true'
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: ${{ secrets.AWS_REGION }}
-      - name: Push to ECR
-        if: needs.gatekeep.outputs.proceed == 'true'
-        uses: opengovsg/gh-ecr-push@v1
-        with:
-          access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
-          secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
-          region: ap-southeast-1
-          local-image: ${{ steps.extract_tag.outputs.tag }}
-          image: ${{ secrets.ECR_REPO }}:${{ steps.extract_tag.outputs.tag }}
+      - run: docker build -t ${{ steps.extract-tag.outputs.tag }} -f Dockerfile .
 
-  deploy:
-    name: Deploy to Elastic Beanstalk
+  deploy-ecs:
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
+    name: Deploy to ECS
     runs-on: ubuntu-latest
-    needs: [lint, test, gatekeep, build]
-    if: needs.gatekeep.outputs.proceed == 'true'
+    needs: [lint, test, proceed, build-docker]
+    if: needs.proceed.outputs.ecs == 'true'
     steps:
       - uses: actions/checkout@v2
-      - name: Package Dockerrun.aws.json
-        run: |
-          sed -i -e "s|@REPO|$REPO|g" Dockerrun.aws.json
-          sed -i -e "s|@TAG|$TAG|g" Dockerrun.aws.json
-          zip -r "deploy.zip" Dockerrun.aws.json .ebextensions/
-        env:
-          REPO: ${{secrets.ECR_URL}}/${{secrets.ECR_REPO}}
-          TAG: ${{ needs.build.outputs.tag }}
-      - name: Get timestamp
-        shell: bash
-        run: echo "##[set-output name=timestamp;]$(env TZ=Asia/Singapore date '+%Y%m%d%H%M%S')"
-        id: get_timestamp
-      - name: Get Elastic Beanstalk label
-        shell: bash
-        run: echo "##[set-output name=label;]$(echo ${TAG}-${TIMESTAMP})"
-        id: get_label
-        env:
-          TAG: ${{ needs.build.outputs.tag }}
-          TIMESTAMP: ${{ steps.get_timestamp.outputs.timestamp }}
-      - name: Select Elastic Beanstalk variables
-        run: |
-          if [[ $GITHUB_REF == $STAGING_BRANCH ]]; then
-            echo EB_APP=${{ secrets.EB_APP_STAGING }} >> $GITHUB_ENV;
-            echo EB_ENV=${{ secrets.EB_ENV_STAGING }} >> $GITHUB_ENV;
-          elif [[ $GITHUB_REF == $PRODUCTION_BRANCH ]]; then
-            echo EB_APP=${{ secrets.EB_APP_PRODUCTION }} >> $GITHUB_ENV;
-            echo EB_ENV=${{ secrets.EB_ENV_PRODUCTION }} >> $GITHUB_ENV;
-          fi
-        id: select_eb_vars
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Deploy to ECS Staging
+        id: ecs-staging
+        uses: ./.github/workflows/aws-deploy.yml
+        if: ${{ github.ref }} == ${{ env.STAGING_BRANCH }}
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: ${{ secrets.AWS_REGION }}
-      - name: Deploy to EB
-        uses: opengovsg/beanstalk-deploy@v11
+          aws-region: 'ap-southeast-1'
+          aws-account-id: ${{ secrets.AWS_ACCOUNT_ID_STAGING }}
+          cicd-role: ${{ secrets.AWS_ROLE_ARN_STAGING }}
+          ecr-repository: ${{ secrets.ECR_REPO }}
+          ecs-cluster-name: 'cluster-application-server'
+          ecs-service-name: 'application-server'
+          ecs-container-name: 'app'
+          codedeploy-application: 'AppECS-cluster-application-server'
+          codedeploy-deployment-group: 'DgpECS-cluster-application-server'
+          image-tag: ${{ needs.build-docker.outputs.tag }}
+      - name: Deploy to ECS Production
+        id: ecs-production
+        uses: ./.github/workflows/aws-deploy.yml
+        if: ${{ github.ref }} == ${{ env.PRODUCTION_BRANCH }}
         with:
-          aws_access_key: ${{ env.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ env.AWS_SECRET_ACCESS_KEY }}
-          application_name: ${{ env.EB_APP }}
-          environment_name: ${{ env.EB_ENV }}
-          version_label: ${{ steps.get_label.outputs.label }}
-          region: ap-southeast-1
-          deployment_package: deploy.zip
-          wait_for_deployment: false
-          wait_for_environment_recovery: false
+          aws-region: 'ap-southeast-1'
+          aws-account-id: ${{ secrets.AWS_ACCOUNT_ID_PROD }}
+          cicd-role: ${{ secrets.AWS_ROLE_ARN_PROD }}
+          ecr-repository: ${{ secrets.ECR_REPO }}
+          ecs-cluster-name: 'cluster-application-server'
+          ecs-service-name: 'application-server'
+          ecs-container-name: 'app'
+          codedeploy-application: 'AppECS-cluster-application-server'
+          codedeploy-deployment-group: 'DgpECS-cluster-application-server'
+          image-tag: ${{ needs.build-docker.outputs.tag }}
