@@ -47,6 +47,9 @@ Register for the following services:
   - Elastic Container Registry details
   - Environment Names
 
+- Stash secrets in AWS Systems Manager Parameter Store.
+  The actual secrets to store are defined in ecs-task-definition.json
+
 - Use the following branch names for deploying:
   - `staging` - deploys to staging
   - `master` or `release` - deploys to production
