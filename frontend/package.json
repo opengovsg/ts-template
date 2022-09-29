@@ -13,7 +13,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.36.1",
     "react-router-dom": "^6.4.1",
-    "wretch": "^2.1.3"
+    "wretch": "^2.1.4"
   },
   "devDependencies": {
     "@snyk/protect": "latest",
