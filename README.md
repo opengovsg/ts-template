@@ -1,76 +1,59 @@
 # TypeScript Project Files Template for OGP
 
-## Folder Structure
-Two separate TypeScript projects, `frontend/` and `backend/`, 
-for frontend and backend respectively.
+A template used by [Open Government Products](https://open.gov.sg)
+to build new products
 
-Structure within frontend/backend folder taken from \[1\]. Notably, 
-we distinguish between `lib/` and `src/` directories, the latter for
-files that we have to process (eg, transpile) into `build/` or `dist/`. 
+## Quickstart
 
-## Linting
-Done with ESLint, using the following rule configs:
+```
+# Clone this repo if you're trying this out, or start a new repo with
+# ts-template as a template and clone that if starting a new product
 
-- `eslint:recommended` 
-- `plugin:prettier/recommended`
-
-Prettier is further configured using the rules in `.prettierrc.js`.
-
-VSCode users will have to add the following to their ESLint extension
-settings for linting to work in both `frontend/` and `backend/`:
-
-```json
-    "eslint.workingDirectories": [
-        "backend",
-        "frontend"
-    ],
+git clone git@github.com:opengovsg/ts-template
+cd ts-template
+npm install
+npm run dev
 ```
 
-### Additional rules
-Developers are free to add more ESLint rules that bring their project
-in-line with norms specific to their language or framework of choice,
-eg. typescript or React.
+## Getting Started
 
-## Conventional Commits
-Commit messages follow [conventional commits](https://conventionalcommits.org/).
-This is enforced by commitlint, when pushing to remote branch.
+This guide should equip you with the basics you’ll need to build and 
+launch a simple product, using this as a starting point, even if you 
+don’t have a background in software engineering.
 
-### Commitizen
-[Commitizen](https://github.com/commitizen/cz-cli) has been installed as a 
-convenience for writing conventional commit messages, via `npm run cz`.
-This may be removed to minimise project dependencies.
+### Preparation - installing software
 
-## Commit Hooks
-Husky is used in tandem with:
+You will need the following:
+- [Docker Desktop](https://www.docker.com/)
+- An application to edit files, like Microsoft's [Visual Studio Code](https://code.visualstudio.com/)
+- A client to interact with GitHub, like its [official desktop client](https://desktop.github.com/)
+- Some familiarity with using the [Terminal in Mac OS X](https://www.youtube.com/watch?v=aKRYQsKR46I)
+- [Volta](https://volta.sh/), by entering into the Terminal the 
+  commands listed on their homepage
+  - Using Volta, install the following software:
+    - Node.js - `volta install node`
+    - npm - `volta install npm`
 
-- lint-staged to ensure files are linted on commit
-- commitlint to ensure commits adhere to convention on push
+### Getting and Preparing the Code in Your Computer
 
-The pre-push hook will interfere on initial push since commitlint
-uses the remote branch as the lower bound in the commit range to inspect,
-and there would be no remote branch. Bypass this the first time with
-`git push --no-verify`.
+- Create a [new repository](https://github.com/new), using
+  opengovsg/ts-template as a template:  
+  ![New Repository](docs/images/new-repository.png)
+- Use [GitHub Desktop](https://docs.github.com/en/desktop/contributing-and-collaborating-using-github-desktop/adding-and-cloning-repositories/cloning-and-forking-repositories-from-github-desktop)
+  (or your preferred tool) to clone your newly-created repository into 
+  your computer
+- In your terminal, open the directory containing the local repository 
+  and the template code, and run the command `npm install`
+    - This pulls in third-party packages for the codebase, which it
+      depends on to run (ie, dependencies)
+- In the same terminal, run `npm run dev` to verify that the application
+  has been prepared correctly. Your browser should display the following:  
+  ![First Run](docs/images/first-run.png)
 
-## Continuous Integration
-Travis is commonly used in OGP. A `.travis.yml` config has been provided
-for convenience, which will run the following in order:
+## Further Reading
 
-- unit-tests
-- linting
-- commit linting
+Take time to understand the codebase and what you have to work with
+to further develop your product.
 
-Builds will fail if any of these tasks fail.
-
-## Miscellany
-
-### Dependabot
-`.github/dependabot.yml` is in place so that npm dependencies will be 
-regularly updated.
-
-### Gitpod
-A `.gitpod.yml` has been configured to run `npm install` for 
-Gitpod users creating workspaces from the repository.
-
-## References
-
-\[1\]: https://gist.github.com/tracker1/59f2c13044315f88bee9
+- An index to all the documentation can be found [here](/docs/).
+- In a hurry to launch your product? Go straight to [deploying](/docs/deploying/)

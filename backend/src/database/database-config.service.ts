@@ -16,6 +16,10 @@ export class DatabaseConfigService implements TypeOrmOptionsFactory {
       port: this.config.get('database.port'),
       user: this.config.get('database.username'),
       password: this.config.get('database.password'),
+      database: this.config.get('database.name'),
+      ...(this.config.get('database.ca')
+        ? { ssl: { ca: this.config.get('database.ca') } }
+        : {}),
     })
     await client.connect()
 
