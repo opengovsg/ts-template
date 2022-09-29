@@ -1,0 +1,56 @@
+name: Fly.io Deploy
+
+on:
+  workflow_call:
+    secrets:
+      app-name:
+        description: 'Application name'
+        required: true
+      fly-api-token:
+        description: 'API Token for Fly.io'
+        required: true
+    inputs:
+      image-tag:
+        description: 'The locally tagged docker image to push to Fly.io'
+        required: true
+        type: string
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  application-server:
+    name: Application server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Login to Fly
+        id: login-fly
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Push image to Fly
+        id: push-image
+        env:
+          FLY_API_TOKEN: ${{ secrets.fly-api-token }}
+          APP_NAME: ${{ secrets.app-name }}
+          IMAGE_TAG: ${{ inputs.image-tag }}
+        run: |
+          flyctl auth docker
+          docker build -t registry.fly.io/$APP_NAME:$IMAGE_TAG .
+          docker push registry.fly.io/$APP_NAME:$IMAGE_TAG
+          echo "::set-output name=image::registry.fly.io/$APP_NAME:$IMAGE_TAG"
+
+      - name: Replace APP_NAME in task definition file
+        id: replace-app-name
+        run: |
+          sed -i 's/<APP_NAME>/${{ secrets.app-name }}/g' fly.toml
+
+      - name: Deploy to Fly.io
+        id: deploy
+        env:
+          FLY_API_TOKEN: ${{ secrets.fly-api-token }}
+        run: |
+          flyctl deploy --image ${{ steps.push-image.outputs.image }}
