@@ -4,7 +4,7 @@ pull_request_rules:
       - author~=^dependabot(|-preview)\[bot\]$
       - check-success~=Lint
       - check-success~=Test
-      - check-success~=Build and push
+      - check-success~=Build Docker
       - title~=^build\(deps[^)]*\). bump [^\s]+ from ([\d]+)\..+ to \1\.
     actions:
       review:
@@ -17,7 +17,7 @@ pull_request_rules:
       - author=snyk-bot
       - check-success~=Lint
       - check-success~=Test
-      - check-success~=Build and push
+      - check-success~=Build Docker
       - title~=^\[Snyk\]
     actions:
       review:
