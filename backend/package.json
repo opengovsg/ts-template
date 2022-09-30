@@ -41,7 +41,7 @@
     "aws-sdk": "^2.1225.0",
     "connect-typeorm": "^2.0.0",
     "convict": "^6.2.3",
-    "dotenv": "^16.0.2",
+    "dotenv": "^16.0.3",
     "express-session": "^1.17.3",
     "helmet": "^6.0.0",
     "nestjs-pino": "^3.1.1",
