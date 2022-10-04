@@ -55,5 +55,5 @@ You will need the following:
 Take time to understand the codebase and what you have to work with
 to further develop your product.
 
-- An index to all the documentation can be found [here](/docs/).
-- In a hurry to launch your product? Go straight to [deploying](/docs/deploying/)
+- An index to all the documentation can be found [here](./docs/).
+- In a hurry to launch your product? Go straight to [deploying](./docs/deploying/)
