@@ -10,7 +10,7 @@ application to a production environment, ready to receive users.
 - [For Engineers](./for-engineers.md): use AWS Elastic Container
   Service. Read this if you are an engineer (or if you are bold!).
 
-- For Hustlers (coming soon!): use fly.io. Read this if you want to 
+- [For Hustlers](./for-hustlers.md): use fly.io. Read this if you want to 
   launch without any engineering, time or financial resources.
 
 ## Post-deployment

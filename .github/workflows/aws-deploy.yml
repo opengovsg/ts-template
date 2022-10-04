@@ -2,23 +2,21 @@ name: AWS Deploy
 
 on:
   workflow_call:
+    secrets:
+      aws-account-id:
+        description: 'AWS account ID to use'
+        required: true
+      cicd-role:
+        description: 'AWS IAM role to assume by GitHub action runner'
+        required: true
+      ecr-repository:
+        description: 'ECR repository to push image to'
+        required: true
     inputs:
       aws-region:
         description: 'AWS region to use'
         required: true
         default: 'ap-southeast-1'
-        type: string
-      aws-account-id:
-        description: 'AWS account ID to use'
-        required: true
-        type: string
-      cicd-role:
-        description: 'AWS IAM role to assume by GitHub action runner'
-        required: true
-        type: string
-      ecr-repository:
-        description: 'ECR repository to push image to'
-        required: true
         type: string
       ecs-cluster-name:
         description: 'ECS cluster to deploy to'
@@ -60,7 +58,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ inputs.cicd-role }}
+          role-to-assume: ${{ secrets.cicd-role }}
           role-session-name: github-action-application-deploy
           aws-region: ${{ inputs.aws-region }}
 
@@ -72,17 +70,17 @@ jobs:
         id: push-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ inputs.ecr-repository }}
+          ECR_REPOSITORY: ${{ secrets.ecr-repository }}
           IMAGE_TAG: ${{ inputs.image-tag }}
         run: |
-          docker image tag $IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
       - name: Replace AWS_ACCOUNT_ID in task definition file
         id: replace-aws-account-id
         run: |
-          sed -i 's/<AWS_ACCOUNT_ID>/${{ inputs.aws-account-id }}/g' ecs-task-definition.json
+          sed -i 's/<AWS_ACCOUNT_ID>/${{ secrets.aws-account-id }}/g' ecs-task-definition.json
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
@@ -90,7 +88,7 @@ jobs:
         with:
           task-definition: ecs-task-definition.json
           container-name: ${{ inputs.ecs-container-name }}
-          image: ${{ steps.build-image.outputs.image }}
+          image: ${{ steps.push-image.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1

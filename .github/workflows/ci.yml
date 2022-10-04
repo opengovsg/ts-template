@@ -86,6 +86,7 @@ jobs:
     name: Determine if deploy is needed
     outputs:
       ecs: ${{ steps.determine-ecs.outputs.ecs }}
+      fly: ${{ steps.determine-fly.outputs.fly }}
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     steps:
@@ -107,6 +108,23 @@ jobs:
           AWS_ROLE_ARN_PROD: ${{ secrets.AWS_ROLE_ARN_PROD }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
           ECR_REPO: ${{ secrets.ECR_REPO }}
+      - id: determine-fly
+        run: |
+          if [[ -z "${APP_NAME_STAGING}" || -z "${ORG_NAME_STAGING}" ]]; then
+            echo '::set-output name=fly::false';
+          elif [[ -z "${APP_NAME_PROD}" || -z "${ORG_NAME_PROD}" ]]; then
+            echo '::set-output name=fly::false';
+          elif [[ -z "${FLY_API_TOKEN}" ]]; then
+            echo '::set-output name=fly::false';
+          else
+            echo '::set-output name=fly::true';
+          fi
+        env:
+          APP_NAME_STAGING: ${{ secrets.APP_NAME_STAGING }}
+          ORG_NAME_STAGING: ${{ secrets.ORG_NAME_STAGING }}
+          APP_NAME_PROD: ${{ secrets.APP_NAME_PROD }}
+          ORG_NAME_PROD: ${{ secrets.ORG_NAME_PROD }}
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
   build-docker:
     name: Build Docker image
@@ -129,43 +147,72 @@ jobs:
           SHA: ${{ github.sha }}
       - run: docker build -t ${{ steps.extract-tag.outputs.tag }} -f Dockerfile .
 
-  deploy-ecs:
+  deploy-ecs-staging:
     concurrency:
       group: ${{ github.ref }}
       cancel-in-progress: true
-    name: Deploy to ECS
-    runs-on: ubuntu-latest
+    name: Deploy to ECS Staging
     needs: [lint, test, proceed, build-docker]
-    if: needs.proceed.outputs.ecs == 'true'
-    steps:
-      - uses: actions/checkout@v2
-      - name: Deploy to ECS Staging
-        id: ecs-staging
-        uses: ./.github/workflows/aws-deploy.yml
-        if: ${{ github.ref }} == ${{ env.STAGING_BRANCH }}
-        with:
-          aws-region: 'ap-southeast-1'
-          aws-account-id: ${{ secrets.AWS_ACCOUNT_ID_STAGING }}
-          cicd-role: ${{ secrets.AWS_ROLE_ARN_STAGING }}
-          ecr-repository: ${{ secrets.ECR_REPO }}
-          ecs-cluster-name: 'cluster-application-server'
-          ecs-service-name: 'application-server'
-          ecs-container-name: 'app'
-          codedeploy-application: 'AppECS-cluster-application-server'
-          codedeploy-deployment-group: 'DgpECS-cluster-application-server'
-          image-tag: ${{ needs.build-docker.outputs.tag }}
-      - name: Deploy to ECS Production
-        id: ecs-production
-        uses: ./.github/workflows/aws-deploy.yml
-        if: ${{ github.ref }} == ${{ env.PRODUCTION_BRANCH }}
-        with:
-          aws-region: 'ap-southeast-1'
-          aws-account-id: ${{ secrets.AWS_ACCOUNT_ID_PROD }}
-          cicd-role: ${{ secrets.AWS_ROLE_ARN_PROD }}
-          ecr-repository: ${{ secrets.ECR_REPO }}
-          ecs-cluster-name: 'cluster-application-server'
-          ecs-service-name: 'application-server'
-          ecs-container-name: 'app'
-          codedeploy-application: 'AppECS-cluster-application-server'
-          codedeploy-deployment-group: 'DgpECS-cluster-application-server'
-          image-tag: ${{ needs.build-docker.outputs.tag }}
+    if: needs.proceed.outputs.ecs == 'true' && needs.build-docker.outputs.branch == 'staging'
+    uses: ./.github/workflows/aws-deploy.yml
+    secrets:
+      aws-account-id: ${{ secrets.AWS_ACCOUNT_ID_STAGING }}
+      cicd-role: ${{ secrets.AWS_ROLE_ARN_STAGING }}
+      ecr-repository: ${{ secrets.ECR_REPO }}
+    with:
+      aws-region: 'ap-southeast-1'
+      ecs-cluster-name: 'cluster-application-server'
+      ecs-service-name: 'application-server'
+      ecs-container-name: 'app'
+      codedeploy-application: 'AppECS-cluster-application-server'
+      codedeploy-deployment-group: 'DgpECS-cluster-application-server'
+      image-tag: ${{ needs.build-docker.outputs.tag }}
+
+  deploy-ecs-production:
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
+    name: Deploy to ECS Production
+    needs: [lint, test, proceed, build-docker]
+    if: needs.proceed.outputs.ecs == 'true' && needs.build-docker.outputs.branch == 'production'
+    uses: ./.github/workflows/aws-deploy.yml
+    secrets:
+      aws-account-id: ${{ secrets.AWS_ACCOUNT_ID_PROD }}
+      cicd-role: ${{ secrets.AWS_ROLE_ARN_PROD }}
+      ecr-repository: ${{ secrets.ECR_REPO }}
+    with:
+      aws-region: 'ap-southeast-1'
+      ecs-cluster-name: 'cluster-application-server'
+      ecs-service-name: 'application-server'
+      ecs-container-name: 'app'
+      codedeploy-application: 'AppECS-cluster-application-server'
+      codedeploy-deployment-group: 'DgpECS-cluster-application-server'
+      image-tag: ${{ needs.build-docker.outputs.tag }}
+
+  deploy-fly-staging:
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
+    name: Deploy to Fly.io Staging
+    needs: [lint, test, proceed, build-docker]
+    if: needs.proceed.outputs.fly == 'true' && needs.build-docker.outputs.branch == 'staging'
+    uses: ./.github/workflows/fly-deploy.yml
+    secrets:
+      app-name: ${{ secrets.APP_NAME_STAGING }}
+      fly-api-token: ${{ secrets.FLY_API_TOKEN }}
+    with:
+      image-tag: ${{ needs.build-docker.outputs.tag }}
+
+  deploy-fly-production:
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
+    name: Deploy to Fly.io Production
+    needs: [lint, test, proceed, build-docker]
+    if: needs.proceed.outputs.fly == 'true' && needs.build-docker.outputs.branch == 'production'
+    uses: ./.github/workflows/fly-deploy.yml
+    secrets:
+      app-name: ${{ secrets.APP_NAME_PROD }}
+      fly-api-token: ${{ secrets.FLY_API_TOKEN }}
+    with:
+      image-tag: ${{ needs.build-docker.outputs.tag }}
