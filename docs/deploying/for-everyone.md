@@ -16,29 +16,29 @@ You will need a credit card to sign up for DigitalOcean.
 On initial login to DigitalOcean, the user will be presented with the 
 following screen:
 
-![DigitalOcean - Landing Page](images/digitalocean-landing-page.png)
+![DigitalOcean - Landing Page](images/digitalocean/landing-page.png)
 
 Create a new database cluster, selecting the Singapore datacentre
 and PostgreSQL as the engine:
 
-![DigitalOcean - Create Database](images/digitalocean-create-database.png)
+![DigitalOcean - Create Database](images/digitalocean/create-database.png)
 
 In a new tab, create a new App on DigitalOcean by clicking Create App, 
 followed by Manage Access. Ensure that the DigitalOcean GitHub App 
 (integration) is installed on both your personal GitHub account as 
 well as the GitHub organisation containing the repo to deploy[^1].
 
-![DigitalOcean - App From Source](images/digitalocean-app-from-source.png)
+![DigitalOcean - App From Source](images/digitalocean/app-from-source.png)
 
 Click Next. Ensure Resources consist of a Web Service read from the 
 Dockerfile, with 2GB RAM. Add a database as a resource.
 
-![DigitalOcean - Resources](images/digitalocean-resources.png)
+![DigitalOcean - Resources](images/digitalocean/resources.png)
 
 Under Configure Your Database, add your Previously Created DigitalOcean
 Database.
 
-![DigitalOcean - Attach Database](images/digitalocean-attach-database.png)
+![DigitalOcean - Attach Database](images/digitalocean/attach-database.png)
 
 Edit the application's environment variables.
 
@@ -46,9 +46,9 @@ Go back to the database tab, and copy each connection parameter to the
 corresponding environment variable as shown in the screenshots below.
 Also add `NODE_ENV`, and set that to `production`.
 
-![DigitalOcean - Database Params](images/digitalocean-db-params.png)
+![DigitalOcean - Database Params](images/digitalocean/db-params.png)
 
-![DigitalOcean - Environment Variables](images/digitalocean-env-vars.png)
+![DigitalOcean - Environment Variables](images/digitalocean/env-vars.png)
 
 Click ahead to Review, then Create Resources
 
