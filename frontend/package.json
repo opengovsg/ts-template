@@ -40,7 +40,7 @@
     "cross-env": "^7.0.3",
     "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.4.0",
-    "eslint-plugin-storybook": "^0.6.4",
+    "eslint-plugin-storybook": "^0.6.5",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "prop-types": "^15.8.1",
