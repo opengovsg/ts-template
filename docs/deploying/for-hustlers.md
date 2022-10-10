@@ -169,7 +169,7 @@ If you are impatient and want to deploy straight from your local machine,
 run the following command:
 
 ```
-flyctl deploy --app <your app name> --file Dockerfile.fly
+flyctl deploy --app <your app name> --dockerfile Dockerfile.fly
 ```
 ### Ready for Users
 
