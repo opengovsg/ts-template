@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common'
 import { SES } from 'aws-sdk'
-import nodemailer, { SendMailOptions, Transporter } from 'nodemailer'
+import nodemailer, {
+  SendMailOptions,
+  SentMessageInfo,
+  Transporter,
+} from 'nodemailer'
 
 import { ConfigService } from '../config/config.service'
 
@@ -18,12 +22,12 @@ export class MailerService {
         }),
       })
     : nodemailer.createTransport({
-        port: 1025,
-        host: 'localhost',
-        ignoreTLS: true,
+        ...this.config.get('mailer'),
+        secure: !this.config.isDevEnv,
+        ignoreTLS: this.config.isDevEnv,
       })
 
-  sendMail = async (mailOptions: SendMailOptions): Promise<void> => {
+  sendMail = async (mailOptions: SendMailOptions): Promise<SentMessageInfo> => {
     return this.mailer.sendMail(mailOptions)
   }
 }
