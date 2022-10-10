@@ -46,6 +46,10 @@ Go back to the database tab, and copy each connection parameter to the
 corresponding environment variable as shown in the screenshots below.
 Also add `NODE_ENV`, and set that to `production`.
 
+(If you wish to use email OTPs for your application, sign up for an email
+service like SendGrid, then input the mail connection parameters as
+the relevant environment variables documented [here](../../backend/src/config/config.schema.ts).
+
 ![DigitalOcean - Database Params](images/digitalocean/db-params.png)
 
 ![DigitalOcean - Environment Variables](images/digitalocean/env-vars.png)

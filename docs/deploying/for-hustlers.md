@@ -140,6 +140,11 @@ NODE_ENV=staging
 Secrets are staged for the first deployment
 ```
 
+(If you wish to use email OTPs for your application, sign up for an email
+service like SendGrid, then input the mail connection parameters as
+the relevant environment variables documented [here](../../backend/src/config/config.schema.ts).
+
+
 ### Deploying with GitHub Actions
 
 From the dashboard, go to [Account -> Access Tokens](https://fly.io/user/personal_access_tokens)

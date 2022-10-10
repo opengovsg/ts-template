@@ -30,6 +30,15 @@ export interface ConfigSchema {
     sender_name: string
     email: string
   }
+  mailer: {
+    auth: {
+      type: 'login'
+      user: string
+      pass: string
+    }
+    host: string
+    port: number
+  }
   health: { heapSizeThreshold: number; rssThreshold: number }
 }
 
@@ -166,6 +175,43 @@ export const schema: Schema<ConfigSchema> = {
       env: 'OTP_EMAIL',
       format: String,
       default: 'donotreply@mail.open.gov.sg',
+    },
+  },
+  mailer: {
+    doc:
+      'Mailer configuration for SMTP mail services. ' +
+      'If AWS_REGION is present, this configuration is ignored and ' +
+      'the mailer will use AWS SES via RESTful API instead.',
+    auth: {
+      type: {
+        doc: 'The type of authentication used. Currently, only "login" is supported',
+        format: ['login'],
+        default: 'login',
+      },
+      user: {
+        doc: 'The user to present to the SMTP service',
+        env: 'MAILER_USER',
+        format: String,
+        default: 'mailer-user',
+      },
+      pass: {
+        doc: 'The password to present to the SMTP service',
+        env: 'MAILER_PASSWORD',
+        format: String,
+        default: 'mailer-password',
+      },
+    },
+    host: {
+      doc: 'The server hosting the SMTP service',
+      env: 'MAILER_HOST',
+      format: String,
+      default: 'localhost',
+    },
+    port: {
+      doc: 'The port for the SMTP service',
+      env: 'MAILER_PORT',
+      format: 'port',
+      default: 1025,
     },
   },
   health: {
