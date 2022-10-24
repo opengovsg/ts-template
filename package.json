@@ -29,7 +29,7 @@
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
     "commitizen": "^4.2.4",
-    "concurrently": "^7.4.0",
+    "concurrently": "^7.5.0",
     "cz-conventional-changelog": "^3.3.0",
     "env-cmd": "^10.1.0",
     "eslint": "^8.25.0",
