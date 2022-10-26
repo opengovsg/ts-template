@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^9.1.6",
-    "@nestjs/core": "^9.1.5",
+    "@nestjs/core": "^9.1.6",
     "@nestjs/platform-express": "^9.1.6",
     "@nestjs/serve-static": "^3.0.0",
     "@nestjs/terminus": "^9.1.2",
