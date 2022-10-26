@@ -34,7 +34,7 @@
     "@types/jest": "^29.2.0",
     "@types/node": "*",
     "@types/react": "^18.0.22",
-    "@types/react-dom": "^18.0.6",
+    "@types/react-dom": "^18.0.7",
     "@types/react-router-dom": "^5.3.3",
     "babel-plugin-named-exports-order": "^0.0.2",
     "cross-env": "^7.0.3",
