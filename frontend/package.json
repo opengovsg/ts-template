@@ -33,7 +33,7 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/jest": "^29.2.1",
     "@types/node": "*",
-    "@types/react": "^18.0.24",
+    "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
     "@types/react-router-dom": "^5.3.3",
     "babel-plugin-named-exports-order": "^0.0.2",
