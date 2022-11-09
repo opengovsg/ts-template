@@ -82,7 +82,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: ./lcov.info
 
-  proceed:
+  proceed-staging:
     name: Determine if deploy is needed
     outputs:
       ecs: ${{ steps.determine-ecs.outputs.ecs }}
@@ -94,8 +94,6 @@ jobs:
         run: |
           if [[ -z "${AWS_ROLE_ARN_STAGING}" || -z "${AWS_ACCOUNT_ID_STAGING}" ]]; then
             echo '::set-output name=ecs::false';
-          elif [[ -z "${AWS_ROLE_ARN_PROD}" || -z "${AWS_ACCOUNT_ID_PROD}" ]]; then
-            echo '::set-output name=ecs::false';
           elif [[ -z "${ECR_REPO}" || -z "${AWS_REGION}" ]]; then
             echo '::set-output name=ecs::false';
           else
@@ -104,15 +102,11 @@ jobs:
         env:
           AWS_ACCOUNT_ID_STAGING: ${{ secrets.AWS_ACCOUNT_ID_STAGING }}
           AWS_ROLE_ARN_STAGING: ${{ secrets.AWS_ROLE_ARN_STAGING }}
-          AWS_ACCOUNT_ID_PROD: ${{ secrets.AWS_ACCOUNT_ID_PROD }}
-          AWS_ROLE_ARN_PROD: ${{ secrets.AWS_ROLE_ARN_PROD }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
           ECR_REPO: ${{ secrets.ECR_REPO }}
       - id: determine-fly
         run: |
           if [[ -z "${APP_NAME_STAGING}" || -z "${ORG_NAME_STAGING}" ]]; then
-            echo '::set-output name=fly::false';
-          elif [[ -z "${APP_NAME_PROD}" || -z "${ORG_NAME_PROD}" ]]; then
             echo '::set-output name=fly::false';
           elif [[ -z "${FLY_API_TOKEN}" ]]; then
             echo '::set-output name=fly::false';
@@ -122,6 +116,40 @@ jobs:
         env:
           APP_NAME_STAGING: ${{ secrets.APP_NAME_STAGING }}
           ORG_NAME_STAGING: ${{ secrets.ORG_NAME_STAGING }}
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+  proceed-production:
+    name: Determine if deploy is needed
+    outputs:
+      ecs: ${{ steps.determine-ecs.outputs.ecs }}
+      fly: ${{ steps.determine-fly.outputs.fly }}
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - id: determine-ecs
+        run: |
+          if [[ -z "${AWS_ROLE_ARN_PROD}" || -z "${AWS_ACCOUNT_ID_PROD}" ]]; then
+            echo '::set-output name=ecs::false';
+          elif [[ -z "${ECR_REPO}" || -z "${AWS_REGION}" ]]; then
+            echo '::set-output name=ecs::false';
+          else
+            echo '::set-output name=ecs::true';
+          fi
+        env:
+          AWS_ACCOUNT_ID_PROD: ${{ secrets.AWS_ACCOUNT_ID_PROD }}
+          AWS_ROLE_ARN_PROD: ${{ secrets.AWS_ROLE_ARN_PROD }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          ECR_REPO: ${{ secrets.ECR_REPO }}
+      - id: determine-fly
+        run: |
+          if [[ -z "${APP_NAME_PROD}" || -z "${ORG_NAME_PROD}" ]]; then
+            echo '::set-output name=fly::false';
+          elif [[ -z "${FLY_API_TOKEN}" ]]; then
+            echo '::set-output name=fly::false';
+          else
+            echo '::set-output name=fly::true';
+          fi
+        env:
           APP_NAME_PROD: ${{ secrets.APP_NAME_PROD }}
           ORG_NAME_PROD: ${{ secrets.ORG_NAME_PROD }}
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
@@ -130,20 +158,15 @@ jobs:
     name: Build Docker image
     runs-on: ubuntu-latest
     outputs:
-      branch: ${{ steps.extract-branch.outputs.branch }}
       tag: ${{steps.extract-tag.outputs.tag}}
     steps:
       - uses: actions/checkout@v2
-      - name: Extract branch name
-        id: extract-branch
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
       - name: Extract tag
         id: extract-tag
         shell: bash
         run: echo "##[set-output name=tag;]$(echo ghactions-${BRANCH}-${SHA})"
         env:
-          BRANCH: ${{ steps.extract-branch.outputs.branch }}
+          BRANCH: ${{ github.ref_name }}
           SHA: ${{ github.sha }}
       - run: docker build -t ${{ steps.extract-tag.outputs.tag }} -f Dockerfile .
 
@@ -152,8 +175,8 @@ jobs:
       group: ${{ github.ref }}
       cancel-in-progress: true
     name: Deploy to ECS Staging
-    needs: [lint, test, proceed, build-docker]
-    if: needs.proceed.outputs.ecs == 'true' && needs.build-docker.outputs.branch == 'staging'
+    needs: [lint, test, proceed-staging, build-docker]
+    if: needs.proceed-staging.outputs.ecs == 'true' && github.ref_name == 'staging'
     uses: ./.github/workflows/aws-deploy.yml
     secrets:
       aws-account-id: ${{ secrets.AWS_ACCOUNT_ID_STAGING }}
@@ -173,8 +196,8 @@ jobs:
       group: ${{ github.ref }}
       cancel-in-progress: true
     name: Deploy to ECS Production
-    needs: [lint, test, proceed, build-docker]
-    if: needs.proceed.outputs.ecs == 'true' && needs.build-docker.outputs.branch == 'production'
+    needs: [lint, test, proceed-production, build-docker]
+    if: needs.proceed-production.outputs.ecs == 'true' && github.ref_name == 'production'
     uses: ./.github/workflows/aws-deploy.yml
     secrets:
       aws-account-id: ${{ secrets.AWS_ACCOUNT_ID_PROD }}
@@ -194,8 +217,8 @@ jobs:
       group: ${{ github.ref }}
       cancel-in-progress: true
     name: Deploy to Fly.io Staging
-    needs: [lint, test, proceed, build-docker]
-    if: needs.proceed.outputs.fly == 'true' && needs.build-docker.outputs.branch == 'staging'
+    needs: [lint, test, proceed-staging, build-docker]
+    if: needs.proceed-staging.outputs.fly == 'true' && github.ref_name == 'staging'
     uses: ./.github/workflows/fly-deploy.yml
     secrets:
       app-name: ${{ secrets.APP_NAME_STAGING }}
@@ -208,8 +231,8 @@ jobs:
       group: ${{ github.ref }}
       cancel-in-progress: true
     name: Deploy to Fly.io Production
-    needs: [lint, test, proceed, build-docker]
-    if: needs.proceed.outputs.fly == 'true' && needs.build-docker.outputs.branch == 'production'
+    needs: [lint, test, proceed-production, build-docker]
+    if: needs.proceed-production.outputs.fly == 'true' && github.ref_name == 'production'
     uses: ./.github/workflows/fly-deploy.yml
     secrets:
       app-name: ${{ secrets.APP_NAME_PROD }}
