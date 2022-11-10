@@ -6,84 +6,14 @@ on:
 env:
   PRODUCTION_BRANCH: refs/heads/production
   STAGING_BRANCH: refs/heads/staging
-jobs:
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: ".nvmrc"
-      - name: Cache Node.js modules
-        uses: actions/cache@v3
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
-      - run: npm ci
-      - run: npx lockfile-lint --type npm --path frontend/package-lock.json --validate-https --allowed-hosts npm
-      - run: npx lockfile-lint --type npm --path backend/package-lock.json --validate-https --allowed-hosts npm
-      - name: Ensure that codebase builds, build shared code for dependents
-        run: npm run build
-      - run: npm run lint
 
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:12
-        env:
-          POSTGRES_DB: ts_template_test
-          POSTGRES_USER: test
-          POSTGRES_PASSWORD: test
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: ".nvmrc"
-      - name: Cache Node.js modules
-        uses: actions/cache@v3
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
-      - run: npm ci
-      - name: Compile shared code for dependents
-        run: npm run --prefix shared build
-      - name: Run tests and generate coverage
-        run: npm run coverage
-        env:
-          POSTGRES_DB: ts_template_test
-          POSTGRES_HOST: localhost
-          POSTGRES_PORT: 5432
-          POSTGRES_USER: test
-          POSTGRES_PASSWORD: test
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: ./lcov.info
+jobs:
+  build:
+    name: Build, Test, Lint
+    uses: ./.github/workflows/build.yml
 
   proceed-staging:
-    name: Determine if deploy is needed
+    name: Determine if staging deploy is needed
     outputs:
       ecs: ${{ steps.determine-ecs.outputs.ecs }}
       fly: ${{ steps.determine-fly.outputs.fly }}
@@ -119,7 +49,7 @@ jobs:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
   proceed-production:
-    name: Determine if deploy is needed
+    name: Determine if production deploy is needed
     outputs:
       ecs: ${{ steps.determine-ecs.outputs.ecs }}
       fly: ${{ steps.determine-fly.outputs.fly }}
@@ -154,28 +84,26 @@ jobs:
           ORG_NAME_PROD: ${{ secrets.ORG_NAME_PROD }}
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
-  build-docker:
-    name: Build Docker image
+  generate-docker-tag:
+    name: Generate Docker tag
     runs-on: ubuntu-latest
     outputs:
-      tag: ${{steps.extract-tag.outputs.tag}}
+      tag: ${{steps.generate-tag.outputs.tag}}
     steps:
-      - uses: actions/checkout@v2
-      - name: Extract tag
-        id: extract-tag
+      - name: Generate tag
+        id: generate-tag
         shell: bash
         run: echo "##[set-output name=tag;]$(echo ghactions-${BRANCH}-${SHA})"
         env:
           BRANCH: ${{ github.ref_name }}
           SHA: ${{ github.sha }}
-      - run: docker build -t ${{ steps.extract-tag.outputs.tag }} -f Dockerfile .
 
   deploy-ecs-staging:
     concurrency:
       group: ${{ github.ref }}
       cancel-in-progress: true
     name: Deploy to ECS Staging
-    needs: [lint, test, proceed-staging, build-docker]
+    needs: [build, proceed-staging, generate-docker-tag]
     if: needs.proceed-staging.outputs.ecs == 'true' && github.ref_name == 'staging'
     uses: ./.github/workflows/aws-deploy.yml
     secrets:
@@ -189,14 +117,14 @@ jobs:
       ecs-container-name: 'app'
       codedeploy-application: 'AppECS-cluster-application-server'
       codedeploy-deployment-group: 'DgpECS-cluster-application-server'
-      image-tag: ${{ needs.build-docker.outputs.tag }}
+      image-tag: ${{ needs.generate-docker-tag.outputs.tag }}
 
   deploy-ecs-production:
     concurrency:
       group: ${{ github.ref }}
       cancel-in-progress: true
     name: Deploy to ECS Production
-    needs: [lint, test, proceed-production, build-docker]
+    needs: [build, proceed-production, generate-docker-tag]
     if: needs.proceed-production.outputs.ecs == 'true' && github.ref_name == 'production'
     uses: ./.github/workflows/aws-deploy.yml
     secrets:
@@ -210,32 +138,32 @@ jobs:
       ecs-container-name: 'app'
       codedeploy-application: 'AppECS-cluster-application-server'
       codedeploy-deployment-group: 'DgpECS-cluster-application-server'
-      image-tag: ${{ needs.build-docker.outputs.tag }}
+      image-tag: ${{ needs.generate-docker-tag.outputs.tag }}
 
   deploy-fly-staging:
     concurrency:
       group: ${{ github.ref }}
       cancel-in-progress: true
     name: Deploy to Fly.io Staging
-    needs: [lint, test, proceed-staging, build-docker]
+    needs: [build, proceed-staging, generate-docker-tag]
     if: needs.proceed-staging.outputs.fly == 'true' && github.ref_name == 'staging'
     uses: ./.github/workflows/fly-deploy.yml
     secrets:
       app-name: ${{ secrets.APP_NAME_STAGING }}
       fly-api-token: ${{ secrets.FLY_API_TOKEN }}
     with:
-      image-tag: ${{ needs.build-docker.outputs.tag }}
+      image-tag: ${{ needs.generate-docker-tag.outputs.tag }}
 
   deploy-fly-production:
     concurrency:
       group: ${{ github.ref }}
       cancel-in-progress: true
     name: Deploy to Fly.io Production
-    needs: [lint, test, proceed-production, build-docker]
+    needs: [build, proceed-production, generate-docker-tag]
     if: needs.proceed-production.outputs.fly == 'true' && github.ref_name == 'production'
     uses: ./.github/workflows/fly-deploy.yml
     secrets:
       app-name: ${{ secrets.APP_NAME_PROD }}
       fly-api-token: ${{ secrets.FLY_API_TOKEN }}
     with:
-      image-tag: ${{ needs.build-docker.outputs.tag }}
+      image-tag: ${{ needs.generate-docker-tag.outputs.tag }}
