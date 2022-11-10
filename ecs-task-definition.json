@@ -15,6 +15,10 @@
         {
           "name": "TZ",
           "value": "Asia/Singapore"
+        },
+        {
+          "name": "NODE_ENV",
+          "value": "production"
         }
       ],
       "mountPoints": [],
@@ -35,10 +39,6 @@
         {
           "name": "DB_USERNAME",
           "valueFrom": "/app/backend/DB_USERNAME"
-        },
-        {
-          "name": "NODE_ENV",
-          "valueFrom": "/app/backend/NODE_ENV"
         },
         {
           "name": "SESSION_SECRET",
@@ -117,7 +117,7 @@
         },
         {
           "name": "DD_TAGS",
-          "valueFrom": "/app/backend/DD_TAGS"
+          "valueFrom": "/app/backend/DD_TAGS_AGENT"
         }
       ],
       "logConfiguration": {
