@@ -9,15 +9,13 @@ on:
       cicd-role:
         description: 'AWS IAM role to assume by GitHub action runner'
         required: true
+      aws-region:
+        description: 'AWS region to use'
+        required: true
       ecr-repository:
         description: 'ECR repository to push image to'
         required: true
     inputs:
-      aws-region:
-        description: 'AWS region to use'
-        required: true
-        default: 'ap-southeast-1'
-        type: string
       ecs-cluster-name:
         description: 'ECS cluster to deploy to'
         required: true
