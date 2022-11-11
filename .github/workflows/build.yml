@@ -67,11 +67,11 @@ jobs:
       - name: Run tests and generate coverage
         run: npm run coverage
         env:
-          POSTGRES_DB: ts_template_test
-          POSTGRES_HOST: localhost
-          POSTGRES_PORT: 5432
-          POSTGRES_USER: test
-          POSTGRES_PASSWORD: test
+          DB_NAME: ts_template_test
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USERNAME: test
+          DB_PASSWORD: test
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
