@@ -82,7 +82,7 @@ jobs:
     with:
       ecs-cluster-name: 'cluster-application-server'
       ecs-service-name: 'application-server'
-      ecs-container-name: 'app'
+      ecs-container-name: 'app-server'
       codedeploy-application: 'AppECS-cluster-application-server'
       codedeploy-deployment-group: 'DgpECS-cluster-application-server'
       image-tag: ${{ inputs.image-tag }}
