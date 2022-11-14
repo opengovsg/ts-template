@@ -7,7 +7,7 @@
         "Properties": {
           "TaskDefinition": "arn:aws:ecs:ap-southeast-1:<AWS_ACCOUNT_ID>:task-definition/application-server:1",
           "LoadBalancerInfo": {
-            "ContainerName": "app",
+            "ContainerName": "app-server",
             "ContainerPort": 8080
           }
         }
