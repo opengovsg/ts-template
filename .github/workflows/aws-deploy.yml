@@ -79,6 +79,7 @@ jobs:
         id: replace-aws-account-id
         run: |
           sed -i 's/<AWS_ACCOUNT_ID>/${{ secrets.aws-account-id }}/g' ecs-task-definition.json
+          sed -i 's/<AWS_ACCOUNT_ID>/${{ secrets.aws-account-id }}/g' appspec.json
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
