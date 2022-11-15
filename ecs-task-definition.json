@@ -19,6 +19,10 @@
         {
           "name": "NODE_ENV",
           "value": "production"
+        },
+        {
+          "name": "DD_SOURCE",
+          "value": "nodejs"
         }
       ],
       "mountPoints": [],
@@ -47,10 +51,6 @@
         {
           "name": "DD_API_KEY",
           "valueFrom": "/app/backend/DD_API_KEY"
-        },
-        {
-          "name": "DD_SOURCE",
-          "valueFrom": "/app/backend/DD_SOURCE"
         },
         {
           "name": "DD_SERVICE",
@@ -137,9 +137,7 @@
   "runtimePlatform": {
     "operatingSystemFamily": "LINUX"
   },
-  "requiresCompatibilities": [
-    "FARGATE"
-  ],
+  "requiresCompatibilities": ["FARGATE"],
   "taskRoleArn": "arn:aws:iam::<AWS_ACCOUNT_ID>:role/application-server-role",
   "executionRoleArn": "arn:aws:iam::<AWS_ACCOUNT_ID>:role/application-server-role",
   "cpu": "512",
