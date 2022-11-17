@@ -7,7 +7,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
@@ -47,7 +47,7 @@ jobs:
         ports:
           - 5432:5432
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
@@ -83,5 +83,5 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository == 'opengovsg/ts-template'
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: docker build -f Dockerfile .
