@@ -36,7 +36,7 @@
     "@nestjs/core": "^9.2.0",
     "@nestjs/platform-express": "^9.2.0",
     "@nestjs/serve-static": "^3.0.0",
-    "@nestjs/terminus": "^9.1.2",
+    "@nestjs/terminus": "^9.1.3",
     "@nestjs/typeorm": "^9.0.1",
     "aws-sdk": "^2.1257.0",
     "connect-typeorm": "^2.0.0",
