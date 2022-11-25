@@ -3,9 +3,6 @@ on:
   push:
   pull_request:
     types: [opened, reopened]
-env:
-  PRODUCTION_BRANCH: refs/heads/production
-  STAGING_BRANCH: refs/heads/staging
 
 jobs:
   build:
@@ -16,7 +13,7 @@ jobs:
     name: Deploy to Staging
     needs: [build]
     if: github.ref_name == 'staging'
-    uses: ./.github/workflows/deploy.yml
+    uses: opengovsg/deploy/.github/workflows/deploy.yml@latest
     secrets:
       aws-account-id: ${{ secrets.AWS_ACCOUNT_ID_STAGING }}
       aws-role-arn: ${{ secrets.AWS_ROLE_ARN_STAGING }}
@@ -27,12 +24,17 @@ jobs:
       fly-api-token: ${{ secrets.FLY_API_TOKEN }}
     with:
       image-tag: ghactions-${{ github.ref_name }}-${{ github.sha }}
+      ecs-cluster-name: "cluster-application-server"
+      ecs-service-name: "application-server"
+      ecs-container-name: "app-server"
+      codedeploy-application: "AppECS-cluster-application-server"
+      codedeploy-deployment-group: "DgpECS-cluster-application-server"
 
   deploy-production:
     name: Deploy to Production
     needs: [build]
     if: github.ref_name == 'production'
-    uses: ./.github/workflows/deploy.yml
+    uses: opengovsg/deploy/.github/workflows/deploy.yml@latest
     secrets:
       aws-account-id: ${{ secrets.AWS_ACCOUNT_ID_PROD }}
       aws-role-arn: ${{ secrets.AWS_ROLE_ARN_PROD }}
@@ -43,3 +45,8 @@ jobs:
       fly-api-token: ${{ secrets.FLY_API_TOKEN }}
     with:
       image-tag: ghactions-${{ github.ref_name }}-${{ github.sha }}
+      ecs-cluster-name: "cluster-application-server"
+      ecs-service-name: "application-server"
+      ecs-container-name: "app-server"
+      codedeploy-application: "AppECS-cluster-application-server"
+      codedeploy-deployment-group: "DgpECS-cluster-application-server"
