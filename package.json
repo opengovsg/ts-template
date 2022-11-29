@@ -27,7 +27,7 @@
     "@commitlint/config-conventional": "^17.3.0",
     "@commitlint/travis-cli": "^17.3.0",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
-    "@typescript-eslint/parser": "^5.44.0",
+    "@typescript-eslint/parser": "^5.45.0",
     "commitizen": "^4.2.4",
     "concurrently": "^7.6.0",
     "cz-conventional-changelog": "^3.3.0",
