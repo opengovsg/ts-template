@@ -6,11 +6,11 @@ import '@testing-library/jest-dom'
 
 // Handle TypeError: env.window.matchMedia is not a function
 window.matchMedia =
-  window.matchMedia ||
+  window.matchMedia ??
   function () {
     return {
       matches: false,
       addListener: () => null,
-      removeListener: () => null,
+      removeListener: () => null
     }
   }

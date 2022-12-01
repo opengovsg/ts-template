@@ -9,12 +9,12 @@ import {
   Link,
   Stack,
   Text,
-  useBreakpointValue,
+  useBreakpointValue
 } from '@chakra-ui/react'
 
 import { isGovSgEmail } from '~shared/decorators/is-gov-sg-email'
 
-export type LoginFormInputs = {
+export interface LoginFormInputs {
   email: string
 }
 
@@ -31,8 +31,8 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): JSX.Element => {
     return isGovDomain || 'Please sign in with a gov.sg email address.'
   }, [])
 
-  const onSubmitForm = async (inputs: LoginFormInputs) => {
-    return onSubmit(inputs).catch((e) => {
+  const onSubmitForm = async (inputs: LoginFormInputs): Promise<void> => {
+    return await onSubmit(inputs).catch((e) => {
       setError('email', { type: 'server', message: e.json.message })
     })
   }
@@ -40,40 +40,41 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): JSX.Element => {
   const isMobile = useBreakpointValue({ base: true, xs: true, lg: false })
 
   return (
+    // eslint-disable-next-line
     <form onSubmit={handleSubmit(onSubmitForm)}>
       <FormControl
-        isInvalid={!!formState.errors.email}
+        isInvalid={!(formState.errors.email == null)}
         isReadOnly={formState.isSubmitting}
-        mb="2.5rem"
+        mb='2.5rem'
       >
-        <FormLabel htmlFor="email" fontSize={{ base: '1.125rem', lg: '1rem' }}>
-          <Text mb="0.25rem">Email</Text>
-          <Text textStyle="body-2" mb="0.75rem">
+        <FormLabel htmlFor='email' fontSize={{ base: '1.125rem', lg: '1rem' }}>
+          <Text mb='0.25rem'>Email</Text>
+          <Text textStyle='body-2' mb='0.75rem'>
             Only available for use by public officers with a gov.sg email
           </Text>
         </FormLabel>
         <Input
-          autoComplete="email"
+          autoComplete='email'
           autoFocus
-          placeholder="e.g. user@agency.gov.sg"
+          placeholder='e.g. user@agency.gov.sg'
           {...register('email', {
             required: 'Please enter an email address',
-            validate: validateEmail,
+            validate: validateEmail
           })}
         />
-        {formState.errors.email && (
+        {(formState.errors.email != null) && (
           <FormErrorMessage>{formState.errors.email.message}</FormErrorMessage>
         )}
       </FormControl>
       <Stack
         direction={{ base: 'column', lg: 'row' }}
         spacing={{ base: '1.5rem', lg: '2.5rem' }}
-        align="center"
+        align='center'
       >
         <Button
-          width={isMobile ? '100%' : undefined}
+          width={isMobile ?? false ? '100%' : undefined}
           isLoading={formState.isSubmitting}
-          type="submit"
+          type='submit'
         >
           Sign in
         </Button>

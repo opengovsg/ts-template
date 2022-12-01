@@ -7,12 +7,12 @@ import {
   FormLabel,
   Input,
   Stack,
-  useBreakpointValue,
+  useBreakpointValue
 } from '@chakra-ui/react'
 
 import { ResendOtpButton } from './ResendOtpButton'
 
-export type OtpFormInputs = {
+export interface OtpFormInputs {
   otp: string
 }
 
@@ -23,7 +23,7 @@ interface OtpFormProps {
 
 export const OtpForm = ({
   onSubmit,
-  onResendOtp,
+  onResendOtp
 }: OtpFormProps): JSX.Element => {
   const { handleSubmit, register, formState, setError } =
     useForm<OtpFormInputs>()
@@ -32,49 +32,50 @@ export const OtpForm = ({
 
   const validateOtp = useCallback(
     (value: string) => value.length === 6 || 'Please enter a 6 digit OTP.',
-    [],
+    []
   )
 
-  const onSubmitForm = async (inputs: OtpFormInputs) => {
-    return onSubmit(inputs).catch((e) => {
+  const onSubmitForm = async (inputs: OtpFormInputs): Promise<void> => {
+    return await onSubmit(inputs).catch((e) => {
       setError('otp', { type: 'server', message: e.json.message })
     })
   }
 
   return (
+    // eslint-disable-next-line
     <form onSubmit={handleSubmit(onSubmitForm)}>
-      <FormControl isInvalid={!!formState.errors.otp} mb="2.5rem">
-        <FormLabel htmlFor="otp">
+      <FormControl isInvalid={!(formState.errors.otp == null)} mb='2.5rem'>
+        <FormLabel htmlFor='otp'>
           Enter 6 digit OTP sent to your email
         </FormLabel>
         <Input
-          type="text"
+          type='text'
           maxLength={6}
-          inputMode="numeric"
-          autoComplete="one-time-code"
+          inputMode='numeric'
+          autoComplete='one-time-code'
           autoFocus
           {...register('otp', {
             required: 'OTP is required.',
             pattern: {
               value: /^[0-9\b]+$/,
-              message: 'Only numbers are allowed.',
+              message: 'Only numbers are allowed.'
             },
-            validate: validateOtp,
+            validate: validateOtp
           })}
         />
-        {formState.errors.otp && (
+        {(formState.errors.otp != null) && (
           <FormErrorMessage>{formState.errors.otp.message}</FormErrorMessage>
         )}
       </FormControl>
       <Stack
         direction={{ base: 'column', lg: 'row' }}
         spacing={{ base: '1.5rem', lg: '2.5rem' }}
-        align="center"
+        align='center'
       >
         <Button
-          width={isMobile ? '100%' : undefined}
+          width={isMobile ?? false ? '100%' : undefined}
           isLoading={formState.isSubmitting}
-          type="submit"
+          type='submit'
         >
           Sign in
         </Button>

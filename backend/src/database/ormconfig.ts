@@ -8,7 +8,7 @@ import { schema } from '../config/config.schema'
 
 const config = convict(schema)
 
-export const base = {
+export const base: DataSourceOptions = {
   type: 'postgres',
   host: config.get('database.host'),
   port: config.get('database.port'),
@@ -21,15 +21,15 @@ export const base = {
   migrationsRun: false,
   // js for runtime, ts for typeorm cli
   entities: [join(__dirname, 'entities', '*.entity{.js,.ts}')],
-  ...(config.get('database.ca')
+  ...(![undefined, null, ''].includes(config.get('database.ca'))
     ? { ssl: { ca: config.get('database.ca') } }
     : {}),
   // ref: https://github.com/typeorm/typeorm/issues/3388 to set pool size
   extra: {
     min: config.get('database.minPool'),
-    max: config.get('database.maxPool'),
-  },
-} as DataSourceOptions
+    max: config.get('database.maxPool')
+  }
+}
 
 const dataSource = new DataSource(base)
 export default dataSource

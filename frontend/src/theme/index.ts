@@ -7,5 +7,5 @@ import { textStyles } from './textStyles'
 export const theme = extendTheme({
   colors: colours,
   textStyles,
-  components,
+  components
 })

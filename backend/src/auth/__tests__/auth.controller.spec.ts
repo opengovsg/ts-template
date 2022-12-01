@@ -22,25 +22,25 @@ describe('AuthController', () => {
         MailerService,
         {
           provide: getRepositoryToken(User),
-          useValue: mockModel,
+          useValue: mockModel
         },
         {
           provide: getRepositoryToken(Session),
-          useValue: mockModel,
+          useValue: mockModel
         },
         {
           provide: getLoggerToken(AuthController.name),
-          useValue: console,
+          useValue: console
         },
         {
           provide: getLoggerToken(AuthService.name),
-          useValue: console,
+          useValue: console
         },
         {
           provide: getLoggerToken(MailerService.name),
-          useValue: console,
-        },
-      ],
+          useValue: console
+        }
+      ]
     }).compile()
 
     controller = module.get<AuthController>(AuthController)

@@ -3,7 +3,7 @@ import {
   SendLoginOtpResponseDto,
   VerifyOtpRequestDto,
   VerifyOtpResponseDto,
-  WhoAmIResponseDto,
+  WhoAmIResponseDto
 } from '~shared/types/auth.dto'
 
 import { api } from '~/api'
@@ -13,19 +13,19 @@ import { api } from '~/api'
  *
  * @returns the logged in user if session is valid, will throw 401 error if not.
  */
-export const fetchUser = async () => {
-  return api.url('/auth/whoami').get().json<WhoAmIResponseDto>()
+export const fetchUser = async (): Promise<WhoAmIResponseDto> => {
+  return await api.url('/auth/whoami').get().json<WhoAmIResponseDto>()
 }
 
-export const sendLoginOtp = async (params: SendLoginOtpRequestDto) => {
+export const sendLoginOtp = async (params: SendLoginOtpRequestDto): Promise<SendLoginOtpResponseDto> => {
   params.email = params.email.toLowerCase()
-  return api.url('/auth').post(params).json<SendLoginOtpResponseDto>()
+  return await api.url('/auth').post(params).json<SendLoginOtpResponseDto>()
 }
 
-export const verifyLoginOtp = async (params: VerifyOtpRequestDto) => {
-  return api.url('/auth/verify').post(params).json<VerifyOtpResponseDto>()
+export const verifyLoginOtp = async (params: VerifyOtpRequestDto): Promise<VerifyOtpResponseDto> => {
+  return await api.url('/auth/verify').post(params).json<VerifyOtpResponseDto>()
 }
 
 export const logout = async (): Promise<void> => {
-  return api.url('/auth/logout').post().json()
+  return await api.url('/auth/logout').post().json()
 }

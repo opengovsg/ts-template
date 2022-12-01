@@ -3,7 +3,7 @@ import {
   HealthCheck,
   HealthCheckService,
   MemoryHealthIndicator,
-  TypeOrmHealthIndicator,
+  TypeOrmHealthIndicator
 } from '@nestjs/terminus'
 
 import { HealthDto } from '~shared/types/health.dto'
@@ -12,30 +12,30 @@ import { ConfigService } from '../config/config.service'
 
 @Controller('health')
 export class HealthController {
-  constructor(
-    private health: HealthCheckService,
-    private config: ConfigService,
+  constructor (
+    private readonly health: HealthCheckService,
+    private readonly config: ConfigService,
     // Refer to https://github.com/nestjs/terminus/blob/master/sample/ for
     // examples of how to add other services/databases to healthcheck.
-    private db: TypeOrmHealthIndicator,
-    private memory: MemoryHealthIndicator,
+    private readonly db: TypeOrmHealthIndicator,
+    private readonly memory: MemoryHealthIndicator
   ) {}
 
   @Get()
   @HealthCheck()
-  async check(): Promise<HealthDto> {
-    return this.health.check([
-      async () => this.db.pingCheck('database'),
+  async check (): Promise<HealthDto> {
+    return await this.health.check([
+      async () => await this.db.pingCheck('database'),
       async () =>
-        this.memory.checkHeap(
+        await this.memory.checkHeap(
           'memory_heap',
-          this.config.get('health.heapSizeThreshold'),
+          this.config.get('health.heapSizeThreshold')
         ),
       async () =>
-        this.memory.checkRSS(
+        await this.memory.checkRSS(
           'memory_rss',
-          this.config.get('health.rssThreshold'),
-        ),
+          this.config.get('health.rssThreshold')
+        )
     ])
   }
 }

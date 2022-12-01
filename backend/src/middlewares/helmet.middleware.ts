@@ -5,9 +5,9 @@ import helmet from 'helmet'
 
 @Injectable()
 export class HelmetMiddleware implements NestMiddleware {
-  private middleware: RequestHandler
+  private readonly middleware: RequestHandler
 
-  constructor(private config: ConfigService) {
+  constructor (private readonly config: ConfigService) {
     this.middleware = helmet({
       contentSecurityPolicy: {
         directives: {
@@ -26,17 +26,17 @@ export class HelmetMiddleware implements NestMiddleware {
           styleSrc: [
             "'self'",
             "'unsafe-inline'",
-            'https://fonts.googleapis.com',
+            'https://fonts.googleapis.com'
           ],
           scriptSrcAttr: ["'none'"],
           scriptSrc: ["'self'"],
-          upgradeInsecureRequests: config.isDevEnv ? null : [],
-        },
-      },
+          upgradeInsecureRequests: config.isDevEnv ? null : []
+        }
+      }
     })
   }
 
-  use(req: Request, res: Response, next: NextFunction): void {
+  use (req: Request, res: Response, next: NextFunction): void {
     this.middleware(req, res, next)
   }
 }

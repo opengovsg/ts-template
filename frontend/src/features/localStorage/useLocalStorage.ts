@@ -5,7 +5,7 @@ import { LOCAL_STORAGE_EVENT } from './constants'
 
 export const useLocalStorage = <T>(
   key: string,
-  initialValue?: T,
+  initialValue?: T
 ): readonly [T | undefined, (value?: T) => void] => {
   // Get from local storage then
   // parse stored json or return initialValue
@@ -16,7 +16,7 @@ export const useLocalStorage = <T>(
     }
     try {
       const item = window.localStorage.getItem(key)
-      return item ? JSON.parse(item) : initialValue
+      return item !== null ? JSON.parse(item) : initialValue
     } catch (error) {
       return initialValue
     }
@@ -26,12 +26,12 @@ export const useLocalStorage = <T>(
   const [storedValue, setStoredValue] = useState(readValue)
   // Return a wrapped version of useState's setter function that ...
   // ... persists the new value to localStorage.
-  const setValue = (value?: T) => {
+  const setValue = (value?: T): void => {
     try {
       // Allow value to be a function so we have the same API as useState
       const newValue = value instanceof Function ? value(storedValue) : value
 
-      if (!value) {
+      if (value !== undefined) {
         window.localStorage.removeItem(key)
       } else {
         // Save to local storage
@@ -50,7 +50,7 @@ export const useLocalStorage = <T>(
     setStoredValue(readValue())
   }, [readValue])
   useEffect(() => {
-    const handleStorageChange = () => {
+    const handleStorageChange = (): void => {
       setStoredValue(readValue())
     }
     // this only works for other documents, not the current one

@@ -5,7 +5,7 @@ import { IsGovSgEmail } from '../is-gov-sg-email'
 describe('IsGovSgEmail', () => {
   class TestClass {
     @IsGovSgEmail()
-    email: unknown
+      email: unknown
   }
 
   it('rejects non-strings', async () => {

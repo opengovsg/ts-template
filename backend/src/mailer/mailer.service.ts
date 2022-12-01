@@ -4,36 +4,35 @@ import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'
 import nodemailer, {
   SendMailOptions,
   SentMessageInfo,
-  Transporter,
+  Transporter
 } from 'nodemailer'
 
 import { ConfigService } from '../config/config.service'
 
 @Injectable()
 export class MailerService {
-  constructor(
-    private config: ConfigService,
+  constructor (
+    private readonly config: ConfigService,
     @InjectPinoLogger(MailerService.name)
-    private readonly logger: PinoLogger,
-  ) {}
+    private readonly logger: PinoLogger
+  ) { }
 
   // FIXME: Once mail services are available, remove this block:
-  private mailer: Pick<Transporter, 'sendMail'> = !this.config.isDevEnv
+  private readonly mailer: Pick<Transporter, 'sendMail'> = !this.config.isDevEnv
     ? {
-        sendMail: (mailOptions: SendMailOptions) => {
+        sendMail: async (mailOptions: SendMailOptions) => {
           this.logger.warn(
-            `REMOVE ME ONCE ${SES.name} OR MAIL IS IN PLACE Logging mail: ${
-              mailOptions.html?.toString() ?? ''
-            }`,
+          `REMOVE ME ONCE ${SES.name} OR MAIL IS IN PLACE Logging mail: ${mailOptions.html?.toString() ?? ''
+          }`
           )
-          return Promise.resolve()
-        },
+          return await Promise.resolve()
+        }
       }
     : nodemailer.createTransport({
-        ...this.config.get('mailer'),
-        secure: !this.config.isDevEnv,
-        ignoreTLS: this.config.isDevEnv,
-      })
+      ...this.config.get('mailer'),
+      secure: !this.config.isDevEnv,
+      ignoreTLS: this.config.isDevEnv
+    })
 
   // FIXME: Once mail services are available, uncomment this block:
   // private mailer: Pick<Transporter, 'sendMail'> = this.config.get('awsRegion')
@@ -53,6 +52,6 @@ export class MailerService {
 
   sendMail = async (mailOptions: SendMailOptions): Promise<SentMessageInfo> => {
     this.logger.info('Sending mail')
-    return this.mailer.sendMail(mailOptions)
+    return await this.mailer.sendMail(mailOptions)
   }
 }

@@ -18,16 +18,16 @@ export type ThemeColorScheme =
  * Available color schemes to use for form field colors
  */
 export type FieldColorScheme = Extract<
-  ThemeColorScheme,
-  | 'primary'
-  | 'theme-green'
-  | 'theme-teal'
-  | 'theme-purple'
-  | 'theme-grey'
-  | 'theme-yellow'
-  | 'theme-orange'
-  | 'theme-red'
-  | 'theme-brown'
+ThemeColorScheme,
+| 'primary'
+| 'theme-green'
+| 'theme-teal'
+| 'theme-purple'
+| 'theme-grey'
+| 'theme-yellow'
+| 'theme-orange'
+| 'theme-red'
+| 'theme-brown'
 >
 
 export const colours: { [k in ThemeColorScheme]: Record<string, string> } = {
@@ -40,7 +40,7 @@ export const colours: { [k in ThemeColorScheme]: Record<string, string> } = {
     600: '#3B4E9A',
     700: '#2C3A73',
     800: '#1E274D',
-    900: '#161D3A',
+    900: '#161D3A'
   },
   secondary: {
     100: '#F5F6F8',
@@ -51,7 +51,7 @@ export const colours: { [k in ThemeColorScheme]: Record<string, string> } = {
     600: '#36405B',
     700: '#293044',
     800: '#1B202E',
-    900: '#0E1017',
+    900: '#0E1017'
   },
   danger: {
     100: '#FFF8F8',
@@ -62,7 +62,7 @@ export const colours: { [k in ThemeColorScheme]: Record<string, string> } = {
     600: '#AD4848',
     700: '#9A4040',
     800: '#733030',
-    900: '#602828',
+    900: '#602828'
   },
   warning: {
     100: '#FFFCF2',
@@ -73,7 +73,7 @@ export const colours: { [k in ThemeColorScheme]: Record<string, string> } = {
     600: '#E0C25D',
     700: '#AE9748',
     800: '#7D6C34',
-    900: '#4B411F',
+    900: '#4B411F'
   },
   success: {
     100: '#E6FCF7',
@@ -84,7 +84,7 @@ export const colours: { [k in ThemeColorScheme]: Record<string, string> } = {
     600: '#05B88B',
     700: '#038564',
     800: '#03664D',
-    900: '#023D2E',
+    900: '#023D2E'
   },
   neutral: {
     100: '#FBFCFD',
@@ -95,7 +95,7 @@ export const colours: { [k in ThemeColorScheme]: Record<string, string> } = {
     600: '#999B9F',
     700: '#636467',
     800: '#48494B',
-    900: '#242425',
+    900: '#242425'
   },
   'theme-green': {
     100: '#F3F6F6',
@@ -104,7 +104,7 @@ export const colours: { [k in ThemeColorScheme]: Record<string, string> } = {
     400: '#81ABA0',
     500: '#357867',
     600: '#025641',
-    700: '#013C2E',
+    700: '#013C2E'
   },
   'theme-teal': {
     100: '#F3F6F8',
@@ -113,7 +113,7 @@ export const colours: { [k in ThemeColorScheme]: Record<string, string> } = {
     400: '#7AA5B7',
     500: '#417E98',
     600: '#1B6483',
-    700: '#054763',
+    700: '#054763'
   },
   'theme-purple': {
     100: '#F4F2F5',
@@ -122,7 +122,7 @@ export const colours: { [k in ThemeColorScheme]: Record<string, string> } = {
     400: '#B393C1',
     500: '#9265A7',
     600: '#583D64',
-    700: '#3A2843',
+    700: '#3A2843'
   },
   'theme-grey': {
     100: '#F6F6F6',
@@ -131,7 +131,7 @@ export const colours: { [k in ThemeColorScheme]: Record<string, string> } = {
     400: '#929DA3',
     500: '#495C66',
     600: '#2C373D',
-    700: '#1D2529',
+    700: '#1D2529'
   },
   'theme-yellow': {
     100: '#F5F4EE',
@@ -140,7 +140,7 @@ export const colours: { [k in ThemeColorScheme]: Record<string, string> } = {
     400: '#F0DD97',
     500: '#F9D651',
     600: '#847642',
-    700: '#6C5D21',
+    700: '#6C5D21'
   },
   'theme-orange': {
     100: '#FAF7F4',
@@ -149,7 +149,7 @@ export const colours: { [k in ThemeColorScheme]: Record<string, string> } = {
     400: '#FBB791',
     500: '#F66F23',
     600: '#BF5200',
-    700: '#8C3C00',
+    700: '#8C3C00'
   },
   'theme-red': {
     100: '#FAF7F7',
@@ -158,7 +158,7 @@ export const colours: { [k in ThemeColorScheme]: Record<string, string> } = {
     400: '#F1AAAA',
     500: '#DC2A2A',
     600: '#B22222',
-    700: '#7C0E0E',
+    700: '#7C0E0E'
   },
   'theme-brown': {
     100: '#F6F5F3',
@@ -167,6 +167,6 @@ export const colours: { [k in ThemeColorScheme]: Record<string, string> } = {
     400: '#B2A99E',
     500: '#7F6F5E',
     600: '#635649',
-    700: '#473E34',
-  },
+    700: '#473E34'
+  }
 }

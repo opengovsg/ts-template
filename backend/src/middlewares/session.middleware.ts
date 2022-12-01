@@ -10,12 +10,12 @@ import { Session } from '../database/entities'
 
 @Injectable()
 export class SessionMiddleware implements NestMiddleware {
-  private middleware: RequestHandler
+  private readonly middleware: RequestHandler
 
-  constructor(
-    private config: ConfigService,
+  constructor (
+    private readonly config: ConfigService,
     @InjectDataSource()
-    private readonly dataSource: DataSource,
+    private readonly dataSource: DataSource
   ) {
     const sessionRepository = dataSource.getRepository(Session)
 
@@ -28,16 +28,16 @@ export class SessionMiddleware implements NestMiddleware {
         httpOnly: true,
         sameSite: 'strict',
         maxAge: this.config.get('session.cookie.maxAge'),
-        secure: !config.isDevEnv, // disable in local dev env
+        secure: !config.isDevEnv // disable in local dev env
       },
       store: new TypeormStore({
         // for every new session, remove this many expired ones. Defaults to 0
-        cleanupLimit: 2,
-      }).connect(sessionRepository),
+        cleanupLimit: 2
+      }).connect(sessionRepository)
     })
   }
 
-  use(req: Request, res: Response, next: NextFunction): void {
+  use (req: Request, res: Response, next: NextFunction): void {
     this.middleware(req, res, next)
   }
 }

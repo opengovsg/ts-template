@@ -38,11 +38,7 @@
     "@types/react-router-dom": "^5.3.3",
     "babel-plugin-named-exports-order": "^0.0.2",
     "cross-env": "^7.0.3",
-    "eslint-plugin-react": "^7.31.11",
-    "eslint-plugin-react-hooks": "^4.4.0",
-    "eslint-plugin-storybook": "^0.6.8",
     "lint-staged": "^13.1.0",
-    "prettier": "^2.8.0",
     "prop-types": "^15.8.1",
     "react-app-alias-ex": "^2.1.0",
     "react-app-rewired": "^2.2.1",
@@ -68,16 +64,15 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "lint": "eslint ./ --ignore-path .gitignore && prettier . -c",
-    "lint:fix": "eslint ./ --ignore-path .gitignore --fix && prettier . -c --write",
+    "lint": "ts-standard",
+    "lint:fix": "npm run lint -- --fix",
     "pre-commit": "lint-staged",
     "snyk-protect": "snyk-protect",
     "prepare": "npm run snyk-protect"
   },
   "lint-staged": {
     "**/*.(js|jsx|ts|tsx)": [
-      "prettier --write",
-      "eslint --cache --fix"
+      "ts-standard --fix"
     ]
   },
   "browserslist": {
@@ -92,5 +87,10 @@
       "last 1 safari version"
     ]
   },
-  "snyk": true
+  "snyk": true,
+  "ts-standard": {
+    "ignore": [
+      "build"
+    ]
+  }
 }

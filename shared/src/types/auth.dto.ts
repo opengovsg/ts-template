@@ -1,9 +1,9 @@
 import { IsGovSgEmail } from '../decorators/is-gov-sg-email'
 export class GenerateOtpDto {
   @IsGovSgEmail({
-    message: 'This does not appear to be a gov.sg email address',
+    message: 'This does not appear to be a gov.sg email address'
   })
-  email: string
+    email: string
 }
 
 export interface VerifyOtpDto {

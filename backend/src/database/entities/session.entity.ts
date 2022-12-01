@@ -4,15 +4,15 @@ import { Column, DeleteDateColumn, Entity, Index, PrimaryColumn } from 'typeorm'
 @Entity({ name: 'sessions' })
 export class Session implements ISession {
   @PrimaryColumn('varchar', { length: 255 })
-  id!: string
+    id!: string
 
   @Index('sessions_expiredAt_idx')
   @Column('bigint')
-  expiredAt = Date.now()
+    expiredAt = Date.now()
 
   @Column('text', { default: '' })
-  json!: string
+    json!: string
 
   @DeleteDateColumn()
-  destroyedAt?: Date
+    destroyedAt?: Date
 }

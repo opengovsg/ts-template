@@ -9,14 +9,14 @@ import { routes } from '~constants/routes'
 
 import { LoginPage } from '~features/auth/LoginPage'
 
-const WorkspacePage = lazy(() => import('~features/dashboard/DashboardPage'))
-const HealthPage = lazy(() => import('~features/health/HealthPage'))
+const WorkspacePage = lazy(async () => await import('~features/dashboard/DashboardPage'))
+const HealthPage = lazy(async () => await import('~features/health/HealthPage'))
 
 export const AppRouter = (): JSX.Element => {
   return (
     <Suspense
       fallback={
-        <Flex w="full" h="full" justify="center" align="center">
+        <Flex w='full' h='full' justify='center' align='center'>
           <Spinner />
         </Flex>
       }
@@ -29,7 +29,7 @@ export const AppRouter = (): JSX.Element => {
               <WorkspacePage />
             </PrivateRoute>
           }
-        ></Route>
+        />
         <Route
           path={routes.login}
           element={
@@ -46,7 +46,7 @@ export const AppRouter = (): JSX.Element => {
             </PrivateRoute>
           }
         />
-        <Route path="*" element={<div>404</div>} />
+        <Route path='*' element={<div>404</div>} />
       </Routes>
     </Suspense>
   )

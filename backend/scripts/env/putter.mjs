@@ -4,11 +4,11 @@ import { exit } from 'process'
 import dotenv from 'dotenv'
 
 /**
- * This is a helper for local file runs or jest, as specified in package.json  
- * It emulates the putting of parameters into SSM which Lambda will do.  
+ * This is a helper for local file runs or jest, as specified in package.json
+ * It emulates the putting of parameters into SSM which Lambda will do.
  * This is not meant to be used in a deployment and is .mjs so we can use top-level await
  */
-async function putAllParameters() {
+async function putAllParameters () {
   console.log(`Retrieving parameters for ENV=${process.env.ENV}`)
 
   if (process.env.ENV === 'development') {
@@ -29,8 +29,8 @@ async function putAllParameters() {
         Path: prefix,
         Recursive: true,
         WithDecryption: true,
-        ...(nextToken ? { NextToken: nextToken } : {}),
-      }),
+        ...(nextToken ? { NextToken: nextToken } : {})
+      })
     )
 
     for (const parameter of res.Parameters ?? []) {
@@ -53,11 +53,11 @@ async function putAllParameters() {
     if (Object.keys(params).includes(k) && params[k] !== v) {
       // different values, set override flag
       console.log(
-        `aws ssm put-parameter --overwrite --name /application/${process.env.ENV}/${k} --value ${v} --type String`,
+        `aws ssm put-parameter --overwrite --name /application/${process.env.ENV}/${k} --value ${v} --type String`
       )
     } else if (!Object.keys(params).includes(k)) {
       console.log(
-        `aws ssm put-parameter --name /application/${process.env.ENV}/${k} --value ${v} --type String`,
+        `aws ssm put-parameter --name /application/${process.env.ENV}/${k} --value ${v} --type String`
       )
     }
   }

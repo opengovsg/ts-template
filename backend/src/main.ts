@@ -5,18 +5,19 @@ import { Logger } from 'nestjs-pino'
 
 import { AppModule } from './app.module'
 
-async function bootstrap() {
+async function bootstrap (): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    bufferLogs: true,
+    bufferLogs: true
   })
   app.useLogger(app.get(Logger))
 
   const config = app.get(ConfigService)
-  if (!config.isDevEnv) {
+  const isDevEnv: boolean = config.isDevEnv
+  if (isDevEnv) {
     app.set('trust proxy', 1)
   }
 
   await app.listen(config.get('port'))
 }
 
-bootstrap()
+void bootstrap()

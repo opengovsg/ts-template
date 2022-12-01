@@ -6,7 +6,7 @@ import {
   Post,
   Req,
   Res,
-  Session,
+  Session
 } from '@nestjs/common'
 import { Request, Response } from 'express'
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'
@@ -20,17 +20,17 @@ import { AuthService } from './auth.service'
 
 @Controller('auth')
 export class AuthController {
-  constructor(
+  constructor (
     private readonly config: ConfigService,
     private readonly authService: AuthService,
     @InjectPinoLogger(AuthController.name)
-    private readonly logger: PinoLogger,
-  ) {}
+    private readonly logger: PinoLogger
+  ) { }
 
   @Post()
-  async generateOtp(
+  async generateOtp (
     @Res() res: Response,
-    @Body() generateOtpDto: GenerateOtpDto,
+      @Body() generateOtpDto: GenerateOtpDto
   ): Promise<void> {
     try {
       await this.authService.generateOtp(generateOtpDto)
@@ -44,17 +44,17 @@ export class AuthController {
   }
 
   @Post('verify')
-  async verifyOtp(
+  async verifyOtp (
     @Req() req: Request,
-    @Res() res: Response,
-    @Body() verifyOtpDto: VerifyOtpDto,
+      @Res() res: Response,
+      @Body() verifyOtpDto: VerifyOtpDto
   ): Promise<void> {
     try {
       const user = await this.authService.verifyOtp(verifyOtpDto)
-      if (user) {
+      if (user !== undefined && user !== null) {
         req.session.user = user
         this.logger.info(
-          `Successfully verified OTP for user ${verifyOtpDto.email}`,
+          `Successfully verified OTP for user ${verifyOtpDto.email}`
         )
         res.status(HttpStatus.OK).json({ message: 'OTP verified' })
       } else {
@@ -72,22 +72,22 @@ export class AuthController {
   }
 
   @Post('logout')
-  async logout(
+  async logout (
     @Req() req: Request,
-    @Session() session: UserSession,
-    @Res({ passthrough: true }) res: Response,
+      @Session() session: UserSession,
+      @Res({ passthrough: true }) res: Response
   ): Promise<void> {
     res.clearCookie(this.config.get('session.name'))
     session.destroy(() =>
-      res.status(HttpStatus.OK).json({ message: 'Logged out' }),
+      res.status(HttpStatus.OK).json({ message: 'Logged out' })
     )
   }
 
   @Get('whoami')
-  async whoami(@Req() req: Request, @Res() res: Response): Promise<void> {
+  async whoami (@Req() req: Request, @Res() res: Response): Promise<void> {
     const user = req.session.user
     res
       .status(HttpStatus.OK)
-      .json(user ? { id: user.id, email: user.email } : null)
+      .json((user !== undefined && user !== null) ? { id: user.id, email: user.email } : null)
   }
 }

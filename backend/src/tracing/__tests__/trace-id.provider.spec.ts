@@ -9,7 +9,7 @@ describe('TraceIdProvider', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [TraceIdProvider],
+      providers: [TraceIdProvider]
     }).compile()
 
     traceIdProvider = module.get<TraceIdProvider>(TraceIdProvider)
@@ -17,7 +17,7 @@ describe('TraceIdProvider', () => {
 
   it('generates its own id if no headers available', () => {
     const req = {
-      headers: {},
+      headers: {}
     } as unknown as IncomingMessage
     const id = traceIdProvider.getTraceId(req)
     expect(id).toBeTruthy()
@@ -27,8 +27,8 @@ describe('TraceIdProvider', () => {
     const requestId = randomUUID()
     const req = {
       headers: {
-        'x-request-id': requestId,
-      },
+        'x-request-id': requestId
+      }
     } as unknown as IncomingMessage
     const id = traceIdProvider.getTraceId(req)
     expect(id).toBe(requestId)
@@ -39,8 +39,8 @@ describe('TraceIdProvider', () => {
     const req = {
       headers: {
         'x-amzn-trace-id': requestId,
-        'x-request-id': 'x-request-id',
-      },
+        'x-request-id': 'x-request-id'
+      }
     } as unknown as IncomingMessage
     const id = traceIdProvider.getTraceId(req)
     expect(id).toBe(requestId)
@@ -52,8 +52,8 @@ describe('TraceIdProvider', () => {
       headers: {
         'x-datadog-trace-id': requestId,
         'x-amzn-trace-id': 'x-amzn-trace-id',
-        'x-request-id': 'x-request-id',
-      },
+        'x-request-id': 'x-request-id'
+      }
     } as unknown as IncomingMessage
     const id = traceIdProvider.getTraceId(req)
     expect(id).toBe(requestId)

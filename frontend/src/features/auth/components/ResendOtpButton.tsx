@@ -9,28 +9,28 @@ export interface ResendOtpButtonProps {
 }
 
 export const ResendOtpButton = ({
-  onResendOtp,
+  onResendOtp
 }: ResendOtpButtonProps): JSX.Element => {
   // The counter
   const [timer, setTimer] = useState(0)
 
   const resendOtpMutation = useMutation(onResendOtp, {
     // On success, restart the timer before this can be called again.
-    onSuccess: () => setTimer(60),
+    onSuccess: () => setTimer(60)
   })
 
   useInterval(
     () => setTimer(timer - 1),
     // Stop interval if timer hits 0.
-    timer <= 0 ? null : 1000,
+    timer <= 0 ? null : 1000
   )
 
   return (
     <Button
       isDisabled={resendOtpMutation.isLoading || timer > 0}
-      type="button"
-      variant="clear"
-      colorScheme="primary"
+      type='button'
+      variant='clear'
+      colorScheme='primary'
       onClick={() => resendOtpMutation.mutate()}
     >
       <u>

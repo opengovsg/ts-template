@@ -12,7 +12,7 @@ const apiModules = [
   TerminusModule,
   HealthModule,
   OtpModule,
-  MailerModule,
+  MailerModule
 ]
 
 @Module({
@@ -21,9 +21,9 @@ const apiModules = [
     RouterModule.register([
       {
         path: 'api',
-        children: apiModules,
-      },
-    ]),
-  ],
+        children: apiModules
+      }
+    ])
+  ]
 })
 export class ApiModule {}

@@ -12,19 +12,19 @@ import { OtpService } from '../otp/otp.service'
 
 @Injectable()
 export class AuthService {
-  constructor(
+  constructor (
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
     @InjectRepository(Session)
     private readonly sessionRepository: Repository<Session>,
-    private otpService: OtpService,
-    private mailerService: MailerService,
-    private config: ConfigService,
+    private readonly otpService: OtpService,
+    private readonly mailerService: MailerService,
+    private readonly config: ConfigService,
     @InjectPinoLogger(AuthService.name)
-    private readonly logger: PinoLogger,
+    private readonly logger: PinoLogger
   ) {}
 
-  async generateOtp(generateOtpDto: GenerateOtpDto): Promise<void> {
+  async generateOtp (generateOtpDto: GenerateOtpDto): Promise<void> {
     const { email } = generateOtpDto
     const { token, timeLeft } = this.otpService.generateOtp(email)
 
@@ -36,32 +36,32 @@ export class AuthService {
     const mail = {
       to: email,
       from: `${this.config.get('otp.sender_name')} <${this.config.get(
-        'otp.email',
+        'otp.email'
       )}>`,
       subject: 'One-Time Password (OTP) for Starter Kit',
-      html,
+      html
     }
 
     this.logger.info(`Sending mail to ${email}`)
-    return this.mailerService.sendMail(mail)
+    return await this.mailerService.sendMail(mail)
   }
 
-  async verifyOtp(verifyOtpDto: VerifyOtpDto): Promise<User | undefined> {
+  async verifyOtp (verifyOtpDto: VerifyOtpDto): Promise<User | undefined> {
     const { email, token } = verifyOtpDto
     const isVerified = this.otpService.verifyOtp(email, token)
     return isVerified
       ? await this.findOrCreate(
-          { where: { email } },
-          {
-            email,
-          },
-        )
+        { where: { email } },
+        {
+          email
+        }
+      )
       : undefined
   }
 
-  async findOrCreate(
+  async findOrCreate (
     query: FindOneOptions<Partial<User>>,
-    create: Partial<Omit<User, 'id'>>,
+    create: Partial<Omit<User, 'id'>>
   ): Promise<User> {
     const user = await this.usersRepository.findOne(query)
     return user ?? (await this.usersRepository.save(create))

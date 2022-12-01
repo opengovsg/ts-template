@@ -5,7 +5,7 @@ import { base } from './ormconfig'
 
 export const config: DataSourceOptions = {
   ...base,
-  migrations: [join(__dirname, 'migrations', '*{.js,.ts}')],
+  migrations: [join(__dirname, 'migrations', '*{.js,.ts}')]
 }
 
 // For CLI migrations.

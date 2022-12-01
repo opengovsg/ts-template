@@ -4,13 +4,14 @@ import { HealthDto } from '~shared/types/health.dto'
 
 import { api } from '~/api'
 
-export function useHealth() {
+export function useHealth (): { data?: HealthDto } {
   const { data } = useQuery(
     ['health'],
-    () => api.url(`/health`).get().json<HealthDto>(),
+    // eslint-disable-next-line
+    async () => await api.url('/health').get().json<HealthDto>(),
     {
-      suspense: true,
-    },
+      suspense: true
+    }
   )
   return { data }
 }

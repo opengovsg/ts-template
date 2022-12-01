@@ -8,8 +8,8 @@ const config: Config.InitialOptions = {
   collectCoverageFrom: ['<rootDir>/src/**/*.{ts,js}'],
   coveragePathIgnorePatterns: ['<rootDir>/build', '<rootDir>/node_modules'],
   moduleNameMapper: {
-    '~shared/(.*)': '<rootDir>/../shared/src/$1',
-  },
+    '~shared/(.*)': '<rootDir>/../shared/src/$1'
+  }
 }
 
 export default config

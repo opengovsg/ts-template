@@ -14,9 +14,9 @@ import { AuthService } from './auth.service'
     ConfigModule,
     OtpModule,
     MailerModule,
-    TypeOrmModule.forFeature([User, Session]),
+    TypeOrmModule.forFeature([User, Session])
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService]
 })
 export class AuthModule {}

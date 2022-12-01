@@ -6,7 +6,7 @@ import {
   chakra,
   Flex,
   HStack,
-  VStack,
+  VStack
 } from '@chakra-ui/react'
 
 import { ReactComponent as BrandLogoSvg } from '~assets/svgs/brand-hort-colour.svg'
@@ -21,20 +21,22 @@ export const Navbar = (): JSX.Element => {
 
   return (
     <Flex
-      flexDir="row"
+      flexDir='row'
       px={8}
       h={16}
-      justifyContent="space-between"
-      borderBottom="1px"
-      borderBottomColor="#F0F0F1"
-      w="full"
+      justifyContent='space-between'
+      borderBottom='1px'
+      borderBottomColor='#F0F0F1'
+      w='full'
     >
       <HStack spacing={8}>
-        <BrandLogo lineHeight={8} title="Makeshift template logo" h="2rem" />
+        <BrandLogo lineHeight={8} title='Makeshift template logo' h='2rem' />
       </HStack>
 
       <HStack spacing={6}>
+        {/* eslint-disable */}
         <Button onClick={logout}>Logout</Button>
+        {/* eslint-enable */}
       </HStack>
     </Flex>
   )
@@ -44,9 +46,9 @@ const DashboardPage = (): JSX.Element => {
   const { user } = useAuth()
 
   return (
-    <VStack alignItems="left" spacing="0px">
+    <VStack alignItems='left' spacing='0px'>
       <Navbar />
-      <VStack pt={16} spacing={8} align={'center'}>
+      <VStack pt={16} spacing={8} align='center'>
         <Box>Welcome {user?.email}.</Box>
         <Box>
           YOU ARE NOW AUTHENTICATED. Replace this page with the root page of

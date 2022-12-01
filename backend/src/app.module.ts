@@ -31,7 +31,7 @@ const FRONTEND_PATH = join(__dirname, '..', '..', 'frontend', 'build')
           customProps: (req) => {
             const context = {
               trace_id: req.headers['x-datadog-trace-id'],
-              xray_id: req.headers['x-amzn-trace-id'],
+              xray_id: req.headers['x-amzn-trace-id']
             }
             return { context, scope: 'NestApplication' }
           },
@@ -39,18 +39,17 @@ const FRONTEND_PATH = join(__dirname, '..', '..', 'frontend', 'build')
             return `${req.method ?? ''} ${req.url ?? ''} ${res.statusCode}`
           },
           customErrorMessage: (req, res, err) => {
-            return `${req.method ?? ''} ${req.url ?? ''} ${res.statusCode}: (${
-              err.name
-            }) ${err.message}`
-          },
+            return `${req.method ?? ''} ${req.url ?? ''} ${res.statusCode}: (${err.name
+              }) ${err.message}`
+          }
         },
-        renameContext: 'scope',
-      }),
+        renameContext: 'scope'
+      })
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useClass: DatabaseConfigService,
+      useClass: DatabaseConfigService
     }),
     ServeStaticModule.forRoot({
       rootPath: FRONTEND_PATH,
@@ -62,22 +61,22 @@ const FRONTEND_PATH = join(__dirname, '..', '..', 'frontend', 'build')
           if (path === join(FRONTEND_PATH, 'index.html')) {
             res.setHeader('Cache-control', 'public, max-age=0')
           }
-        },
-      },
-    }),
+        }
+      }
+    })
   ],
   providers: [
     {
       provide: APP_PIPE,
       useClass: LoggedValidationPipe,
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      inject: [PinoLogger],
-    },
-  ],
+      // @ts-expect-error
+      inject: [PinoLogger]
+    }
+  ]
 })
 export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer): void {
+  configure (consumer: MiddlewareConsumer): void {
     consumer.apply(HelmetMiddleware, SessionMiddleware).forRoutes('*')
   }
 }
