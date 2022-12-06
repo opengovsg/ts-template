@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
-import { PinoLogger } from 'nestjs-pino'
+import { getLoggerToken } from 'nestjs-pino'
 
 import { ConfigModule } from '../../config/config.module'
 import { Session, User } from '../../database/entities'
-import { MailerModule } from '../../mailer/mailer.module'
+import { MailerService } from '../../mailer/mailer.service'
 import { OtpModule } from '../../otp/otp.module'
 import { AuthController } from '../auth.controller'
 import { AuthService } from '../auth.service'
@@ -15,10 +15,11 @@ describe('AuthController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [ConfigModule, OtpModule, MailerModule],
+      imports: [ConfigModule, OtpModule],
       controllers: [AuthController],
       providers: [
         AuthService,
+        MailerService,
         {
           provide: getRepositoryToken(User),
           useValue: mockModel,
@@ -28,11 +29,15 @@ describe('AuthController', () => {
           useValue: mockModel,
         },
         {
-          provide: `${PinoLogger.name}:${AuthController.name}`,
+          provide: getLoggerToken(AuthController.name),
           useValue: console,
         },
         {
-          provide: `${PinoLogger.name}:${AuthService.name}`,
+          provide: getLoggerToken(AuthService.name),
+          useValue: console,
+        },
+        {
+          provide: getLoggerToken(MailerService.name),
           useValue: console,
         },
       ],

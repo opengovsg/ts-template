@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
-import { PinoLogger } from 'nestjs-pino'
+import { getLoggerToken } from 'nestjs-pino'
 
 import { ConfigService } from '../../config/config.service'
 import { Session, User } from '../../database/entities'
@@ -28,7 +28,11 @@ describe('AuthService', () => {
           useValue: mockModel,
         },
         {
-          provide: `${PinoLogger.name}:${AuthService.name}`,
+          provide: getLoggerToken(AuthService.name),
+          useValue: console,
+        },
+        {
+          provide: getLoggerToken(MailerService.name),
           useValue: console,
         },
       ],
