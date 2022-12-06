@@ -41,7 +41,7 @@
     "aws-sdk": "^2.1268.0",
     "connect-typeorm": "^2.0.0",
     "convict": "^6.2.3",
-    "dd-trace": "^3.9.0",
+    "dd-trace": "^3.9.1",
     "dotenv": "^16.0.3",
     "express-session": "^1.17.3",
     "helmet": "^6.0.1",
