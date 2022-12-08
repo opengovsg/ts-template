@@ -12,8 +12,7 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react'
 
-const emailRegex =
-  /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+/
+import { isGovSgEmail } from '~shared/decorators/is-gov-sg-email'
 
 export type LoginFormInputs = {
   email: string
@@ -28,12 +27,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): JSX.Element => {
     useForm<LoginFormInputs>()
 
   const validateEmail = useCallback((value: string) => {
-    const isValidEmail = emailRegex.test(value)
-    if (!isValidEmail) {
-      return 'Please enter a valid email'
-    }
-
-    const isGovDomain = value.split('@').pop()?.includes('gov.sg')
+    const isGovDomain = isGovSgEmail(value)
     return isGovDomain || 'Please sign in with a gov.sg email address.'
   }, [])
 
@@ -61,7 +55,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): JSX.Element => {
         <Input
           autoComplete="email"
           autoFocus
-          placeholder="e.g. jane@data.gov.sg"
+          placeholder="e.g. user@agency.gov.sg"
           {...register('email', {
             required: 'Please enter an email address',
             validate: validateEmail,
