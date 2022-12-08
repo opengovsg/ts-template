@@ -2,15 +2,17 @@
 import 'tracing'
 
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
+import { APP_PIPE } from '@nestjs/core'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ApiModule } from 'api.module'
 import { ConfigModule } from 'config/config.module'
 import { ConfigService } from 'config/config.service'
+import { LoggedValidationPipe } from 'core/providers/logged-validation.pipe'
 import { DatabaseConfigService } from 'database/database-config.service'
 import { HelmetMiddleware } from 'middlewares/helmet.middleware'
 import { SessionMiddleware } from 'middlewares/session.middleware'
-import { LoggerModule } from 'nestjs-pino'
+import { LoggerModule, PinoLogger } from 'nestjs-pino'
 import { join } from 'path'
 import { TraceIdProvider } from 'tracing/trace-id.provider'
 
@@ -63,6 +65,15 @@ const FRONTEND_PATH = join(__dirname, '..', '..', 'frontend', 'build')
         },
       },
     }),
+  ],
+  providers: [
+    {
+      provide: APP_PIPE,
+      useClass: LoggedValidationPipe,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      inject: [PinoLogger],
+    },
   ],
 })
 export class AppModule implements NestModule {

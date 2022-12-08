@@ -8,6 +8,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm'
 
+import { IsGovSgEmail } from '~shared/decorators/is-gov-sg-email'
+
 @Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn()
@@ -18,6 +20,7 @@ export class User {
     unique: true,
     where: '"deletedAt" IS NULL',
   })
+  @IsGovSgEmail()
   email: string
 
   @CreateDateColumn({ type: 'timestamptz' })
