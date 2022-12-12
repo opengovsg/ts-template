@@ -16,7 +16,7 @@
     "lint": "npm run all \"npm:on-* lint\"",
     "lint:fix": "npm run all \"npm:on-* lint:fix\"",
     "test": "npm run all \"npm:on-* test\"",
-    "build": "npm run all \"npm:on-* build\"",
+    "build": "npm run on-shared build && npm run all \"npm:on-*end build\"",
     "coverage": "npm run on-backend -- test:cov && cat backend/coverage/lcov.info > lcov.info",
     "cz": "git-cz",
     "start": "npm --prefix backend start",
