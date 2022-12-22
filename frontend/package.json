@@ -19,7 +19,7 @@
     "@snyk/protect": "latest",
     "@storybook/addon-actions": "^6.5.15",
     "@storybook/addon-essentials": "^6.5.14",
-    "@storybook/addon-interactions": "^6.5.14",
+    "@storybook/addon-interactions": "^6.5.15",
     "@storybook/addon-links": "^6.5.15",
     "@storybook/builder-webpack5": "^6.5.14",
     "@storybook/manager-webpack5": "^6.5.14",
