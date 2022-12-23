@@ -67,7 +67,7 @@
     "@types/jest": "^28.1.8",
     "@types/node": "*",
     "@types/nodemailer": "^6.4.7",
-    "@types/pg": "^8.6.5",
+    "@types/pg": "^8.6.6",
     "@types/supertest": "^2.0.12",
     "dotenv-cli": "^6.0.0",
     "jest": "^28.1.3",
