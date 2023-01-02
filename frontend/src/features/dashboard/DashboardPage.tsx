@@ -1,13 +1,6 @@
 import { Link } from 'react-router-dom'
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Flex,
-  HStack,
-  Text,
-  VStack,
-} from '@chakra-ui/react'
+import { Box, ButtonGroup, Flex, HStack, Text, VStack } from '@chakra-ui/react'
+import { Button } from '@opengovsg/design-system-react'
 
 import { routes } from '~constants/routes'
 
