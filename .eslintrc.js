@@ -64,7 +64,6 @@ module.exports = {
           ['^(~shared)(/.*|$)'],
           ['^(~)(/.*|$)'],
           [
-            '^(~assets)(/.*|$)',
             '^(~contexts)(/.*|$)',
             '^(~constants)(/.*|$)',
             '^(~hooks)(/.*|$)',
