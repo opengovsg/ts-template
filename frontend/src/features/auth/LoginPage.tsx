@@ -68,7 +68,7 @@ export const LoginPage = (): JSX.Element => {
   }
 
   return (
-    <Flex flexDir="column" minH="100vh">
+    <Flex flexDir="column" flex={1}>
       <Box
         flexGrow={1}
         px={{ base: '1.5rem', md: '5.5rem', lg: 0 }}
@@ -79,7 +79,7 @@ export const LoginPage = (): JSX.Element => {
         }}
       >
         <Grid
-          minH={{ base: 'initial', lg: '100vh' }}
+          minH={{ base: 'initial', lg: '100%' }}
           maxW="90rem"
           margin="auto"
           templateAreas={{
