@@ -1,7 +1,18 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npm run on-backend -- pre-push && \
-npm run on-frontend -- pre-push && \
-npm run on-shared -- pre-push && \
-npx commitlint --from origin/develop --to HEAD --verbose
+
+while read local_ref local_sha remote_ref remote_sha
+do
+
+  # Get the current branch name from fully qualified ref
+  # e.g. refs/heads/main -> main
+  SRC=${local_ref#refs/heads/}
+  DEST=$1/${remote_ref#refs/heads/}
+
+  npm run on-backend -- pre-push -- --diff=$SRC...$DEST && \
+  npm run on-frontend -- pre-push -- --diff=$SRC...$DEST && \
+  npm run on-shared -- pre-push -- --diff=$SRC...$DEST && \
+  npx commitlint --from origin/develop --to HEAD --verbose
+
+done
