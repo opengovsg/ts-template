@@ -3,18 +3,15 @@ import {
   Box,
   Button,
   ButtonGroup,
-  chakra,
   Flex,
   HStack,
+  Text,
   VStack,
 } from '@chakra-ui/react'
 
-import { ReactComponent as BrandLogoSvg } from '~assets/svgs/brand-hort-colour.svg'
 import { routes } from '~constants/routes'
 
 import { useAuth } from '~features/auth'
-
-const BrandLogo = chakra(BrandLogoSvg)
 
 export const Navbar = (): JSX.Element => {
   const { logout } = useAuth()
@@ -30,7 +27,7 @@ export const Navbar = (): JSX.Element => {
       w="full"
     >
       <HStack spacing={8}>
-        <BrandLogo lineHeight={8} title="Makeshift template logo" h="2rem" />
+        <Text>Starter Kit</Text>
       </HStack>
 
       <HStack spacing={6}>
