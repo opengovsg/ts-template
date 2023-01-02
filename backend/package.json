@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "eslint --ext ts,tsx,js,jsx . && prettier -c \"src/**/*.{ts,tsx}\"",
     "lint:fix": "eslint --fix --ext ts,tsx,js,jsx . && prettier -c --write \"src/**/*.{ts,tsx}\"",
-    "pre-commit": "lint-staged",
+    "pre-push": "lint-staged",
     "prebuild": "rimraf build",
     "build": "nest build",
     "preload": "echo ENV=${ENV:-'development'} && dotenv -c ${ENV:-'development'} --",

@@ -1,4 +1,0 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-npm run on-backend -- pre-commit && npm run on-frontend -- pre-commit

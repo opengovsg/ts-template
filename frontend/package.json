@@ -70,7 +70,7 @@
     "build-storybook": "build-storybook -s public",
     "lint": "eslint ./ --ignore-path .gitignore && prettier . -c",
     "lint:fix": "eslint ./ --ignore-path .gitignore --fix && prettier . -c --write",
-    "pre-commit": "lint-staged",
+    "pre-push": "lint-staged",
     "snyk-protect": "snyk-protect",
     "prepare": "npm run snyk-protect"
   },

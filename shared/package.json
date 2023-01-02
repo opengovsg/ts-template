@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "pre-commit": "lint-staged",
+    "pre-push": "lint-staged",
     "lint": "eslint --ext ts,tsx,js,jsx . && prettier -c \"src/**/*.{ts,tsx}\"",
     "lint:fix": "eslint --fix --ext ts,tsx,js,jsx . && prettier -c --write \"src/**/*.{ts,tsx}\"",
     "build": "tsc --build --clean && tsc --build tsconfig.build.json --force",

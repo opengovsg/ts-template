@@ -1,4 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+npm run on-backend -- pre-push && \
+npm run on-frontend -- pre-push && \
+npm run on-shared -- pre-push && \
 npx commitlint --from origin/develop --to HEAD --verbose
