@@ -13,8 +13,6 @@
       "~utils/*": ["./src/utils/*"],
       "~pages/*": ["./src/pages/*"],
       "~services/*": ["./src/services/*"],
-      "~theme/*": ["./src/theme/*"],
-      "~typings/*": ["./src/typings/*"],
       "~/*": ["./src/*"]
     }
   }

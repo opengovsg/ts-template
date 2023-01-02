@@ -1,11 +1,17 @@
 import { extendTheme } from '@chakra-ui/react'
 
-import { colours } from './foundations/colours'
 import { components } from './components'
-import { textStyles } from './textStyles'
 
+/**
+ * Design system themes can be found at
+ * https://github.com/opengovsg/design-system/tree/main/token-gen/themes.
+ */
 export const theme = extendTheme({
-  colors: colours,
-  textStyles,
+  global: {
+    body: {
+      fontFeatureSettings: "'tnum' on, 'cv05' on",
+      WebkitFontSmoothing: 'antialiased',
+    },
+  },
   components,
 })
