@@ -145,7 +145,7 @@ export const LoginPage = (): JSX.Element => {
                 />
                 <Text
                   textStyle="h3"
-                  color="secondary.500"
+                  color="brand.secondary.500"
                   mb={{ base: '2rem', lg: '2.5rem' }}
                 >
                   Get started with Template

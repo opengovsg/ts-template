@@ -1,3 +1,6 @@
+import 'inter-ui/inter.css'
+import '@fontsource/ibm-plex-mono'
+
 import { ThemeProvider } from '@opengovsg/design-system-react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
