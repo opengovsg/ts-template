@@ -19,6 +19,7 @@
     "wretch": "^2.3.0"
   },
   "devDependencies": {
+    "@chakra-ui/cli": "^2.3.0",
     "@snyk/protect": "latest",
     "@storybook/addon-actions": "^6.5.15",
     "@storybook/addon-essentials": "^6.5.15",
@@ -64,6 +65,8 @@
     ]
   },
   "scripts": {
+    "gen:theme-typings": "chakra-cli tokens src/theme/index.ts",
+    "postinstall": "npm run gen:theme-typings",
     "dev": "npm start",
     "start": "react-app-rewired start",
     "build": "cross-env CI=false INLINE_RUNTIME_CHUNK=false react-app-rewired build",

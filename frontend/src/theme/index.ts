@@ -1,5 +1,6 @@
 import { extendTheme } from '@chakra-ui/react'
-import { theme as baseTheme } from '@opengovsg/design-system-react'
+// Importing from main so @chakra-cli can work properly without complaining about ESM.
+import { theme as baseTheme } from '@opengovsg/design-system-react/build/main/theme/theme'
 
 import { components } from './components'
 
