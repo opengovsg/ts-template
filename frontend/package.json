@@ -11,6 +11,7 @@
     "@hookform/resolvers": "^2.9.10",
     "@opengovsg/design-system-react": "^0.1.0-alpha.0",
     "@tanstack/react-query": "^4.20.4",
+    "class-validator": "^0.14.0",
     "framer-motion": "^7.10.3",
     "inter-ui": "^3.19.3",
     "react": "^18.2.0",
@@ -100,5 +101,15 @@
       "last 1 safari version"
     ]
   },
-  "snyk": true
+  "snyk": true,
+  "jest": {
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\](?!(react-markdown|vfile|vfile-message|markdown-table|unist-.*|unified|bail|is-plain-obj|trough|remark-.*|rehype-.*|html-void-elements|hast-util-.*|zwitch|hast-to-hyperscript|hastscript|web-namespaces|mdast-util-.*|escape-string-regexp|micromark.*|decode-named-character-reference|character-entities|property-information|hast-util-whitespace|space-separated-tokens|comma-separated-tokens|pretty-bytes|ccount|mdast-util-gfm|gemoji)).+\\.(js|jsx|mjs|cjs|ts|tsx)$"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|jpg|png)$": "identity-obj-proxy",
+      "@fontsource/ibm-plex-mono": "identity-obj-proxy",
+      "react-markdown": "<rootDir>/__mocks__/react-markdown.js"
+    }
+  }
 }

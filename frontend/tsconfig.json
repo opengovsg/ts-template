@@ -19,6 +19,6 @@
     "experimentalDecorators": true,
     "strictPropertyInitialization": false
   },
-  "include": ["src/**/*", ".storybook/**/*"],
+  "include": ["src/**/*", ".storybook/**/*", "__mocks__/**/*"],
   "exclude": ["**/jest.config.ts"]
 }
