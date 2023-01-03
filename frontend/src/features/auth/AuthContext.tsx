@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useCallback, useContext } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { WhoAmIResponseDto } from '~shared/types/auth.dto'
+import { VerifyOtpRequestDto, WhoAmIResponseDto } from '~shared/types/auth.dto'
 
 import { LOGGED_IN_KEY, useLocalStorage } from '~features/localStorage'
 
@@ -52,7 +52,7 @@ const useProvideAuth = () => {
   )
 
   const verifyLoginOtp = useCallback(
-    async (params: { token: string; email: string }) => {
+    async (params: VerifyOtpRequestDto) => {
       await AuthService.verifyLoginOtp(params)
       setIsLoggedIn(true)
     },

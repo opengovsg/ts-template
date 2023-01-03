@@ -63,9 +63,7 @@ module.exports = {
           // Shared imports should be separate from application imports.
           ['^(~shared)(/.*|$)'],
           ['^(~)(/.*|$)'],
-          ['^(~typings)(/.*|$)'],
           [
-            '^(~assets|~theme)(/.*|$)',
             '^(~contexts)(/.*|$)',
             '^(~constants)(/.*|$)',
             '^(~hooks)(/.*|$)',

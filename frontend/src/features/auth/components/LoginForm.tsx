@@ -1,18 +1,16 @@
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
+import { FormControl, Link, Stack } from '@chakra-ui/react'
 import {
   Button,
-  FormControl,
   FormErrorMessage,
   FormLabel,
   Input,
-  Link,
-  Stack,
-  Text,
-  useBreakpointValue,
-} from '@chakra-ui/react'
+} from '@opengovsg/design-system-react'
 
 import { isGovSgEmail } from '~shared/decorators/is-gov-sg-email'
+
+import { useIsDesktop } from '~hooks/useIsDesktop'
 
 export type LoginFormInputs = {
   email: string
@@ -27,30 +25,34 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): JSX.Element => {
     useForm<LoginFormInputs>()
 
   const validateEmail = useCallback((value: string) => {
-    const isGovDomain = isGovSgEmail(value)
-    return isGovDomain || 'Please sign in with a gov.sg email address.'
+    return (
+      isGovSgEmail(value.trim()) ||
+      'Please sign in with a gov.sg email address.'
+    )
   }, [])
 
-  const onSubmitForm = async (inputs: LoginFormInputs) => {
-    return onSubmit(inputs).catch((e) => {
+  const onSubmitForm = async ({ email }: LoginFormInputs) => {
+    return onSubmit({ email: email.trim() }).catch((e) => {
       setError('email', { type: 'server', message: e.json.message })
     })
   }
 
-  const isMobile = useBreakpointValue({ base: true, xs: true, lg: false })
+  const isDesktop = useIsDesktop()
 
   return (
-    <form onSubmit={handleSubmit(onSubmitForm)}>
+    <form noValidate onSubmit={handleSubmit(onSubmitForm)}>
       <FormControl
+        isRequired
         isInvalid={!!formState.errors.email}
         isReadOnly={formState.isSubmitting}
         mb="2.5rem"
       >
-        <FormLabel htmlFor="email" fontSize={{ base: '1.125rem', lg: '1rem' }}>
-          <Text mb="0.25rem">Email</Text>
-          <Text textStyle="body-2" mb="0.75rem">
-            Only available for use by public officers with a gov.sg email
-          </Text>
+        <FormLabel
+          description="Only available for use by public officers with a gov.sg email"
+          htmlFor="email"
+          fontSize={{ base: '1.125rem', lg: '1rem' }}
+        >
+          Email
         </FormLabel>
         <Input
           autoComplete="email"
@@ -61,9 +63,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): JSX.Element => {
             validate: validateEmail,
           })}
         />
-        {formState.errors.email && (
-          <FormErrorMessage>{formState.errors.email.message}</FormErrorMessage>
-        )}
+        <FormErrorMessage>{formState.errors.email?.message}</FormErrorMessage>
       </FormControl>
       <Stack
         direction={{ base: 'column', lg: 'row' }}
@@ -71,7 +71,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): JSX.Element => {
         align="center"
       >
         <Button
-          width={isMobile ? '100%' : undefined}
+          isFullWidth={!isDesktop}
           isLoading={formState.isSubmitting}
           type="submit"
         >

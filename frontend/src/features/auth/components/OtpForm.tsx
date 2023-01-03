@@ -1,34 +1,36 @@
 import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
+import { FormControl, Stack } from '@chakra-ui/react'
 import {
   Button,
-  FormControl,
   FormErrorMessage,
   FormLabel,
   Input,
-  Stack,
-  useBreakpointValue,
-} from '@chakra-ui/react'
+} from '@opengovsg/design-system-react'
+
+import { useIsDesktop } from '~hooks/useIsDesktop'
 
 import { ResendOtpButton } from './ResendOtpButton'
 
 export type OtpFormInputs = {
-  otp: string
+  token: string
 }
 
 interface OtpFormProps {
+  email: string
   onSubmit: (inputs: OtpFormInputs) => Promise<void>
   onResendOtp: () => Promise<void>
 }
 
 export const OtpForm = ({
+  email,
   onSubmit,
   onResendOtp,
 }: OtpFormProps): JSX.Element => {
   const { handleSubmit, register, formState, setError } =
     useForm<OtpFormInputs>()
 
-  const isMobile = useBreakpointValue({ base: true, xs: true, lg: false })
+  const isDesktop = useIsDesktop()
 
   const validateOtp = useCallback(
     (value: string) => value.length === 6 || 'Please enter a 6 digit OTP.',
@@ -37,15 +39,15 @@ export const OtpForm = ({
 
   const onSubmitForm = async (inputs: OtpFormInputs) => {
     return onSubmit(inputs).catch((e) => {
-      setError('otp', { type: 'server', message: e.json.message })
+      setError('token', { type: 'server', message: e.json.message })
     })
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmitForm)}>
-      <FormControl isInvalid={!!formState.errors.otp} mb="2.5rem">
-        <FormLabel htmlFor="otp">
-          Enter 6 digit OTP sent to your email
+    <form noValidate onSubmit={handleSubmit(onSubmitForm)}>
+      <FormControl isRequired isInvalid={!!formState.errors.token} mb="2.5rem">
+        <FormLabel htmlFor="token">
+          {`Enter OTP sent to ${email.toLowerCase()}`}
         </FormLabel>
         <Input
           type="text"
@@ -53,7 +55,7 @@ export const OtpForm = ({
           inputMode="numeric"
           autoComplete="one-time-code"
           autoFocus
-          {...register('otp', {
+          {...register('token', {
             required: 'OTP is required.',
             pattern: {
               value: /^[0-9\b]+$/,
@@ -62,9 +64,7 @@ export const OtpForm = ({
             validate: validateOtp,
           })}
         />
-        {formState.errors.otp && (
-          <FormErrorMessage>{formState.errors.otp.message}</FormErrorMessage>
-        )}
+        <FormErrorMessage>{formState.errors.token?.message}</FormErrorMessage>
       </FormControl>
       <Stack
         direction={{ base: 'column', lg: 'row' }}
@@ -72,7 +72,7 @@ export const OtpForm = ({
         align="center"
       >
         <Button
-          width={isMobile ? '100%' : undefined}
+          isFullWidth={!isDesktop}
           isLoading={formState.isSubmitting}
           type="submit"
         >
