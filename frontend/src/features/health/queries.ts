@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { HealthDto } from '~shared/types/health.dto'
 
-import { api } from '~/api'
+import { api } from '~lib/api'
 
 export function useHealth() {
   const { data } = useQuery(
