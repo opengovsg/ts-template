@@ -3,17 +3,22 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { VerifyOtpRequestDto, WhoAmIResponseDto } from '~shared/types/auth.dto'
 
-import { LOGGED_IN_KEY, useLocalStorage } from '~features/localStorage'
+import {
+  fetchUser,
+  logout,
+  sendLoginOtp,
+  STORAGE_LOGGED_IN_KEY,
+} from '~features/auth'
 
-import * as AuthService from './AuthService'
+import { useLocalStorage } from './storage'
 
 type AuthContextProps = {
   isAuthenticated?: boolean
   user?: WhoAmIResponseDto
   isLoading: boolean
-  sendLoginOtp: typeof AuthService.sendLoginOtp
+  sendLoginOtp: typeof sendLoginOtp
   verifyLoginOtp: (params: { token: string; email: string }) => Promise<void>
-  logout: typeof AuthService.logout
+  logout: typeof logout
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined)
@@ -41,26 +46,28 @@ export const useAuth = (): AuthContextProps => {
 
 // Provider hook that creates auth object and handles state
 const useProvideAuth = () => {
-  const [isLoggedIn, setIsLoggedIn] = useLocalStorage<boolean>(LOGGED_IN_KEY)
+  const [isLoggedIn, setIsLoggedIn] = useLocalStorage<boolean>(
+    STORAGE_LOGGED_IN_KEY,
+  )
   const queryClient = useQueryClient()
 
   const { data: user, isLoading } = useQuery(
     ['currentUser'],
-    () => AuthService.fetchUser(),
+    () => fetchUser(),
     // 10 minutes staletime, do not need to retrieve so often.
     { staleTime: 600000, enabled: !!isLoggedIn },
   )
 
   const verifyLoginOtp = useCallback(
     async (params: VerifyOtpRequestDto) => {
-      await AuthService.verifyLoginOtp(params)
+      await verifyLoginOtp(params)
       setIsLoggedIn(true)
     },
     [setIsLoggedIn],
   )
 
   const logout = useCallback(async () => {
-    await AuthService.logout()
+    await logout()
     if (isLoggedIn) {
       // Clear logged in state.
       setIsLoggedIn(undefined)
@@ -73,8 +80,8 @@ const useProvideAuth = () => {
     isAuthenticated: isLoggedIn,
     user: isLoggedIn ? user : undefined,
     isLoading,
-    sendLoginOtp: AuthService.sendLoginOtp,
-    verifyLoginOtp: verifyLoginOtp,
+    sendLoginOtp,
+    verifyLoginOtp,
     logout,
   }
 }

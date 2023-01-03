@@ -4,10 +4,11 @@ import { Box } from '@chakra-ui/react'
 
 import { routes } from '~constants/routes'
 
-import { LoginPage } from '~features/auth/LoginPage'
+const { AuthRoutes } = lazyImport(() => import('~features/auth'), 'AuthRoutes')
+
+import { lazyImport } from '~utils/lazyImport'
 
 import { PrivateElement } from './PrivateElement'
-import { PublicElement } from './PublicElement'
 
 const WorkspacePage = lazy(() => import('~features/dashboard/DashboardPage'))
 const HealthPage = lazy(() => import('~features/health/HealthPage'))
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
   },
   {
     path: routes.login,
-    element: <PublicElement strict element={<LoginPage />} />,
+    element: <AuthRoutes />,
   },
   {
     path: routes.health,

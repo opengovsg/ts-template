@@ -1,41 +1,47 @@
-import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { FormControl, Link, Stack } from '@chakra-ui/react'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
   Button,
   FormErrorMessage,
   FormLabel,
   Input,
 } from '@opengovsg/design-system-react'
+import { z } from 'zod'
 
 import { isGovSgEmail } from '~shared/decorators/is-gov-sg-email'
 
 import { useIsDesktop } from '~hooks/useIsDesktop'
 
+const schema = z.object({
+  email: z
+    .string()
+    .trim()
+    .min(1, 'Please enter an email address.')
+    .email({ message: 'Please enter a valid email address.' })
+    .refine(isGovSgEmail, {
+      message: 'Please sign in with a gov.sg email address.',
+    }),
+})
+
 export type LoginFormInputs = {
   email: string
 }
-
 interface LoginFormProps {
   onSubmit: (inputs: LoginFormInputs) => Promise<void>
 }
 
 export const LoginForm = ({ onSubmit }: LoginFormProps): JSX.Element => {
-  const { handleSubmit, register, formState, setError } =
-    useForm<LoginFormInputs>()
-
-  const validateEmail = useCallback((value: string) => {
-    return (
-      isGovSgEmail(value.trim()) ||
-      'Please sign in with a gov.sg email address.'
-    )
-  }, [])
-
-  const onSubmitForm = async ({ email }: LoginFormInputs) => {
-    return onSubmit({ email: email.trim() }).catch((e) => {
+  const onSubmitForm = async (inputs: LoginFormInputs) => {
+    return onSubmit(inputs).catch((e) => {
       setError('email', { type: 'server', message: e.json.message })
     })
   }
+
+  const { handleSubmit, register, formState, setError } =
+    useForm<LoginFormInputs>({
+      resolver: zodResolver(schema),
+    })
 
   const isDesktop = useIsDesktop()
 
@@ -58,10 +64,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): JSX.Element => {
           autoComplete="email"
           autoFocus
           placeholder="e.g. user@agency.gov.sg"
-          {...register('email', {
-            required: 'Please enter an email address',
-            validate: validateEmail,
-          })}
+          {...register('email')}
         />
         <FormErrorMessage>{formState.errors.email?.message}</FormErrorMessage>
       </FormControl>

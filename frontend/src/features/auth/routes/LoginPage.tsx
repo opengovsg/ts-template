@@ -2,14 +2,14 @@ import { FC, PropsWithChildren, useState } from 'react'
 import { Box, Flex, GridItem, GridProps, Text } from '@chakra-ui/react'
 
 import { AppFooter } from '~/app/AppFooter'
-import { AppGrid } from '~/templates/AppGrid'
 
+import { useAuth } from '~lib/auth'
 import { useIsDesktop } from '~hooks/useIsDesktop'
+import { AppGrid } from '~templates/AppGrid'
 
-import { LoginForm, LoginFormInputs } from './components/LoginForm'
-import { LoginImageSvgr } from './components/LoginImageSvgr'
-import { OtpForm, OtpFormInputs } from './components/OtpForm'
-import { useAuth } from './AuthContext'
+import { LoginForm, LoginFormInputs } from '../components/LoginForm'
+import { LoginImageSvgr } from '../components/LoginImageSvgr'
+import { OtpForm, OtpFormInputs } from '../components/OtpForm'
 
 export type LoginOtpData = {
   email: string

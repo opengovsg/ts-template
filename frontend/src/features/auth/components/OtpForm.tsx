@@ -1,16 +1,26 @@
-import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { FormControl, Stack } from '@chakra-ui/react'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
   Button,
   FormErrorMessage,
   FormLabel,
   Input,
 } from '@opengovsg/design-system-react'
+import { z } from 'zod'
 
 import { useIsDesktop } from '~hooks/useIsDesktop'
 
 import { ResendOtpButton } from './ResendOtpButton'
+
+const schema = z.object({
+  token: z
+    .string()
+    .trim()
+    .min(1, 'OTP is required.')
+    .regex(/^[0-9\b]+$/, { message: 'Only numbers are allowed.' })
+    .length(6, 'Please enter a 6 digit OTP.'),
+})
 
 export type OtpFormInputs = {
   token: string
@@ -28,14 +38,11 @@ export const OtpForm = ({
   onResendOtp,
 }: OtpFormProps): JSX.Element => {
   const { handleSubmit, register, formState, setError } =
-    useForm<OtpFormInputs>()
+    useForm<OtpFormInputs>({
+      resolver: zodResolver(schema),
+    })
 
   const isDesktop = useIsDesktop()
-
-  const validateOtp = useCallback(
-    (value: string) => value.length === 6 || 'Please enter a 6 digit OTP.',
-    [],
-  )
 
   const onSubmitForm = async (inputs: OtpFormInputs) => {
     return onSubmit(inputs).catch((e) => {
@@ -55,14 +62,7 @@ export const OtpForm = ({
           inputMode="numeric"
           autoComplete="one-time-code"
           autoFocus
-          {...register('token', {
-            required: 'OTP is required.',
-            pattern: {
-              value: /^[0-9\b]+$/,
-              message: 'Only numbers are allowed.',
-            },
-            validate: validateOtp,
-          })}
+          {...register('token')}
         />
         <FormErrorMessage>{formState.errors.token?.message}</FormErrorMessage>
       </FormControl>

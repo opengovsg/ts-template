@@ -9,6 +9,7 @@ Most of the code lives in the `src` folder and looks like this:
 │   ├── assets/       # assets folder can contain all the static files such as images, fonts, etc.
 │   ├── components/   # shared components used across the entire application
 │   ├── config/       # all the global configuration, env variables etc. get exported from here and used in the app
+│   ├── constants/    # shared constants used across the entire application
 │   ├── features/     # feature based modules
 │   ├── hooks/        # shared hooks used across the entire application
 │   ├── lib/          # re-exporting different libraries preconfigured for the application
@@ -34,6 +35,7 @@ A feature could have the following structure:
 │   ├── stores/       # state stores for a specific feature
 │   ├── types/        # typescript types for TS specific feature domain
 │   ├── utils/        # utility functions for a specific feature
+│   ├── constants.ts  # constants scoped to a specific feature
 │   ├── index.ts      # entry point for the feature, it should serve as the public API of the given feature and exports everything that should be used outside the feature
 ```
 
