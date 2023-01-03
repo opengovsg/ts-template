@@ -109,7 +109,7 @@
     "moduleNameMapper": {
       "\\.(css|jpg|png)$": "identity-obj-proxy",
       "@fontsource/ibm-plex-mono": "identity-obj-proxy",
-      "react-markdown": "<rootDir>/__mocks__/react-markdown.js"
+      "react-markdown": "<rootDir>/__mocks__/react-markdown.tsx"
     }
   }
 }
