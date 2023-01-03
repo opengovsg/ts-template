@@ -5,9 +5,10 @@ import { VerifyOtpRequestDto, WhoAmIResponseDto } from '~shared/types/auth.dto'
 
 import {
   fetchUser,
-  logout,
+  logout as logoutApi,
   sendLoginOtp,
   STORAGE_LOGGED_IN_KEY,
+  verifyLoginOtp as verifyLoginOtpApi,
 } from '~features/auth'
 
 import { useLocalStorage } from './storage'
@@ -17,8 +18,8 @@ type AuthContextProps = {
   user?: WhoAmIResponseDto
   isLoading: boolean
   sendLoginOtp: typeof sendLoginOtp
-  verifyLoginOtp: (params: { token: string; email: string }) => Promise<void>
-  logout: typeof logout
+  verifyLoginOtp: (params: VerifyOtpRequestDto) => Promise<void>
+  logout: typeof logoutApi
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined)
@@ -60,14 +61,14 @@ const useProvideAuth = () => {
 
   const verifyLoginOtp = useCallback(
     async (params: VerifyOtpRequestDto) => {
-      await verifyLoginOtp(params)
+      await verifyLoginOtpApi(params)
       setIsLoggedIn(true)
     },
     [setIsLoggedIn],
   )
 
   const logout = useCallback(async () => {
-    await logout()
+    await logoutApi()
     if (isLoggedIn) {
       // Clear logged in state.
       setIsLoggedIn(undefined)
