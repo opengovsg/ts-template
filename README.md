@@ -67,5 +67,5 @@ Take time to understand the codebase and what you have to work with
 to further develop your product.
 
 - An index to all the documentation can be found [here](./docs/).
-- README for the frontend application can be found [here](./frontend/README.md)
+- README for the frontend application can be found [here](./frontend/)
 - In a hurry to launch your product? Go straight to [deploying](./docs/deploying/)
