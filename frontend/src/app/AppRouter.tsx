@@ -1,29 +1,32 @@
-import { lazy, PropsWithChildren, Suspense } from 'react'
+import { PropsWithChildren, Suspense } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Box } from '@chakra-ui/react'
 
 import { routes } from '~constants/routes'
+import { lazyImport } from '~utils/lazyImport'
 
-import { LoginPage } from '~features/auth/LoginPage'
-
-import { PrivateElement } from './PrivateElement'
-import { PublicElement } from './PublicElement'
-
-const WorkspacePage = lazy(() => import('~features/dashboard/DashboardPage'))
-const HealthPage = lazy(() => import('~features/health/HealthPage'))
+const { AuthRoutes } = lazyImport(() => import('~features/auth'), 'AuthRoutes')
+const { DashboardRoutes } = lazyImport(
+  () => import('~features/dashboard'),
+  'DashboardRoutes',
+)
+const { HealthRoutes } = lazyImport(
+  () => import('~features/health'),
+  'HealthRoutes',
+)
 
 const router = createBrowserRouter([
   {
     path: routes.index,
-    element: <PrivateElement element={<WorkspacePage />} />,
+    element: <DashboardRoutes />,
   },
   {
     path: routes.login,
-    element: <PublicElement strict element={<LoginPage />} />,
+    element: <AuthRoutes />,
   },
   {
     path: routes.health,
-    element: <PrivateElement element={<HealthPage />} />,
+    element: <HealthRoutes />,
   },
   {
     path: '*',

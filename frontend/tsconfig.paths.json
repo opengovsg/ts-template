@@ -7,6 +7,7 @@
       "~constants/*": ["./src/constants/*"],
       "~components/*": ["./src/components/*"],
       "~templates/*": ["./src/templates/*"],
+      "~lib/*": ["./src/lib/*"],
       "~features/*": ["./src/features/*"],
       "~hooks/*": ["./src/hooks/*"],
       "~utils/*": ["./src/utils/*"],

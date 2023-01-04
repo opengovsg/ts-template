@@ -1,10 +1,9 @@
-import { registerDecorator, ValidationOptions } from 'class-validator'
-import { isEmail } from 'class-validator'
+import { isEmail, registerDecorator, ValidationOptions } from 'class-validator'
 
-export const isGovSgEmail = (value: unknown, options?: ValidationOptions) => {
+export const isGovSgEmail = (value: unknown) => {
   return (
     typeof value === 'string' &&
-    isEmail(value, options) &&
+    isEmail(value) &&
     value.toString().endsWith('.gov.sg')
   )
 }
@@ -18,7 +17,7 @@ export const IsGovSgEmail = (options?: ValidationOptions) => {
       propertyName,
       options,
       validator: {
-        validate: (value: unknown) => isGovSgEmail(value, options),
+        validate: (value: unknown) => isGovSgEmail(value),
       },
     })
   }

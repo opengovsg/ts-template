@@ -8,15 +8,18 @@
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@fontsource/ibm-plex-mono": "^4.5.13",
+    "@hookform/resolvers": "^2.9.10",
     "@opengovsg/design-system-react": "^0.1.0-alpha.0",
     "@tanstack/react-query": "^4.20.4",
+    "class-validator": "^0.14.0",
     "framer-motion": "^7.10.3",
     "inter-ui": "^3.19.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.41.3",
     "react-router-dom": "^6.6.1",
-    "wretch": "^2.3.0"
+    "wretch": "^2.3.0",
+    "zod": "^3.20.2"
   },
   "devDependencies": {
     "@chakra-ui/cli": "^2.3.0",
@@ -98,5 +101,15 @@
       "last 1 safari version"
     ]
   },
-  "snyk": true
+  "snyk": true,
+  "jest": {
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\](?!(react-markdown|)).+\\.(js|jsx|mjs|cjs|ts|tsx)$"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|jpg|png)$": "identity-obj-proxy",
+      "@fontsource/ibm-plex-mono": "identity-obj-proxy",
+      "react-markdown": "<rootDir>/__mocks__/react-markdown.tsx"
+    }
+  }
 }

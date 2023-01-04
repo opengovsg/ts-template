@@ -27,5 +27,8 @@
       "prettier --write",
       "eslint --fix"
     ]
+  },
+  "dependencies": {
+    "class-validator": "^0.14.0"
   }
 }

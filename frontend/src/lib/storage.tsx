@@ -1,9 +1,13 @@
 // Retrieved from https://usehooks-typescript.com/react-hook/use-local-storage
 import { useCallback, useEffect, useState } from 'react'
 
-import { LOCAL_STORAGE_EVENT } from './constants'
+/**
+ * Event name to be used when emitting event to indicate that localStorage has
+ * been modified.
+ */
+export const LOCAL_STORAGE_EVENT = 'app-local-storage'
 
-export const useLocalStorage = <T>(
+export const useLocalStorage = <T,>(
   key: string,
   initialValue?: T,
 ): readonly [T | undefined, (value?: T) => void] => {
