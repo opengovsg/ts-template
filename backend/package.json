@@ -40,7 +40,7 @@
     "@nestjs/typeorm": "^9.0.1",
     "aws-sdk": "^2.1289.0",
     "connect-typeorm": "^2.0.0",
-    "convict": "^6.2.3",
+    "convict": "^6.2.4",
     "dd-trace": "^3.10.0",
     "dotenv": "^16.0.3",
     "express-session": "^1.17.3",
