@@ -10,7 +10,7 @@
     "@fontsource/ibm-plex-mono": "^4.5.13",
     "@hookform/resolvers": "^2.9.10",
     "@opengovsg/design-system-react": "^0.1.0-alpha.1",
-    "@tanstack/react-query": "^4.20.9",
+    "@tanstack/react-query": "^4.22.0",
     "class-validator": "^0.14.0",
     "framer-motion": "^7.10.3",
     "inter-ui": "^3.19.3",
