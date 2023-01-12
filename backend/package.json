@@ -38,7 +38,7 @@
     "@nestjs/serve-static": "^3.0.0",
     "@nestjs/terminus": "^9.1.4",
     "@nestjs/typeorm": "^9.0.1",
-    "@opengovsg/postmangovsg-client": "^0.0.7",
+    "@opengovsg/postmangovsg-client": "^0.0.8",
     "connect-typeorm": "^2.0.0",
     "convict": "^6.2.4",
     "dd-trace": "^3.10.0",
