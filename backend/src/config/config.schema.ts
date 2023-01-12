@@ -30,6 +30,7 @@ export interface ConfigSchema {
     sender_name: string
     email: string
   }
+  postmangovsgApiKey: string
   mailer: {
     auth: {
       type: 'login'
@@ -171,17 +172,23 @@ export const schema: Schema<ConfigSchema> = {
       default: 'Starter Kit',
     },
     email: {
-      doc: 'Email to send OTP emails from',
+      doc: 'Email to send OTP emails from. If POSTMANGOVSG_API_KEY is set, ensure that this email is the one associated with the key',
       env: 'OTP_EMAIL',
       format: String,
       default: 'donotreply@mail.open.gov.sg',
     },
   },
+  postmangovsgApiKey: {
+    doc: 'The API key used to send emails via Postman',
+    env: 'POSTMANGOVSG_API_KEY',
+    format: String,
+    default: '',
+  },
   mailer: {
     doc:
       'Mailer configuration for SMTP mail services. ' +
-      'If AWS_REGION is present, this configuration is ignored and ' +
-      'the mailer will use AWS SES via RESTful API instead.',
+      'If POSTMANGOVSG_API_KEY is present, this configuration is ignored and ' +
+      'the mailer will use Postman instead.',
     auth: {
       type: {
         doc: 'The type of authentication used. Currently, only "login" is supported',
