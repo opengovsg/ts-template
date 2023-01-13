@@ -16,7 +16,7 @@
     "inter-ui": "^3.19.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.41.5",
+    "react-hook-form": "^7.42.0",
     "react-router-dom": "^6.6.2",
     "wretch": "^2.3.2",
     "zod": "^3.20.2"
