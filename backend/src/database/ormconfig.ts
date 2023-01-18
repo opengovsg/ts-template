@@ -17,8 +17,9 @@ export const base = {
   database: config.get('database.name'),
   logging: config.get('database.logging'),
   // https://docs.nestjs.com/techniques/database#auto-load-entities
-  synchronize: true, // do not automatically sync entities
-  migrationsRun: false,
+  // TODO: remove migrations config and migrate schema separately
+  migrationsRun: true,
+  migrations: [join(__dirname, 'migrations', '*.{.js,.ts}')],
   // js for runtime, ts for typeorm cli
   entities: [join(__dirname, 'entities', '*.entity{.js,.ts}')],
   ...(config.get('database.ca')
