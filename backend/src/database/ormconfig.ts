@@ -19,7 +19,7 @@ export const base = {
   // https://docs.nestjs.com/techniques/database#auto-load-entities
   // TODO: remove migrations config and migrate schema separately
   migrationsRun: true,
-  migrations: [join(__dirname, 'migrations', '*.{.js,.ts}')],
+  migrations: [join(__dirname, 'migrations', '*{.js,.ts}')],
   // js for runtime, ts for typeorm cli
   entities: [join(__dirname, 'entities', '*.entity{.js,.ts}')],
   ...(config.get('database.ca')
