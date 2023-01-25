@@ -41,7 +41,7 @@
     "@opengovsg/postmangovsg-client": "^0.0.8",
     "connect-typeorm": "^2.0.0",
     "convict": "^6.2.4",
-    "dd-trace": "^3.12.0",
+    "dd-trace": "^3.12.1",
     "dotenv": "^16.0.3",
     "express-session": "^1.17.3",
     "helmet": "^6.0.1",
