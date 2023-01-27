@@ -24,7 +24,7 @@
   "devDependencies": {
     "@chakra-ui/cli": "^2.3.0",
     "@snyk/protect": "latest",
-    "@storybook/addon-actions": "^6.5.15",
+    "@storybook/addon-actions": "^6.5.16",
     "@storybook/addon-essentials": "^6.5.15",
     "@storybook/addon-interactions": "^6.5.15",
     "@storybook/addon-links": "^6.5.15",
