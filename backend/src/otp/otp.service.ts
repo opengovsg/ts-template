@@ -18,7 +18,7 @@ export class OtpService {
   })
 
   private concatSecretWithEmail(email: string): string {
-    return this.config.get('otp.secret') + email
+    return this.config.get('otp.secret') + email.toLowerCase()
   }
 
   generateOtp(email: string): { token: string; timeLeft: number } {
