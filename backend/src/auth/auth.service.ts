@@ -47,7 +47,9 @@ export class AuthService {
   }
 
   async verifyOtp(verifyOtpDto: VerifyOtpDto): Promise<User | undefined> {
-    const { email, token } = verifyOtpDto
+    const { token } = verifyOtpDto
+    let { email } = verifyOtpDto
+    email = email.toLowerCase()
     const isVerified = this.otpService.verifyOtp(email, token)
     return isVerified
       ? await this.findOrCreate(
