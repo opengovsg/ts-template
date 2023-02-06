@@ -36,7 +36,7 @@
     "@nestjs/core": "^9.3.1",
     "@nestjs/platform-express": "^9.3.2",
     "@nestjs/serve-static": "^3.0.0",
-    "@nestjs/terminus": "^9.1.4",
+    "@nestjs/terminus": "^9.2.0",
     "@nestjs/typeorm": "^9.0.1",
     "@opengovsg/postmangovsg-client": "^0.0.8",
     "connect-typeorm": "^2.0.0",
