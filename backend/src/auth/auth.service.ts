@@ -38,7 +38,9 @@ export class AuthService {
       from: `${this.config.get('otp.sender_name')} <${this.config.get(
         'otp.email',
       )}>`,
-      subject: 'One-Time Password (OTP) for Starter Kit',
+      subject: `One-Time Password (OTP) for ${this.config.get(
+        'otp.sender_name',
+      )}`,
       html,
     }
 
