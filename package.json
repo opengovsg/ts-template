@@ -23,7 +23,7 @@
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.4.2",
+    "@commitlint/cli": "^17.4.3",
     "@commitlint/config-conventional": "^17.4.3",
     "@commitlint/travis-cli": "^17.4.2",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
