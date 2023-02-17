@@ -6,7 +6,7 @@
   "dependencies": {
     "@chakra-ui/react": "^2.5.1",
     "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.5",
+    "@emotion/styled": "^11.10.6",
     "@fontsource/ibm-plex-mono": "^4.5.13",
     "@hookform/resolvers": "^2.9.11",
     "@opengovsg/design-system-react": "^0.1.0-alpha.9",
