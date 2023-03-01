@@ -23,6 +23,7 @@ jobs:
       fly-app-name: ${{ secrets.APP_NAME_STAGING }}
       fly-api-token: ${{ secrets.FLY_API_TOKEN }}
     with:
+      env: "stg"
       image-tag: ghactions-${{ github.ref_name }}-${{ github.sha }}
       ecs-cluster-name: "cluster-application-server"
       ecs-service-name: "application-server"
@@ -44,6 +45,7 @@ jobs:
       fly-app-name: ${{ secrets.APP_NAME_PROD }}
       fly-api-token: ${{ secrets.FLY_API_TOKEN }}
     with:
+      env: "prod"
       image-tag: ghactions-${{ github.ref_name }}-${{ github.sha }}
       ecs-cluster-name: "cluster-application-server"
       ecs-service-name: "application-server"
