@@ -74,7 +74,7 @@
     "lint-staged": "^13.1.2",
     "pino-pretty": "^9.4.0",
     "prettier": "^2.8.4",
-    "rimraf": "^4.1.2",
+    "rimraf": "^4.2.0",
     "supertest": "^6.3.3",
     "ts-jest": "^28.0.8",
     "ts-loader": "^9.4.2",
