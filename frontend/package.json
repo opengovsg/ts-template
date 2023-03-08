@@ -19,7 +19,7 @@
     "react-hook-form": "^7.43.3",
     "react-router-dom": "^6.8.2",
     "wretch": "^2.5.1",
-    "zod": "^3.20.6"
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@chakra-ui/cli": "^2.3.0",
