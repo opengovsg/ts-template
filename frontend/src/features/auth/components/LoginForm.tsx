@@ -33,7 +33,7 @@ interface LoginFormProps {
 
 export const LoginForm = ({ onSubmit }: LoginFormProps): JSX.Element => {
   const onSubmitForm = async (inputs: LoginFormInputs) => {
-    return onSubmit(inputs).catch((e) => {
+    return onSubmit(inputs).catch((e: { json: { message: string } }) => {
       setError('email', { type: 'server', message: e.json.message })
     })
   }

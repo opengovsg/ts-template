@@ -45,7 +45,7 @@ export const OtpForm = ({
   const isDesktop = useIsDesktop()
 
   const onSubmitForm = async (inputs: OtpFormInputs) => {
-    return onSubmit(inputs).catch((e) => {
+    return onSubmit(inputs).catch((e: { json: { message: string } }) => {
       setError('token', { type: 'server', message: e.json.message })
     })
   }
