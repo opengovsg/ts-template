@@ -51,7 +51,7 @@ export const OtpForm = ({
   }
 
   return (
-    <form noValidate onSubmit={handleSubmit(onSubmitForm)}>
+    <form noValidate onSubmit={void handleSubmit(onSubmitForm)}>
       <FormControl isRequired isInvalid={!!formState.errors.token} mb="2.5rem">
         <FormLabel htmlFor="token">
           {`Enter OTP sent to ${email.toLowerCase()}`}
