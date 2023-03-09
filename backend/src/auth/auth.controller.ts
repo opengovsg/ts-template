@@ -34,11 +34,11 @@ export class AuthController {
     try {
       await this.authService.generateOtp(generateOtpDto)
       res.status(HttpStatus.OK).json({ message: 'OTP sent' })
-    } catch (error: any) {
+    } catch (error) {
       this.logger.error(error)
       res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: error.message })
+        .json({ message: (error as Record<string, string>).message })
     }
   }
 
@@ -62,11 +62,11 @@ export class AuthController {
           .status(HttpStatus.UNAUTHORIZED)
           .json({ message: 'Incorrect OTP given' })
       }
-    } catch (error: any) {
+    } catch (error) {
       this.logger.error(error)
       res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: error.message })
+        .json({ message: (error as Record<string, string>).message })
     }
   }
 

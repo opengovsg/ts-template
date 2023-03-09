@@ -20,20 +20,23 @@ export const useLocalStorage = <T,>(
     }
     try {
       const item = window.localStorage.getItem(key)
-      return item ? JSON.parse(item) : initialValue
+      return item ? (JSON.parse(item) as T | undefined) : initialValue
     } catch (error) {
       return initialValue
     }
   }, [initialValue, key])
   // State to store our value
   // Pass initial state function to useState so logic is only executed once
-  const [storedValue, setStoredValue] = useState(readValue)
+  const [storedValue, setStoredValue] = useState<T | undefined>(readValue)
   // Return a wrapped version of useState's setter function that ...
   // ... persists the new value to localStorage.
   const setValue = (value?: T) => {
     try {
       // Allow value to be a function so we have the same API as useState
-      const newValue = value instanceof Function ? value(storedValue) : value
+      const newValue =
+        value instanceof Function
+          ? (value(storedValue) as T | undefined)
+          : value
 
       if (!value) {
         window.localStorage.removeItem(key)
