@@ -6,12 +6,6 @@ module.exports = {
     {
       files: ['*.ts', '*.tsx'],
       extends: ['opengovsg'],
-      rules: {
-        '@typescript-eslint/no-unused-vars': [
-          'error',
-          { ignoreRestSiblings: true },
-        ],
-      },
     },
   ],
 }
