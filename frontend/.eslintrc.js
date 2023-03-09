@@ -5,7 +5,6 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
   ],
-  ignorePatterns: ['config-overrides.js'],
   env: {
     browser: true,
     es2021: true,

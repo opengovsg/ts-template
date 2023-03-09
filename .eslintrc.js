@@ -1,6 +1,6 @@
 module.exports = {
   extends: ['opengovsg/javascript'],
-  ignorePatterns: ['coverage', 'build', 'node_modules', 'jest.config.ts'],
+  ignorePatterns: ['coverage', 'build', 'jest.config.ts'],
   root: true,
   overrides: [
     {
