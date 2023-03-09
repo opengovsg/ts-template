@@ -34,28 +34,4 @@ module.exports = {
       },
     },
   ],
-  rules: {
-    // Rules for auto sort of imports
-    'simple-import-sort/imports': [
-      'error',
-      {
-        groups: [
-          // Side effect imports.
-          ['^\\u0000'],
-          // Packages.
-          // Things that start with a letter (or digit or underscore), or
-          // `@` followed by a letter.
-          ['^@?\\w'],
-          // Root imports
-          // Shared imports should be separate from application imports.
-          ['^(~shared)(/.*|$)'],
-          ['^(~)(/.*|$)'],
-          // Parent imports. Put `..` last.
-          ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
-          // Other relative imports. Put same-folder imports and `.` last.
-          ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
-        ],
-      },
-    ],
-  },
 }
