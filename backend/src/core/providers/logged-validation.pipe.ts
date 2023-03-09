@@ -29,17 +29,9 @@ export class LoggedValidationPipe extends ValidationPipe {
   private flattenErrors(
     errors: ValidationError[],
   ): Omit<ValidationError, 'children'>[] {
-    const children: Omit<ValidationError, 'children'>[] = errors
-      .filter((error) => error.children?.length)
-      // Filter guarantees that error.children is non-null
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      .map((error) => this.flattenErrors(error.children!))
-      .flat()
-    const result: Omit<ValidationError, 'children'>[] = errors.map((error) => {
-      const { children, ...rest } = error
-      return rest
+    const result = errors.flatMap(({ children, ...error }) => {
+      return [error].concat(this.flattenErrors(children || []))
     })
-    result.push(...children)
     return result
   }
 }
