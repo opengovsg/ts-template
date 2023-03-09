@@ -15,7 +15,6 @@ import { GenerateOtpDto, VerifyOtpDto } from '~shared/types/auth.dto'
 
 import { ConfigService } from '../config/config.service'
 import { UserSession } from '../types/session'
-
 import { AuthService } from './auth.service'
 
 @Controller('auth')

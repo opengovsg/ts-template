@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/no-var-requires */
 const { aliasWebpack, aliasJest, configPaths } = require('react-app-alias-ex')
 
 const aliasMap = configPaths('./tsconfig.paths.json')
