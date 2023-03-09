@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "lint": "eslint --ext ts,tsx,js,jsx . && prettier -c \"src/**/*.{ts,tsx}\"",
-    "lint:fix": "eslint --fix --ext ts,tsx,js,jsx . && prettier -c --write \"src/**/*.{ts,tsx}\"",
+    "lint": "eslint --ext ts,tsx,js,jsx .",
+    "lint:fix": "eslint --fix --ext ts,tsx,js,jsx .",
     "pre-commit": "lint-staged",
     "prebuild": "rimraf build",
     "build": "nest build",
@@ -73,7 +73,6 @@
     "jest": "^28.1.3",
     "lint-staged": "^13.1.2",
     "pino-pretty": "^9.4.0",
-    "prettier": "^2.8.4",
     "rimraf": "^4.1.2",
     "supertest": "^6.3.3",
     "ts-jest": "^28.0.8",

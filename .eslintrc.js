@@ -1,25 +1,11 @@
 module.exports = {
-  env: {
-    es6: true,
-    node: true,
-    jest: true,
-  },
-  parserOptions: {
-    ecmaVersion: 2022,
-    sourceType: 'module',
-  },
-  extends: ['eslint:recommended', 'plugin:prettier/recommended'],
+  extends: ['opengovsg/javascript'],
   ignorePatterns: ['coverage', 'build', 'node_modules', 'jest.config.ts'],
-  plugins: ['@typescript-eslint', 'simple-import-sort'],
   root: true,
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
-      extends: [
-        'plugin:@typescript-eslint/recommended',
-        'plugin:@typescript-eslint/recommended-requiring-type-checking',
-      ],
-      parser: '@typescript-eslint/parser',
+      extends: ['opengovsg'],
       rules: {
         '@typescript-eslint/no-unsafe-assignment': 'warn',
         '@typescript-eslint/no-unsafe-member-access': 'warn',
@@ -49,7 +35,6 @@ module.exports = {
     },
   ],
   rules: {
-    'no-console': 'warn',
     // Rules for auto sort of imports
     'simple-import-sort/imports': [
       'error',
@@ -72,6 +57,5 @@ module.exports = {
         ],
       },
     ],
-    'simple-import-sort/exports': 'error',
   },
 }
