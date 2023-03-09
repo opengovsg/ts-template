@@ -140,7 +140,7 @@ export function unregister(): void {
       .then((registration) => {
         registration.unregister()
       })
-      .catch((error) => {
+      .catch((error: Error) => {
         console.error(error.message)
       })
   }
