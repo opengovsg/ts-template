@@ -1,5 +1,0 @@
-**/build
-**/coverage
-**/node_modules
-**/jest-dotenv.config.js
-**/jest.config.ts
