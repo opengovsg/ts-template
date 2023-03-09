@@ -9,7 +9,6 @@
     "prebuild": "rimraf build",
     "build": "nest build",
     "preload": "echo ENV=${ENV:-'development'} && dotenv -c ${ENV:-'development'} --",
-    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "dev": "npm run preload -- nest start --watch | npm run pino-pretty",
     "debug": "npm run preload -- nest start --debug --watch | npm run pino-pretty",
     "start": "node -r tsconfig-paths/register build/main | npm run pino-datadog",

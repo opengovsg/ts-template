@@ -71,11 +71,10 @@ export class AuthController {
   }
 
   @Post('logout')
-  async logout(
-    @Req() req: Request,
+  logout(
     @Session() session: UserSession,
     @Res({ passthrough: true }) res: Response,
-  ): Promise<void> {
+  ): void {
     res.clearCookie(this.config.get('session.name'))
     session.destroy(() =>
       res.status(HttpStatus.OK).json({ message: 'Logged out' }),
@@ -83,7 +82,7 @@ export class AuthController {
   }
 
   @Get('whoami')
-  async whoami(@Req() req: Request, @Res() res: Response): Promise<void> {
+  whoami(@Req() req: Request, @Res() res: Response): void {
     const user = req.session.user
     res
       .status(HttpStatus.OK)

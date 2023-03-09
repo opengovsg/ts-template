@@ -45,7 +45,7 @@ export class AuthService {
     }
 
     this.logger.info(`Sending mail to ${email}`)
-    return this.mailerService.sendMail(mail)
+    await this.mailerService.sendMail(mail)
   }
 
   async verifyOtp(verifyOtpDto: VerifyOtpDto): Promise<User | undefined> {

@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { PostmanNodemailerTransport } from '@opengovsg/postmangovsg-client'
 import { InjectPinoLogger, PinoLogger } from 'nestjs-pino'
-import nodemailer, {
+import {
+  createTransport,
   SendMailOptions,
   SentMessageInfo,
   Transporter,
@@ -19,11 +20,11 @@ export class MailerService {
 
   private chooseTransporter(): Pick<Transporter, 'sendMail'> {
     if (this.config.get('postmangovsgApiKey')) {
-      return nodemailer.createTransport(
+      return createTransport(
         new PostmanNodemailerTransport(this.config.get('postmangovsgApiKey')),
       )
     } else if (this.config.isDevEnv) {
-      return nodemailer.createTransport({
+      return createTransport({
         ...this.config.get('mailer'),
         secure: !this.config.isDevEnv,
         ignoreTLS: this.config.isDevEnv,

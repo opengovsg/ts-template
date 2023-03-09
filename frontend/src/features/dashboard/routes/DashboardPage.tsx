@@ -23,7 +23,7 @@ const Navbar = (): JSX.Element => {
       </HStack>
 
       <HStack spacing={6}>
-        <Button onClick={logout}>Logout</Button>
+        <Button onClick={void logout}>Logout</Button>
       </HStack>
     </Flex>
   )

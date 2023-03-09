@@ -46,7 +46,7 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): JSX.Element => {
   const isDesktop = useIsDesktop()
 
   return (
-    <form noValidate onSubmit={handleSubmit(onSubmitForm)}>
+    <form noValidate onSubmit={void handleSubmit(onSubmitForm)}>
       <FormControl
         isRequired
         isInvalid={!!formState.errors.email}

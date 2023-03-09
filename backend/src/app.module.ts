@@ -10,6 +10,7 @@ import { ConfigModule } from 'config/config.module'
 import { ConfigService } from 'config/config.service'
 import { LoggedValidationPipe } from 'core/providers/logged-validation.pipe'
 import { DatabaseConfigService } from 'database/database-config.service'
+import { Response } from 'express'
 import { HelmetMiddleware } from 'middlewares/helmet.middleware'
 import { SessionMiddleware } from 'middlewares/session.middleware'
 import { LoggerModule, PinoLogger } from 'nestjs-pino'
@@ -57,7 +58,7 @@ const FRONTEND_PATH = join(__dirname, '..', '..', 'frontend', 'build')
       exclude: ['/api*'], // Return 404 for non-existent API routes
       serveStaticOptions: {
         maxAge: 2 * 60 * 60 * 1000, // 2 hours, same as cloudflare
-        setHeaders: function (res, path) {
+        setHeaders: function (res: Response, path: string) {
           // set maxAge to 0 for root index.html
           if (path === join(FRONTEND_PATH, 'index.html')) {
             res.setHeader('Cache-control', 'public, max-age=0')
