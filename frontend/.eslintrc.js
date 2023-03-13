@@ -3,6 +3,7 @@ module.exports = {
   extends: [
     '../.eslintrc.js',
     'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
   ],
   env: {
@@ -15,7 +16,6 @@ module.exports = {
     },
   },
   rules: {
-    'react/react-in-jsx-scope': 'off',
     // Rules for auto sort of imports
     'simple-import-sort/imports': [
       'error',
