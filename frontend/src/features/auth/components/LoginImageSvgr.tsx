@@ -1,5 +1,5 @@
-import { SVGProps } from 'react'
 import { chakra } from '@chakra-ui/react'
+import { SVGProps } from 'react'
 
 export const LoginImageSvgr = chakra((props: SVGProps<SVGSVGElement>) => (
   <svg

@@ -1,7 +1,7 @@
 import { Navigate, NavigateProps, useLocation } from 'react-router-dom'
 
-import { useAuth } from '~lib/auth'
 import { routes } from '~constants/routes'
+import { useAuth } from '~lib/auth'
 
 interface PrivateElementProps {
   /**

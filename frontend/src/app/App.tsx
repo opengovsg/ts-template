@@ -5,7 +5,6 @@ import { ThemeProvider } from '@opengovsg/design-system-react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { theme } from '~/theme'
-
 import { AuthProvider } from '~lib/auth'
 
 import { AppRouter } from './AppRouter'

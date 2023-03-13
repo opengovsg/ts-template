@@ -15,40 +15,4 @@ module.exports = {
       version: 'detect',
     },
   },
-  rules: {
-    // Rules for auto sort of imports
-    'simple-import-sort/imports': [
-      'error',
-      {
-        groups: [
-          // Side effect imports.
-          ['^\\u0000'],
-          // Packages.
-          // Packages. `react` related packages come first.
-          // Things that start with a letter (or digit or underscore), or
-          // `@` followed by a letter.
-          ['^react', '^@?\\w'],
-          // Root imports
-          // Shared imports should be separate from application imports.
-          ['^(~shared)(/.*|$)'],
-          ['^(~)(/.*|$)'],
-          [
-            '^(~lib)(/.*|$)',
-            '^(~contexts)(/.*|$)',
-            '^(~constants)(/.*|$)',
-            '^(~hooks)(/.*|$)',
-            '^(~utils)(/.*|$)',
-            '^(~services)(/.*|$)',
-            '^(~components)(/.*|$)',
-            '^(~templates)(/.*|$)',
-          ],
-          ['^(~pages)(/.*|$)', '^(~features)(/.*|$)'],
-          // Parent imports. Put `..` last.
-          ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
-          // Other relative imports. Put same-folder imports and `.` last.
-          ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
-        ],
-      },
-    ],
-  },
 }

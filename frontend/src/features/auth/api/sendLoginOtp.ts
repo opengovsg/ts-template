@@ -1,9 +1,8 @@
+import { api } from '~lib/api'
 import type {
   SendLoginOtpRequestDto,
   SendLoginOtpResponseDto,
 } from '~shared/types/auth.dto'
-
-import { api } from '~lib/api'
 
 export const sendLoginOtp = async (params: SendLoginOtpRequestDto) => {
   params.email = params.email.toLowerCase()

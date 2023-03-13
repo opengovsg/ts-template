@@ -1,6 +1,5 @@
-import type { WhoAmIResponseDto } from '~shared/types/auth.dto'
-
 import { api } from '~lib/api'
+import type { WhoAmIResponseDto } from '~shared/types/auth.dto'
 
 /**
  * Fetches the user from the server using the current session cookie.
