@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom'
 import { Box, ButtonGroup, Flex, HStack, Text, VStack } from '@chakra-ui/react'
 import { Button } from '@opengovsg/design-system-react'
+import { Link } from 'react-router-dom'
 
-import { useAuth } from '~lib/auth'
 import { routes } from '~constants/routes'
+import { useAuth } from '~lib/auth'
 
 const Navbar = (): JSX.Element => {
   const { logout } = useAuth()

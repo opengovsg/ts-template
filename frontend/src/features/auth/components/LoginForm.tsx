@@ -1,4 +1,3 @@
-import { useForm } from 'react-hook-form'
 import { FormControl, Link, Stack } from '@chakra-ui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -7,11 +6,11 @@ import {
   FormLabel,
   Input,
 } from '@opengovsg/design-system-react'
+import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { isGovSgEmail } from '~shared/decorators/is-gov-sg-email'
-
 import { useIsDesktop } from '~hooks/useIsDesktop'
+import { isGovSgEmail } from '~shared/decorators/is-gov-sg-email'
 
 const schema = z.object({
   email: z

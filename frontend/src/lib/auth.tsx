@@ -1,7 +1,5 @@
-import { createContext, ReactNode, useCallback, useContext } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-
-import { VerifyOtpRequestDto, WhoAmIResponseDto } from '~shared/types/auth.dto'
+import { createContext, ReactNode, useCallback, useContext } from 'react'
 
 import {
   fetchUser,
@@ -10,6 +8,7 @@ import {
   STORAGE_LOGGED_IN_KEY,
   verifyLoginOtp as verifyLoginOtpApi,
 } from '~features/auth'
+import { VerifyOtpRequestDto, WhoAmIResponseDto } from '~shared/types/auth.dto'
 
 import { useLocalStorage } from './storage'
 

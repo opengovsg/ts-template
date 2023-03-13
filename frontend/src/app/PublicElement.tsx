@@ -1,9 +1,9 @@
-import { Navigate, useLocation } from 'react-router-dom'
 import { Flex } from '@chakra-ui/react'
 import { RestrictedGovtMasthead } from '@opengovsg/design-system-react'
+import { Navigate, useLocation } from 'react-router-dom'
 
-import { useAuth } from '~lib/auth'
 import { routes } from '~constants/routes'
+import { useAuth } from '~lib/auth'
 
 interface PublicElementProps {
   /**

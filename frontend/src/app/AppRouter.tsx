@@ -1,6 +1,6 @@
+import { Box } from '@chakra-ui/react'
 import { PropsWithChildren, Suspense } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { Box } from '@chakra-ui/react'
 
 import { routes } from '~constants/routes'
 import { lazyImport } from '~utils/lazyImport'
