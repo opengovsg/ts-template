@@ -4,8 +4,16 @@ module.exports = {
   root: true,
   overrides: [
     {
-      files: ['*.ts', '*.tsx'],
+      files: ['*.ts'],
       extends: ['opengovsg'],
+    },
+    {
+      files: ['*.tsx'],
+      extends: ['opengovsg', 'opengovsg/react'],
+    },
+    {
+      files: ['*.jsx'],
+      extends: ['opengovsg/javascript', 'opengovsg/react'],
     },
   ],
 }
