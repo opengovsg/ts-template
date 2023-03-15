@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "pre-commit": "lint-staged",
-    "lint": "eslint --ext ts,tsx,js,jsx .",
-    "lint:fix": "eslint --fix --ext ts,tsx,js,jsx .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "build": "tsc --build --clean && tsc --build tsconfig.build.json --force",
     "test": "jest",
     "test:watch": "jest --watch --runInBand",

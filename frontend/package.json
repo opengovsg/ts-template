@@ -73,8 +73,8 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "lint": "eslint ./ --ignore-path .gitignore",
-    "lint:fix": "eslint ./ --ignore-path .gitignore --fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "pre-commit": "lint-staged",
     "snyk-protect": "snyk-protect",
     "prepare": "npm run snyk-protect"

@@ -8,11 +8,11 @@ module.exports = {
       extends: ['opengovsg'],
     },
     {
-      files: ['*.tsx'],
+      files: ['frontend/**/*.ts', '*.tsx'],
       extends: ['opengovsg', 'opengovsg/react'],
     },
     {
-      files: ['*.jsx'],
+      files: ['frontend/**/*.js', '*.jsx'],
       extends: ['opengovsg/javascript', 'opengovsg/react'],
     },
   ],
