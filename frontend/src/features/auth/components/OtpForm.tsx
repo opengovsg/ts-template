@@ -51,7 +51,8 @@ export const OtpForm = ({
   }
 
   return (
-    <form noValidate onSubmit={void handleSubmit(onSubmitForm)}>
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    <form noValidate onSubmit={handleSubmit(onSubmitForm)}>
       <FormControl isRequired isInvalid={!!formState.errors.token} mb="2.5rem">
         <FormLabel htmlFor="token">
           {`Enter OTP sent to ${email.toLowerCase()}`}

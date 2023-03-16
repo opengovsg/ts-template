@@ -23,7 +23,8 @@ const Navbar = (): JSX.Element => {
       </HStack>
 
       <HStack spacing={6}>
-        <Button onClick={void logout}>Logout</Button>
+        {/* eslint-disable-next-line @typescript-eslint/no-misused-promises */}
+        <Button onClick={logout}>Logout</Button>
       </HStack>
     </Flex>
   )

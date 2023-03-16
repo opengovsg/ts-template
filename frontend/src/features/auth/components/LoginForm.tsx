@@ -45,7 +45,8 @@ export const LoginForm = ({ onSubmit }: LoginFormProps): JSX.Element => {
   const isDesktop = useIsDesktop()
 
   return (
-    <form noValidate onSubmit={void handleSubmit(onSubmitForm)}>
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    <form noValidate onSubmit={handleSubmit(onSubmitForm)}>
       <FormControl
         isRequired
         isInvalid={!!formState.errors.email}
