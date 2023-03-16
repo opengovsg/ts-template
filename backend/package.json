@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "lint": "eslint --ext ts,tsx,js,jsx .",
-    "lint:fix": "eslint --fix --ext ts,tsx,js,jsx .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "pre-commit": "lint-staged",
     "prebuild": "rimraf build",
     "build": "nest build",
