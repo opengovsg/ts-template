@@ -58,7 +58,7 @@
     "@aws-sdk/client-ssm": "^3.294.0",
     "@nestjs/cli": "^9.3.0",
     "@nestjs/schematics": "^9.0.4",
-    "@nestjs/testing": "^9.3.10",
+    "@nestjs/testing": "^9.3.11",
     "@types/convict": "^6.1.1",
     "@types/express": "^4.17.17",
     "@types/express-session": "^1.17.7",
