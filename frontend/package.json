@@ -22,7 +22,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@chakra-ui/cli": "^2.3.0",
+    "@chakra-ui/cli": "^2.4.1",
     "@snyk/protect": "latest",
     "@storybook/addon-actions": "^6.5.16",
     "@storybook/addon-essentials": "^6.5.16",
