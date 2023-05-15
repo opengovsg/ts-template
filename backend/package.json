@@ -55,7 +55,7 @@
     "typeorm": "^0.3.16"
   },
   "devDependencies": {
-    "@aws-sdk/client-ssm": "^3.329.0",
+    "@aws-sdk/client-ssm": "^3.332.0",
     "@nestjs/cli": "^9.4.2",
     "@nestjs/schematics": "^9.1.0",
     "@nestjs/testing": "^9.4.0",
