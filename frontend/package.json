@@ -8,7 +8,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fontsource/ibm-plex-mono": "^4.5.13",
-    "@hookform/resolvers": "^2.9.11",
+    "@hookform/resolvers": "^3.3.2",
     "@opengovsg/design-system-react": "^0.1.0-alpha.10",
     "@tanstack/react-query": "^4.28.0",
     "class-validator": "^0.14.0",
