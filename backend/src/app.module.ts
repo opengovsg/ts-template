@@ -64,6 +64,7 @@ const FRONTEND_PATH = join(__dirname, '..', '..', 'frontend', 'build')
             res.setHeader('Cache-control', 'public, max-age=0')
           }
         },
+        fallthrough: false,
       },
     }),
   ],
