@@ -65,6 +65,7 @@ const FRONTEND_PATH = join(__dirname, '..', '..', 'frontend', 'build')
           }
         },
       },
+      fallthrough: false,
     }),
   ],
   providers: [
