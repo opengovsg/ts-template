@@ -55,7 +55,10 @@ const FRONTEND_PATH = join(__dirname, '..', '..', 'frontend', 'build')
     }),
     ServeStaticModule.forRoot({
       rootPath: FRONTEND_PATH,
-      exclude: ['/api*'], // Return 404 for non-existent API routes
+      // '/api*' works for @nestjs/serve-static versions < 3.x
+      // '/api(.*)' works for @nestjs/serve-static versions >= 3.x
+      // Reference: https://github.com/nestjs/serve-static/issues/1177
+      exclude: ['/api(.*)'], // Return 404 for non-existent API routes
       serveStaticOptions: {
         maxAge: 2 * 60 * 60 * 1000, // 2 hours, same as cloudflare
         setHeaders: function (res: Response, path: string) {
@@ -64,7 +67,6 @@ const FRONTEND_PATH = join(__dirname, '..', '..', 'frontend', 'build')
             res.setHeader('Cache-control', 'public, max-age=0')
           }
         },
-        fallthrough: false,
       },
     }),
   ],
