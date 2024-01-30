@@ -32,7 +32,7 @@
     "env-cmd": "^10.1.0",
     "eslint": "^8.56.0",
     "eslint-config-opengovsg": "^2.0.6",
-    "husky": "^8.0.3"
+    "husky": "^9.0.7"
   },
   "lint-staged": {
     "**/*.(js|jsx|ts|tsx)": [
