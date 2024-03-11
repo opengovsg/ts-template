@@ -22,7 +22,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@chakra-ui/cli": "^2.3.0",
+    "@chakra-ui/cli": "^2.4.1",
     "@pulumi/eslint-plugin": "^0.2.0",
     "@snyk/protect": "latest",
     "@storybook/addon-actions": "^6.5.16",
