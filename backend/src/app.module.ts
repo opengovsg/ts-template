@@ -1,6 +1,3 @@
-// Initialize Datadog tracer
-import 'tracing'
-
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { APP_PIPE } from '@nestjs/core'
 import { ServeStaticModule } from '@nestjs/serve-static'
