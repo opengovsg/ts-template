@@ -1,4 +1,9 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
+import {
+  ClassProvider,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+} from '@nestjs/common'
 import { APP_PIPE } from '@nestjs/core'
 import { ServeStaticModule } from '@nestjs/serve-static'
 import { TypeOrmModule } from '@nestjs/typeorm'
@@ -74,7 +79,7 @@ const FRONTEND_PATH = join(__dirname, '..', '..', 'frontend', 'build')
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       inject: [PinoLogger],
-    },
+    } as unknown as ClassProvider<PinoLogger>,
   ],
 })
 export class AppModule implements NestModule {
