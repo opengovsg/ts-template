@@ -39,6 +39,7 @@
     ]
   },
   "dependencies": {
-    "class-validator": "^0.14.0"
+    "class-validator": "^0.14.0",
+    "ts-node": "^10.9.2"
   }
 }

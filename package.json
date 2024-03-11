@@ -20,7 +20,7 @@
     "coverage": "npm run on-backend -- test:cov && cat backend/coverage/lcov.info > lcov.info",
     "cz": "git-cz",
     "start": "npm --prefix backend start",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.0.3",
