@@ -50,7 +50,7 @@
     "pg": "^8.10.0",
     "pino-datadog": "^2.0.2",
     "pino-http": "^9.0.0",
-    "reflect-metadata": "^0.1.13",
+    "reflect-metadata": "^0.1.14",
     "rxjs": "^7.8.1",
     "typeorm": "^0.3.20"
   },
