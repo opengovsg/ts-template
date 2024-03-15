@@ -57,7 +57,7 @@
   "devDependencies": {
     "@aws-sdk/client-ssm": "^3.532.0",
     "@nestjs/cli": "^10.3.2",
-    "@nestjs/schematics": "^9.1.0",
+    "@nestjs/schematics": "^10.1.1",
     "@nestjs/testing": "^9.4.1",
     "@pulumi/eslint-plugin": "^0.2.0",
     "@types/convict": "^6.1.6",
